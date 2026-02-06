@@ -102,7 +102,7 @@ window.PagePostDetail = {
                     </div>
                 </div>
                 <div class="mc-card-body">
-                    <h2 class="text-xl font-display font-semibold text-navy mb-2">${this._esc(post.title || 'Untitled Post')}</h2>
+                    <h2 class="text-xl font-semibold text-[#323338] mb-2">${this._esc(post.title || 'Untitled Post')}</h2>
                     <div class="flex items-center gap-4 text-xs text-gray-500">
                         <span class="flex items-center gap-1">
                             <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
@@ -119,7 +119,7 @@ window.PagePostDetail = {
                     <!-- Content Card -->
                     <div class="mc-card">
                         <div class="mc-card-header">
-                            <h3 class="text-sm font-semibold text-navy">Post Content</h3>
+                            <h3 class="text-sm font-semibold text-[#323338]">Post Content</h3>
                             <button id="pd-toggle-edit" class="btn-ghost text-xs">
                                 <i data-lucide="pencil" class="w-3.5 h-3.5"></i> Edit
                             </button>
@@ -130,7 +130,7 @@ window.PagePostDetail = {
                                 <div class="prose prose-sm max-w-none text-gray-700 whitespace-pre-wrap leading-relaxed">${this._esc(post.content || 'No content yet.')}</div>
                                 ${hashtags.length > 0 ? `
                                     <div class="flex flex-wrap gap-2 mt-4 pt-4 border-t border-gray-100">
-                                        ${hashtags.map(tag => `<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-navy/5 text-navy/70">#${this._esc(tag)}</span>`).join('')}
+                                        ${hashtags.map(tag => `<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-navy/5 text-[#323338]/70">#${this._esc(tag)}</span>`).join('')}
                                     </div>
                                 ` : ''}
                             </div>
@@ -158,7 +158,7 @@ window.PagePostDetail = {
                     ${isPublished ? `
                     <div class="mc-card">
                         <div class="mc-card-header">
-                            <h3 class="text-sm font-semibold text-navy">Engagement</h3>
+                            <h3 class="text-sm font-semibold text-[#323338]">Engagement</h3>
                         </div>
                         <div class="mc-card-body">
                             <div class="grid grid-cols-3 gap-4">
@@ -166,21 +166,21 @@ window.PagePostDetail = {
                                     <div class="flex items-center justify-center mb-2">
                                         <i data-lucide="thumbs-up" class="w-5 h-5 text-blue-500"></i>
                                     </div>
-                                    <div class="text-2xl font-bold text-navy">${engagement.likes || 0}</div>
+                                    <div class="text-2xl font-bold text-[#323338]">${engagement.likes || 0}</div>
                                     <div class="text-xs text-gray-500 uppercase tracking-wide mt-1">Likes</div>
                                 </div>
                                 <div class="text-center p-4 rounded-xl bg-green-50">
                                     <div class="flex items-center justify-center mb-2">
                                         <i data-lucide="message-circle" class="w-5 h-5 text-green-500"></i>
                                     </div>
-                                    <div class="text-2xl font-bold text-navy">${engagement.comments || 0}</div>
+                                    <div class="text-2xl font-bold text-[#323338]">${engagement.comments || 0}</div>
                                     <div class="text-xs text-gray-500 uppercase tracking-wide mt-1">Comments</div>
                                 </div>
                                 <div class="text-center p-4 rounded-xl bg-purple-50">
                                     <div class="flex items-center justify-center mb-2">
                                         <i data-lucide="share-2" class="w-5 h-5 text-purple-500"></i>
                                     </div>
-                                    <div class="text-2xl font-bold text-navy">${engagement.shares || 0}</div>
+                                    <div class="text-2xl font-bold text-[#323338]">${engagement.shares || 0}</div>
                                     <div class="text-xs text-gray-500 uppercase tracking-wide mt-1">Shares</div>
                                 </div>
                             </div>
@@ -194,7 +194,7 @@ window.PagePostDetail = {
                     <!-- Actions Card -->
                     <div class="mc-card">
                         <div class="mc-card-header">
-                            <h3 class="text-sm font-semibold text-navy">Actions</h3>
+                            <h3 class="text-sm font-semibold text-[#323338]">Actions</h3>
                         </div>
                         <div class="mc-card-body space-y-3">
                             ${isDraft || isReview ? `
@@ -223,7 +223,7 @@ window.PagePostDetail = {
                     <!-- Post Meta Card -->
                     <div class="mc-card">
                         <div class="mc-card-header">
-                            <h3 class="text-sm font-semibold text-navy">Details</h3>
+                            <h3 class="text-sm font-semibold text-[#323338]">Details</h3>
                         </div>
                         <div class="mc-card-body">
                             <dl class="space-y-3 text-sm">
@@ -397,7 +397,7 @@ window.PagePostDetail = {
                 rescheduleBtn.textContent = 'Rescheduling...';
                 try {
                     await API.posts.reschedule(post.id, newDate);
-                    this._showFeedback('Post rescheduled to ' + newDate, 'text-navy');
+                    this._showFeedback('Post rescheduled to ' + newDate, 'text-[#323338]');
                     await this.render(post.id);
                 } catch (err) {
                     this._showFeedback('Failed to reschedule: ' + err.message, 'text-red-600');

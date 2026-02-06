@@ -98,7 +98,7 @@ window.PageHome = {
                 <div class="flex items-start gap-3 py-2.5 border-b border-gray-50 last:border-0">
                     <span class="company-dot company-dot-${this._esc(p.company_slug || p.company || 'us-framing')} mt-1.5 flex-shrink-0"></span>
                     <div class="min-w-0 flex-1">
-                        <p class="text-sm text-navy font-medium truncate">${this._esc(p.title || 'Untitled Post')}</p>
+                        <p class="text-sm text-[#323338] font-medium truncate">${this._esc(p.title || 'Untitled Post')}</p>
                         <p class="text-xs text-gray-400 mt-0.5">${this._fmtDate(p.scheduled_date || p.date || '')}</p>
                     </div>
                     <span class="badge badge-scheduled flex-shrink-0">Scheduled</span>
@@ -123,9 +123,9 @@ window.PageHome = {
                 <div class="mc-card-body">
                     ${listHTML}
                     <div class="flex items-center justify-between text-xs text-gray-500 pt-3 mt-3 border-t border-gray-100">
-                        <span>Published: <strong class="text-navy">${this._num(li.published)}</strong></span>
-                        <span>Drafts: <strong class="text-navy">${this._num(li.drafts)}</strong></span>
-                        <span>Engagement: <strong class="text-navy">${this._num(li.total_engagement)}</strong></span>
+                        <span>Published: <strong class="text-[#323338]">${this._num(li.published)}</strong></span>
+                        <span>Drafts: <strong class="text-[#323338]">${this._num(li.drafts)}</strong></span>
+                        <span>Engagement: <strong class="text-[#323338]">${this._num(li.total_engagement)}</strong></span>
                     </div>
                 </div>
             </div>`;
@@ -159,7 +159,7 @@ window.PageHome = {
                                             <i data-lucide="${st.icon}" class="w-3.5 h-3.5"></i>
                                             ${st.label}
                                         </span>
-                                        <span class="text-xs font-semibold text-navy">${st.count}</span>
+                                        <span class="text-xs font-semibold text-[#323338]">${st.count}</span>
                                     </div>
                                     <div class="w-full bg-gray-100 rounded-full h-1.5">
                                         <div class="h-1.5 rounded-full transition-all duration-500 ${st.progressClass}"
@@ -169,8 +169,8 @@ window.PageHome = {
                         }).join('')}
                     </div>
                     <div class="mt-5 pt-3 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
-                        <span>Total: <strong class="text-navy">${this._num(total)}</strong></span>
-                        ${co.avg_aeo_score != null ? `<span>Avg AEO: <strong class="text-navy">${co.avg_aeo_score}</strong></span>` : ''}
+                        <span>Total: <strong class="text-[#323338]">${this._num(total)}</strong></span>
+                        ${co.avg_aeo_score != null ? `<span>Avg AEO: <strong class="text-[#323338]">${co.avg_aeo_score}</strong></span>` : ''}
                     </div>
                 </div>
             </div>`;
@@ -193,8 +193,8 @@ window.PageHome = {
                         <canvas id="home-funnel-chart"></canvas>
                     </div>
                     <div class="mt-4 pt-3 border-t border-gray-100 grid grid-cols-2 gap-2 text-xs text-gray-500">
-                        <span>Total: <strong class="text-navy">${this._num(funnel.total)}</strong></span>
-                        <span>Active: <strong class="text-navy">${this._num(funnel.active)}</strong></span>
+                        <span>Total: <strong class="text-[#323338]">${this._num(funnel.total)}</strong></span>
+                        <span>Active: <strong class="text-[#323338]">${this._num(funnel.active)}</strong></span>
                         ${rates.overall != null ? `<span class="col-span-2">Conversion: <strong class="text-emerald-600">${rates.overall}%</strong></span>` : ''}
                     </div>
                 </div>
@@ -275,7 +275,7 @@ window.PageHome = {
                                     <i data-lucide="${m.icon}" class="w-5 h-5 ${m.iconColor}"></i>
                                 </div>
                                 <div>
-                                    <div class="text-lg font-bold text-navy">${m.value}</div>
+                                    <div class="text-lg font-bold text-[#323338]">${m.value}</div>
                                     <div class="text-xs text-gray-500 font-medium">${m.label}</div>
                                 </div>
                             </div>

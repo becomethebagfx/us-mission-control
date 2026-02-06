@@ -80,7 +80,7 @@ window.PageBrandAudit = {
                 <div class="mc-card">
                     <div class="mc-card-header">
                         <h3 class="flex items-center gap-2">
-                            <i data-lucide="shield-check" class="w-4 h-4 text-navy/60"></i>
+                            <i data-lucide="shield-check" class="w-4 h-4 text-[#323338]/60"></i>
                             Company Brand Health
                         </h3>
                         <span class="text-xs text-gray-400">${Array.isArray(items) ? items.length : 0} audits</span>
@@ -90,21 +90,21 @@ window.PageBrandAudit = {
                             ${Array.isArray(items) && items.length ? items.map(a => `
                             <div class="border border-gray-100 rounded-xl p-5 hover:border-gray-200 transition-colors">
                                 <div class="flex items-center justify-between mb-3">
-                                    <span class="font-semibold text-navy">${this._esc(a.company || '')}</span>
+                                    <span class="font-semibold text-[#323338]">${this._esc(a.company || '')}</span>
                                     <span class="score-badge ${(a.score || 0) >= 80 ? 'score-badge-green' : (a.score || 0) >= 60 ? 'score-badge-amber' : 'score-badge-red'}">${a.score || 0}</span>
                                 </div>
                                 <div class="grid grid-cols-3 gap-4 text-center text-sm">
                                     <div>
                                         <div class="text-xs text-gray-400 mb-1">NAP</div>
-                                        <div class="font-semibold text-navy">${a.nap_score || 0}</div>
+                                        <div class="font-semibold text-[#323338]">${a.nap_score || 0}</div>
                                     </div>
                                     <div>
                                         <div class="text-xs text-gray-400 mb-1">Visual</div>
-                                        <div class="font-semibold text-navy">${a.visual_score || 0}</div>
+                                        <div class="font-semibold text-[#323338]">${a.visual_score || 0}</div>
                                     </div>
                                     <div>
                                         <div class="text-xs text-gray-400 mb-1">Voice</div>
-                                        <div class="font-semibold text-navy">${a.voice_score || 0}</div>
+                                        <div class="font-semibold text-[#323338]">${a.voice_score || 0}</div>
                                     </div>
                                 </div>
                                 ${a.issues && a.issues.length ? `

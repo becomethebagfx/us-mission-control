@@ -77,7 +77,7 @@ window.PageAssets = {
                 <div class="mc-card">
                     <div class="mc-card-header">
                         <h3 class="flex items-center gap-2">
-                            <i data-lucide="image" class="w-4 h-4 text-navy/60"></i>
+                            <i data-lucide="image" class="w-4 h-4 text-[#323338]/60"></i>
                             Asset Library
                         </h3>
                         <span class="text-xs text-gray-400">${Array.isArray(items) ? items.length : 0} assets</span>
@@ -91,7 +91,7 @@ window.PageAssets = {
                                     ${a.thumbnail ? `<img src="${this._esc(a.thumbnail)}" class="w-full h-full object-cover" alt="${this._esc(a.name || '')}">` : `<i data-lucide="image" class="w-8 h-8 text-gray-300"></i>`}
                                 </div>
                                 <div class="p-4">
-                                    <p class="font-medium text-navy text-sm truncate">${this._esc(a.name || a.title || 'Untitled')}</p>
+                                    <p class="font-medium text-[#323338] text-sm truncate">${this._esc(a.name || a.title || 'Untitled')}</p>
                                     <div class="flex items-center gap-2 mt-2">
                                         <span class="badge badge-generated">${this._esc(a.type || 'asset')}</span>
                                         <span class="badge badge-scheduled">${this._esc(a.company || '')}</span>

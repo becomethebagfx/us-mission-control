@@ -34,7 +34,7 @@ window.PageCalendar = {
                     <div class="mc-card">
                         <div class="mc-card-header">
                             <h3 class="flex items-center gap-2">
-                                <i data-lucide="calendar" class="w-4 h-4 text-navy/60"></i>
+                                <i data-lucide="calendar" class="w-4 h-4 text-[#323338]/60"></i>
                                 LinkedIn Calendar
                             </h3>
                             <span class="text-xs text-gray-400">${(events || []).length} events</span>

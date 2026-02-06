@@ -124,7 +124,7 @@ window.PageContent = {
                             <div class="stat-label">Total Articles</div>
                         </div>
                         <div class="stat-icon bg-navy/10">
-                            <i data-lucide="file-text" class="w-5 h-5 text-navy"></i>
+                            <i data-lucide="file-text" class="w-5 h-5 text-[#323338]"></i>
                         </div>
                     </div>
                 </div>
@@ -244,7 +244,7 @@ window.PageContent = {
                         ${statusPill}
                     </div>
                     <!-- Title -->
-                    <h4 class="text-sm font-semibold text-navy leading-snug mb-2 line-clamp-2">${this._esc(article.title || 'Untitled')}</h4>
+                    <h4 class="text-sm font-semibold text-[#323338] leading-snug mb-2 line-clamp-2">${this._esc(article.title || 'Untitled')}</h4>
                     ${article.topic && article.topic !== article.title ? `<p class="text-xs text-gray-500 mb-3">${this._esc(article.topic)}</p>` : ''}
                     <!-- Word Count + AEO Score -->
                     <div class="flex items-center justify-between mb-3">
@@ -293,7 +293,7 @@ window.PageContent = {
             <div class="mc-card sticky top-24">
                 <!-- Panel Header -->
                 <div class="mc-card-header">
-                    <h3 class="text-sm font-semibold text-navy">Article Details</h3>
+                    <h3 class="text-sm font-semibold text-[#323338]">Article Details</h3>
                     <button id="ct-close-panel" class="btn-ghost text-xs">
                         <i data-lucide="x" class="w-4 h-4"></i>
                     </button>
@@ -306,7 +306,7 @@ window.PageContent = {
                             <span class="text-xs text-gray-500">${this._esc(article.company || '')}</span>
                             <span class="ml-auto">${statusPillDetail}</span>
                         </div>
-                        <h4 class="text-base font-display font-semibold text-navy leading-snug">${this._esc(article.title || 'Untitled')}</h4>
+                        <h4 class="text-base font-semibold text-[#323338] leading-snug">${this._esc(article.title || 'Untitled')}</h4>
                         ${article.topic && article.topic !== article.title ? `<p class="text-xs text-gray-500 mt-1">${this._esc(article.topic)}</p>` : ''}
                     </div>
 
@@ -357,7 +357,7 @@ window.PageContent = {
                     <div class="border-t border-gray-100 pt-3">
                         <p class="text-xs text-gray-500 mb-2">Tags</p>
                         <div class="flex flex-wrap gap-1.5">
-                            ${tags.map(tag => `<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-navy/5 text-navy/70">${this._esc(tag)}</span>`).join('')}
+                            ${tags.map(tag => `<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-navy/5 text-[#323338]/70">${this._esc(tag)}</span>`).join('')}
                         </div>
                     </div>
                     ` : ''}

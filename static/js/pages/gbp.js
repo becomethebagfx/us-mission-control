@@ -78,7 +78,7 @@ window.PageGBP = {
                 <div class="mc-card">
                     <div class="mc-card-header">
                         <h3 class="flex items-center gap-2">
-                            <i data-lucide="building-2" class="w-4 h-4 text-navy/60"></i>
+                            <i data-lucide="building-2" class="w-4 h-4 text-[#323338]/60"></i>
                             Locations
                         </h3>
                         <span class="text-xs text-gray-400">${Array.isArray(locs) ? locs.length : 0} locations</span>
@@ -98,7 +98,7 @@ window.PageGBP = {
                                 <tbody>
                                     ${Array.isArray(locs) && locs.length ? locs.map(l => `
                                     <tr>
-                                        <td class="font-medium text-navy">${this._esc(l.name || l.company || '')}</td>
+                                        <td class="font-medium text-[#323338]">${this._esc(l.name || l.company || '')}</td>
                                         <td class="text-gray-600">${this._esc(l.address || '')}</td>
                                         <td class="text-gray-600">${this._esc(l.phone || '')}</td>
                                         <td><span class="badge ${l.verified ? 'badge-active' : 'badge-expiring'}">${l.verified ? 'Verified' : 'Pending'}</span></td>

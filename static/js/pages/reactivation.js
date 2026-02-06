@@ -61,7 +61,7 @@ window.PageReactivation = {
                     <div class="mc-card">
                         <div class="mc-card-header">
                             <h3 class="flex items-center gap-2">
-                                <i data-lucide="users" class="w-4 h-4 text-navy/60"></i>
+                                <i data-lucide="users" class="w-4 h-4 text-[#323338]/60"></i>
                                 Lead Pipeline
                             </h3>
                             <div class="flex items-center gap-3">
@@ -88,7 +88,7 @@ window.PageReactivation = {
                                     <tbody>
                                         <template x-for="lead in visibleLeads" :key="lead.id">
                                             <tr>
-                                                <td class="font-medium text-navy" x-text="lead.name"></td>
+                                                <td class="font-medium text-[#323338]" x-text="lead.name"></td>
                                                 <td>
                                                     <a :href="'mailto:' + lead.email" class="text-blue-600 hover:underline text-xs" x-text="lead.email"></a>
                                                 </td>
@@ -149,7 +149,7 @@ window.PageReactivation = {
                     <div class="mc-card">
                         <div class="mc-card-header">
                             <h3 class="flex items-center gap-2">
-                                <i data-lucide="git-branch" class="w-4 h-4 text-navy/60"></i>
+                                <i data-lucide="git-branch" class="w-4 h-4 text-[#323338]/60"></i>
                                 4-Touch Reactivation Sequence
                             </h3>
                             <span class="text-xs text-gray-500" x-text="sequenceTotal + ' total leads'"></span>
@@ -169,7 +169,7 @@ window.PageReactivation = {
                                         <div class="mt-3 text-center">
                                             <p class="text-xs font-semibold text-gray-700">Not Started</p>
                                             <p class="text-xs text-gray-400 mt-0.5">Awaiting outreach</p>
-                                            <p class="text-2xl font-bold text-navy mt-1" x-text="sequenceSteps['0'] || 0"></p>
+                                            <p class="text-2xl font-bold text-[#323338] mt-1" x-text="sequenceSteps['0'] || 0"></p>
                                             <p class="text-xs text-gray-400">leads</p>
                                         </div>
                                     </div>
@@ -183,7 +183,7 @@ window.PageReactivation = {
                                         <div class="mt-3 text-center">
                                             <p class="text-xs font-semibold text-gray-700">Touch 1</p>
                                             <p class="text-xs text-gray-400 mt-0.5">Initial Outreach</p>
-                                            <p class="text-2xl font-bold text-navy mt-1" x-text="sequenceSteps['1'] || 0"></p>
+                                            <p class="text-2xl font-bold text-[#323338] mt-1" x-text="sequenceSteps['1'] || 0"></p>
                                             <p class="text-xs text-gray-400">leads</p>
                                         </div>
                                     </div>
@@ -197,7 +197,7 @@ window.PageReactivation = {
                                         <div class="mt-3 text-center">
                                             <p class="text-xs font-semibold text-gray-700">Touch 2</p>
                                             <p class="text-xs text-gray-400 mt-0.5">Value Follow-Up</p>
-                                            <p class="text-2xl font-bold text-navy mt-1" x-text="sequenceSteps['2'] || 0"></p>
+                                            <p class="text-2xl font-bold text-[#323338] mt-1" x-text="sequenceSteps['2'] || 0"></p>
                                             <p class="text-xs text-gray-400">leads</p>
                                         </div>
                                     </div>
@@ -211,7 +211,7 @@ window.PageReactivation = {
                                         <div class="mt-3 text-center">
                                             <p class="text-xs font-semibold text-gray-700">Touch 3</p>
                                             <p class="text-xs text-gray-400 mt-0.5">Case Study Send</p>
-                                            <p class="text-2xl font-bold text-navy mt-1" x-text="sequenceSteps['3'] || 0"></p>
+                                            <p class="text-2xl font-bold text-[#323338] mt-1" x-text="sequenceSteps['3'] || 0"></p>
                                             <p class="text-xs text-gray-400">leads</p>
                                         </div>
                                     </div>
@@ -225,7 +225,7 @@ window.PageReactivation = {
                                         <div class="mt-3 text-center">
                                             <p class="text-xs font-semibold text-gray-700">Touch 4</p>
                                             <p class="text-xs text-gray-400 mt-0.5">Final Offer</p>
-                                            <p class="text-2xl font-bold text-navy mt-1" x-text="sequenceSteps['4'] || 0"></p>
+                                            <p class="text-2xl font-bold text-[#323338] mt-1" x-text="sequenceSteps['4'] || 0"></p>
                                             <p class="text-xs text-gray-400">leads</p>
                                         </div>
                                     </div>
@@ -294,7 +294,7 @@ window.PageReactivation = {
                     <div class="mc-card">
                         <div class="mc-card-header">
                             <h3 class="flex items-center gap-2">
-                                <i data-lucide="bar-chart-3" class="w-4 h-4 text-navy/60"></i>
+                                <i data-lucide="bar-chart-3" class="w-4 h-4 text-[#323338]/60"></i>
                                 Reactivation Funnel
                             </h3>
                         </div>

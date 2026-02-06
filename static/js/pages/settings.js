@@ -34,7 +34,7 @@ window.PageSettings = {
                     <div class="mc-card">
                         <div class="mc-card-header">
                             <h3 class="flex items-center gap-2">
-                                <i data-lucide="shield-check" class="w-4 h-4 text-navy/60"></i>
+                                <i data-lucide="shield-check" class="w-4 h-4 text-[#323338]/60"></i>
                                 OAuth Token Status
                             </h3>
                             <span class="text-xs text-gray-500" x-text="tokenList.length + ' companies'"></span>
@@ -57,7 +57,7 @@ window.PageSettings = {
                                                 <td>
                                                     <span class="flex items-center gap-2">
                                                         <span :class="companyDotClass(token.company_slug)"></span>
-                                                        <span class="font-medium text-navy" x-text="token.company"></span>
+                                                        <span class="font-medium text-[#323338]" x-text="token.company"></span>
                                                     </span>
                                                 </td>
                                                 <td>
@@ -96,7 +96,7 @@ window.PageSettings = {
                     <div class="mc-card">
                         <div class="mc-card-header">
                             <h3 class="flex items-center gap-2">
-                                <i data-lucide="building-2" class="w-4 h-4 text-navy/60"></i>
+                                <i data-lucide="building-2" class="w-4 h-4 text-[#323338]/60"></i>
                                 Company Configurations
                             </h3>
                             <span class="text-xs text-gray-500" x-text="companies.length + ' companies (' + activeCompanyCount + ' active)'"></span>
@@ -110,7 +110,7 @@ window.PageSettings = {
                                         <div class="flex items-center gap-3 mb-4">
                                             <div class="w-5 h-5 rounded-full flex-shrink-0" :style="'background:' + (co.accent_color || '#ccc')"></div>
                                             <div class="min-w-0">
-                                                <h4 class="font-semibold text-navy" x-text="co.name"></h4>
+                                                <h4 class="font-semibold text-[#323338]" x-text="co.name"></h4>
                                                 <span class="text-[10px] text-gray-400 font-mono" x-text="co.slug"></span>
                                             </div>
                                             <span x-show="!co.active" class="badge badge-draft ml-auto flex-shrink-0">Coming Soon</span>
@@ -159,7 +159,7 @@ window.PageSettings = {
                     <div class="mc-card">
                         <div class="mc-card-header">
                             <h3 class="flex items-center gap-2">
-                                <i data-lucide="server" class="w-4 h-4 text-navy/60"></i>
+                                <i data-lucide="server" class="w-4 h-4 text-[#323338]/60"></i>
                                 System Information
                             </h3>
                         </div>
@@ -168,11 +168,11 @@ window.PageSettings = {
                                 <!-- App Name -->
                                 <div class="sys-info-tile" style="background: linear-gradient(135deg, rgba(27,42,74,0.04) 0%, rgba(27,42,74,0.08) 100%);">
                                     <div class="sys-icon bg-navy/10">
-                                        <i data-lucide="layout-dashboard" class="w-5 h-5 text-navy"></i>
+                                        <i data-lucide="layout-dashboard" class="w-5 h-5 text-[#323338]"></i>
                                     </div>
                                     <div>
                                         <p class="text-[10px] text-gray-500 font-medium uppercase tracking-wide">App Name</p>
-                                        <p class="text-sm font-semibold text-navy" x-text="systemInfo.app_name || '--'"></p>
+                                        <p class="text-sm font-semibold text-[#323338]" x-text="systemInfo.app_name || '--'"></p>
                                     </div>
                                 </div>
 
@@ -183,7 +183,7 @@ window.PageSettings = {
                                     </div>
                                     <div>
                                         <p class="text-[10px] text-gray-500 font-medium uppercase tracking-wide">Version</p>
-                                        <p class="text-sm font-semibold text-navy" x-text="'v' + (systemInfo.version || '0.0.0')"></p>
+                                        <p class="text-sm font-semibold text-[#323338]" x-text="'v' + (systemInfo.version || '0.0.0')"></p>
                                     </div>
                                 </div>
 
@@ -210,7 +210,7 @@ window.PageSettings = {
                                     </div>
                                     <div>
                                         <p class="text-[10px] text-gray-500 font-medium uppercase tracking-wide">Host</p>
-                                        <p class="text-sm font-mono font-semibold text-navy" x-text="(systemInfo.host || '--') + ':' + (systemInfo.port || '--')"></p>
+                                        <p class="text-sm font-mono font-semibold text-[#323338]" x-text="(systemInfo.host || '--') + ':' + (systemInfo.port || '--')"></p>
                                     </div>
                                 </div>
 
@@ -221,7 +221,7 @@ window.PageSettings = {
                                     </div>
                                     <div class="min-w-0">
                                         <p class="text-[10px] text-gray-500 font-medium uppercase tracking-wide">Data Directory</p>
-                                        <p class="text-sm font-mono font-semibold text-navy truncate" x-text="systemInfo.data_dir || '--'" style="max-width: 200px;"></p>
+                                        <p class="text-sm font-mono font-semibold text-[#323338] truncate" x-text="systemInfo.data_dir || '--'" style="max-width: 200px;"></p>
                                     </div>
                                 </div>
 
@@ -232,7 +232,7 @@ window.PageSettings = {
                                     </div>
                                     <div>
                                         <p class="text-[10px] text-gray-500 font-medium uppercase tracking-wide">Active Companies</p>
-                                        <p class="text-sm font-semibold text-navy" x-text="(systemInfo.active_companies_count || 0) + ' / ' + (systemInfo.companies_count || 0)"></p>
+                                        <p class="text-sm font-semibold text-[#323338]" x-text="(systemInfo.active_companies_count || 0) + ' / ' + (systemInfo.companies_count || 0)"></p>
                                     </div>
                                 </div>
                             </div>

@@ -1,166 +1,135 @@
-/* Mission Control Dashboard — Premium Design System v2.0
-   Steve Jobs / Jony Ive design philosophy: Restraint, purpose, breathing room.
-   Navy-first palette, Playfair + Inter typography, calm confident spacing. */
+/* Mission Control — Production Design System v3.0
+   Inspired by Monday.com: clean, dense, professional SaaS feel.
+   Flat design, bright status colors, white workspace, compact sidebar. */
 
 [x-cloak] { display: none !important; }
 
 /* ================================================================
-   CSS CUSTOM PROPERTIES — Design Tokens
+   DESIGN TOKENS
    ================================================================ */
 :root {
-    --navy:         #1B2A4A;
-    --navy-light:   #2A3F6B;
-    --navy-dark:    #0F1A2E;
-    --navy-muted:   #3B4F6E;
-    --gold:         #B8860B;
-    --gold-light:   #D4A843;
-    --text-primary: #1A1A2E;
-    --text-secondary: #4B5563;
-    --text-muted:   #9CA3AF;
-    --border:       #E5E7EB;
-    --border-light: #F3F4F6;
-    --bg-page:      #F8F9FB;
-    --bg-card:      #FFFFFF;
-    --radius-sm:    6px;
-    --radius-md:    10px;
-    --radius-lg:    12px;
-    --shadow-card:  0 1px 3px rgba(27,42,74,0.05), 0 1px 2px rgba(27,42,74,0.03);
-    --shadow-card-hover: 0 4px 12px rgba(27,42,74,0.08), 0 2px 4px rgba(27,42,74,0.04);
-    --shadow-elevated: 0 8px 24px rgba(27,42,74,0.1), 0 2px 8px rgba(27,42,74,0.04);
-    --transition: 200ms ease;
+    /* Sidebar */
+    --sidebar-bg:       #292F4C;
+    --sidebar-bg-dark:  #1C1F35;
+    --sidebar-hover:    rgba(255,255,255,0.08);
+    --sidebar-active:   rgba(255,255,255,0.14);
+
+    /* Brand accent */
+    --accent:           #0073EA;
+    --accent-hover:     #0060C0;
+    --accent-light:     #E6F4FF;
+
+    /* Neutrals */
+    --text-primary:     #323338;
+    --text-secondary:   #676879;
+    --text-muted:       #C5C7D0;
+    --border:           #D0D4E4;
+    --border-light:     #E6E9EF;
+    --bg-page:          #F6F7FB;
+    --bg-white:         #FFFFFF;
+
+    /* Status colors — bright and flat */
+    --green:            #00C875;
+    --green-bg:         #D6F5E8;
+    --blue:             #0073EA;
+    --blue-bg:          #CCE5FF;
+    --orange:           #FDAB3D;
+    --orange-bg:        #FFF0D6;
+    --red:              #E2445C;
+    --red-bg:           #FDDFDF;
+    --purple:           #A25DDC;
+    --purple-bg:        #F0E3FC;
+    --gray:             #C4C4C4;
+    --gray-bg:          #F0F0F0;
+
+    /* Shapes */
+    --radius:           4px;
+    --radius-md:        8px;
+    --shadow-sm:        0 1px 4px rgba(0,0,0,0.08);
+    --shadow-md:        0 4px 16px rgba(0,0,0,0.08);
+    --transition:       150ms ease;
 }
 
 /* ================================================================
-   BASE — Body, Typography, Scrollbar
+   BASE
    ================================================================ */
 body {
     background: var(--bg-page);
     color: var(--text-primary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 14px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom thin scrollbar — navy theme */
-::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-}
-::-webkit-scrollbar-track {
-    background: transparent;
-}
-::-webkit-scrollbar-thumb {
-    background: rgba(27, 42, 74, 0.15);
-    border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: rgba(27, 42, 74, 0.25);
-}
-/* Firefox */
-* {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(27, 42, 74, 0.15) transparent;
-}
+/* Scrollbar — thin, subtle */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.25); }
+* { scrollbar-width: thin; scrollbar-color: rgba(0,0,0,0.15) transparent; }
 
-/* ================================================================
-   FOCUS STATES — Accessibility
-   ================================================================ */
+/* Focus */
 *:focus-visible {
-    outline: 2px solid #4A90D9;
+    outline: 2px solid var(--accent);
     outline-offset: 2px;
-    border-radius: 4px;
-}
-button:focus-visible,
-a:focus-visible,
-select:focus-visible,
-input:focus-visible,
-textarea:focus-visible {
-    outline: 2px solid #4A90D9;
-    outline-offset: 2px;
+    border-radius: 2px;
 }
 
 /* ================================================================
-   PAGE TRANSITIONS — Subtle fade-in on route change
+   PAGE TRANSITIONS
    ================================================================ */
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(8px); }
-    to   { opacity: 1; transform: translateY(0); }
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
-.page-enter {
-    animation: fadeInUp 0.35s ease-out both;
-}
-.page-fade {
-    transition: opacity 0.25s ease;
-}
-.page-fade-enter {
-    opacity: 0;
-}
-.page-fade-active {
-    opacity: 1;
-}
+.page-enter { animation: fadeIn 0.2s ease both; }
+.page-fade { transition: opacity 0.15s ease; }
+.page-fade-enter { opacity: 0; }
+.page-fade-active { opacity: 1; }
 
 /* ================================================================
-   SKELETON LOADING — Pulse animation
+   SKELETON LOADING
    ================================================================ */
-@keyframes skeletonPulse {
-    0%, 100% { opacity: 0.5; }
-    50%      { opacity: 0.8; }
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
 }
 .skeleton {
-    background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+    background: linear-gradient(90deg, #E6E9EF 25%, #F6F7FB 50%, #E6E9EF 75%);
     background-size: 200% 100%;
-    animation: skeletonPulse 1.5s ease-in-out infinite;
-    border-radius: var(--radius-sm);
+    animation: shimmer 1.5s ease-in-out infinite;
+    border-radius: var(--radius);
 }
-.skeleton-text {
-    height: 12px;
-    border-radius: 4px;
-    margin-bottom: 8px;
-}
-.skeleton-card {
-    height: 120px;
-    border-radius: var(--radius-lg);
-}
+.skeleton-text { height: 14px; border-radius: 2px; margin-bottom: 8px; }
+.skeleton-card { height: 100px; border-radius: var(--radius-md); }
 
 /* ================================================================
-   SIDEBAR — Clean, minimal navy gradient
+   SIDEBAR — Compact, dark, Monday.com-style
    ================================================================ */
 .sidebar-gradient {
-    background: linear-gradient(180deg, var(--navy) 0%, var(--navy-dark) 100%);
+    background: var(--sidebar-bg);
 }
 
-/* Nav active — subtle left accent, quiet highlight */
+/* Nav active */
 .nav-active {
-    background: rgba(255, 255, 255, 0.07);
-    border-left: 3px solid var(--gold);
-    padding-left: calc(1.5rem - 3px);
-}
-.nav-active svg,
-.nav-active i {
-    color: var(--gold-light);
+    background: var(--sidebar-active);
+    border-radius: var(--radius);
+    margin-left: 8px;
+    margin-right: 8px;
 }
 
-/* Company filter select */
+/* Company filter */
 .company-select {
-    background-color: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: border-color var(--transition), background-color var(--transition);
+    background-color: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    transition: border-color var(--transition);
 }
-.company-select:hover {
-    background-color: rgba(255, 255, 255, 0.09);
-}
-.company-select:focus {
-    border-color: var(--gold);
-    background-color: rgba(255, 255, 255, 0.09);
-}
-.company-select option {
-    background: var(--navy);
-    color: #fff;
-}
+.company-select:hover { background-color: rgba(255,255,255,0.11); }
+.company-select:focus { border-color: var(--accent); }
+.company-select option { background: var(--sidebar-bg-dark); color: #fff; }
 
-/* Company color indicator dot in sidebar */
-.company-indicator {
-    position: relative;
-}
+.company-indicator { position: relative; }
 .company-indicator::after {
     content: '';
     position: absolute;
@@ -171,151 +140,118 @@ textarea:focus-visible {
     height: 8px;
     border-radius: 50%;
     background: var(--company-color, transparent);
-    transition: background var(--transition);
 }
 
 /* ================================================================
-   TOP BAR — Breadcrumb
+   TOP BAR
    ================================================================ */
 .breadcrumb-sep::before {
-    content: '/';
-    color: var(--border);
-    margin: 0 8px;
-    font-size: 12px;
-    font-weight: 300;
+    content: '>';
+    color: var(--text-muted);
+    margin: 0 6px;
+    font-size: 11px;
 }
 
 /* ================================================================
-   STAT CARDS — Two sizes, unified, hoverable
+   CARDS — Flat, white, minimal border
+   ================================================================ */
+.mc-card {
+    background: var(--bg-white);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+.mc-card:hover {
+    box-shadow: var(--shadow-md);
+}
+.mc-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border-light);
+}
+.mc-card-header h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+.mc-card-body {
+    padding: 20px;
+}
+
+/* ================================================================
+   STAT CARDS — Clean, flat, number-focused
    ================================================================ */
 .stat-card {
-    background: var(--bg-card);
+    background: var(--bg-white);
     border: 1px solid var(--border-light);
-    border-radius: var(--radius-lg);
-    padding: 1.25rem 1.5rem;
-    box-shadow: var(--shadow-card);
-    transition: box-shadow var(--transition), transform var(--transition);
+    border-radius: var(--radius-md);
+    padding: 16px 20px;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow var(--transition);
 }
-.stat-card:hover {
-    box-shadow: var(--shadow-card-hover);
-    transform: translateY(-1px);
-}
+.stat-card:hover { box-shadow: var(--shadow-md); }
 .stat-card .stat-value {
-    font-size: 1.5rem;
+    font-size: 24px;
     font-weight: 700;
-    letter-spacing: -0.01em;
-    color: var(--navy);
+    color: var(--text-primary);
     line-height: 1.2;
+    font-variant-numeric: tabular-nums;
 }
 .stat-card .stat-label {
-    font-size: 0.6875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    font-weight: 600;
-    color: var(--text-muted);
-    margin-top: 0.25rem;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-top: 4px;
 }
 .stat-card .stat-icon {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius);
 }
 
-/* Large stat cards — dashboard hero row */
+/* Large stat cards */
 .stat-card-lg {
-    background: var(--bg-card);
+    background: var(--bg-white);
     border: 1px solid var(--border-light);
-    border-radius: var(--radius-lg);
-    padding: 1.5rem 1.75rem;
-    box-shadow: var(--shadow-card);
-    transition: box-shadow var(--transition), transform var(--transition);
+    border-radius: var(--radius-md);
+    padding: 20px 24px;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow var(--transition);
 }
-.stat-card-lg:hover {
-    box-shadow: var(--shadow-card-hover);
-    transform: translateY(-1px);
-}
+.stat-card-lg:hover { box-shadow: var(--shadow-md); }
 .stat-card-lg .stat-value {
-    font-size: 1.75rem;
-    font-weight: 800;
-    letter-spacing: -0.01em;
-    color: var(--navy);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary);
     line-height: 1.2;
+    font-variant-numeric: tabular-nums;
 }
 .stat-card-lg .stat-label {
-    font-size: 0.6875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-weight: 600;
-    color: var(--text-muted);
-    margin-top: 0.375rem;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-top: 4px;
 }
 .stat-card-lg .stat-icon {
-    width: 3rem;
-    height: 3rem;
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius);
 }
 
 /* ================================================================
-   STATUS BADGES — Consistent pill-shaped, restrained palette
-   ================================================================ */
-.badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.125rem 0.625rem;
-    border-radius: 9999px;
-    font-size: 0.6875rem;
-    font-weight: 600;
-    line-height: 1.5;
-    white-space: nowrap;
-}
-.badge-scheduled   { background: #EFF6FF; color: #1D4ED8; }
-.badge-published   { background: #ECFDF5; color: #047857; }
-.badge-draft       { background: #F3F4F6; color: #6B7280; }
-.badge-rejected    { background: #FEF2F2; color: #B91C1C; }
-.badge-review      { background: #FFFBEB; color: #B45309; }
-.badge-approved    { background: #ECFDF5; color: #047857; }
-.badge-active      { background: #ECFDF5; color: #047857; }
-.badge-expiring    { background: #FFFBEB; color: #B45309; }
-.badge-expired     { background: #FEF2F2; color: #B91C1C; }
-.badge-disconnected { background: #F3F4F6; color: #9CA3AF; }
-.badge-new         { background: #EFF6FF; color: #1D4ED8; }
-.badge-contacted   { background: #F5F3FF; color: #7C3AED; }
-.badge-engaged     { background: #EEF2FF; color: #4338CA; }
-.badge-converted   { background: #ECFDF5; color: #047857; }
-.badge-dead        { background: #F3F4F6; color: #9CA3AF; }
-.badge-generated   { background: #ECFEFF; color: #0E7490; }
-
-/* ================================================================
-   COMPANY COLOR DOTS
-   ================================================================ */
-.company-dot {
-    width: 0.5rem;
-    height: 0.5rem;
-    border-radius: 50%;
-    display: inline-block;
-    margin-right: 0.375rem;
-    flex-shrink: 0;
-}
-.company-dot-us-framing    { background: #4A90D9; }
-.company-dot-us-drywall    { background: #B8860B; }
-.company-dot-us-exteriors  { background: #2D5F2D; }
-.company-dot-us-development { background: #C4AF94; }
-.company-dot-us-interiors  { background: #5B7B99; }
-
-/* ================================================================
-   TABLES — Clean, alternating rows, sticky headers
+   TABLES — Monday.com style: clean, compact, row-hover
    ================================================================ */
 .mc-table {
     width: 100%;
-    font-size: 0.8125rem;
+    font-size: 13px;
     border-collapse: collapse;
 }
 .mc-table thead {
@@ -326,27 +262,25 @@ textarea:focus-visible {
 }
 .mc-table th {
     text-align: left;
-    font-size: 0.6875rem;
+    font-size: 12px;
     font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--text-muted);
-    padding: 0.75rem 1rem;
-    background: #FAFBFC;
+    color: var(--text-secondary);
+    padding: 8px 16px;
+    background: var(--bg-page);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
 }
 .mc-table td {
-    padding: 0.75rem 1rem;
+    padding: 10px 16px;
     border-bottom: 1px solid var(--border-light);
-    color: var(--text-secondary);
-}
-.mc-table tbody tr:nth-child(even) td {
-    background: rgba(248, 249, 251, 0.5);
+    color: var(--text-primary);
+    vertical-align: middle;
 }
 .mc-table tbody tr:hover td {
-    background: rgba(27, 42, 74, 0.02);
+    background: #F0F3FF;
 }
 
-/* Divided table variant (settings) */
+/* Divided table variant */
 .mc-table-divided td,
 .mc-table-divided th {
     border-right: 1px solid var(--border-light);
@@ -355,120 +289,175 @@ textarea:focus-visible {
 .mc-table-divided th:last-child {
     border-right: none;
 }
-.mc-table-divided td {
-    padding: 0.875rem 1.25rem;
-}
-.mc-table-divided th {
-    padding: 0.75rem 1.25rem;
-}
 
 /* ================================================================
-   CARD CONTAINERS — 12px radius, consistent shadow, breathing room
+   BADGES — Monday.com style: filled, rounded, bright
    ================================================================ */
-.mc-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-card);
-    overflow: hidden;
-    transition: box-shadow var(--transition);
-}
-.mc-card:hover {
-    box-shadow: var(--shadow-card-hover);
-}
-.mc-card-header {
-    display: flex;
+.badge, .mc-badge {
+    display: inline-flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 1rem 1.5rem;
-    border-bottom: 1px solid var(--border-light);
-}
-.mc-card-header h3 {
-    font-size: 0.8125rem;
+    padding: 2px 10px;
+    border-radius: 3px;
+    font-size: 12px;
     font-weight: 600;
-    color: var(--navy);
-}
-.mc-card-body {
-    padding: 1.5rem;
+    line-height: 1.6;
+    white-space: nowrap;
 }
 
+/* Default */
+.mc-badge {
+    background: var(--gray-bg);
+    color: var(--text-secondary);
+}
+.mc-badge-info    { background: var(--blue-bg);   color: #004D9E; }
+.mc-badge-success { background: var(--green-bg);  color: #007A4B; }
+.mc-badge-warning { background: var(--orange-bg); color: #A56800; }
+.mc-badge-danger  { background: var(--red-bg);    color: #B02236; }
+
+/* Status badges — Monday.com style: fully colored */
+.badge-scheduled   { background: var(--blue);    color: #fff; }
+.badge-published   { background: var(--green);   color: #fff; }
+.badge-draft       { background: var(--gray);    color: #fff; }
+.badge-rejected    { background: var(--red);     color: #fff; }
+.badge-review      { background: var(--orange);  color: #fff; }
+.badge-approved    { background: var(--green);   color: #fff; }
+.badge-active      { background: var(--green);   color: #fff; }
+.badge-expiring    { background: var(--orange);  color: #fff; }
+.badge-expired     { background: var(--red);     color: #fff; }
+.badge-disconnected { background: var(--gray);   color: #fff; }
+.badge-new         { background: var(--blue);    color: #fff; }
+.badge-contacted   { background: var(--purple);  color: #fff; }
+.badge-engaged     { background: #5559DF;        color: #fff; }
+.badge-converted   { background: var(--green);   color: #fff; }
+.badge-dead        { background: var(--gray);    color: #fff; }
+.badge-generated   { background: #579BFC;        color: #fff; }
+
 /* ================================================================
-   TABS — Navy-brand active state, clean underline
+   COMPANY COLOR DOTS
+   ================================================================ */
+.company-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 6px;
+    flex-shrink: 0;
+}
+.company-dot-us-framing    { background: #579BFC; }
+.company-dot-us-drywall    { background: #FDAB3D; }
+.company-dot-us-exteriors  { background: #00C875; }
+.company-dot-us-development { background: #C4C4C4; }
+.company-dot-us-interiors  { background: #A25DDC; }
+
+/* ================================================================
+   BUTTONS — Monday.com style
+   ================================================================ */
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: var(--radius);
+    transition: background var(--transition);
+    border: none;
+    cursor: pointer;
+}
+.btn-primary:hover { background: var(--accent-hover); }
+
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 7px 16px;
+    background: var(--bg-white);
+    color: var(--text-primary);
+    font-size: 13px;
+    font-weight: 600;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: background var(--transition);
+    cursor: pointer;
+}
+.btn-secondary:hover { background: var(--bg-page); }
+
+.btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    background: transparent;
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 500;
+    transition: background var(--transition);
+    border-radius: var(--radius);
+    cursor: pointer;
+}
+.btn-ghost:hover { background: var(--accent-light); }
+
+/* ================================================================
+   TABS — Monday.com style: bottom-border active
    ================================================================ */
 .mc-tabs {
     display: flex;
-    gap: 0.25rem;
-    margin-bottom: 1.5rem;
+    gap: 0;
+    margin-bottom: 20px;
     border-bottom: 1px solid var(--border);
 }
 .mc-tab {
-    padding: 0.625rem 1.25rem;
-    font-size: 0.8125rem;
+    padding: 10px 20px;
+    font-size: 14px;
     font-weight: 500;
     cursor: pointer;
     transition: all var(--transition);
     border-bottom: 2px solid transparent;
     margin-bottom: -1px;
-    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    color: var(--text-secondary);
 }
 .mc-tab-active {
-    border-bottom-color: var(--navy);
-    color: var(--navy);
-    background: rgba(27, 42, 74, 0.03);
-}
-.mc-tab-inactive {
-    color: var(--text-muted);
-    border-bottom-color: transparent;
+    border-bottom-color: var(--accent);
+    color: var(--accent);
 }
 .mc-tab-inactive:hover {
-    color: var(--text-secondary);
-    background: rgba(0, 0, 0, 0.015);
-    border-bottom-color: var(--border);
+    color: var(--text-primary);
 }
 
 /* ================================================================
-   SCORE BADGES — Circle, color-coded by value
+   SCORE BADGES
    ================================================================ */
 .score-badge {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 2.25rem;
-    height: 2.25rem;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
-    font-size: 0.6875rem;
+    font-size: 12px;
     font-weight: 700;
 }
-.score-badge-green {
-    background: #ECFDF5;
-    color: #047857;
-}
-.score-badge-blue {
-    background: rgba(27, 42, 74, 0.06);
-    color: var(--navy);
-}
-.score-badge-amber {
-    background: #FFFBEB;
-    color: #B45309;
-}
-.score-badge-red {
-    background: #FEF2F2;
-    color: #B91C1C;
-}
+.score-badge-green { background: var(--green-bg); color: #007A4B; }
+.score-badge-blue  { background: var(--blue-bg);  color: #004D9E; }
+.score-badge-amber { background: var(--orange-bg); color: #A56800; }
+.score-badge-red   { background: var(--red-bg);   color: #B02236; }
 
 /* ================================================================
-   DEAL VALUE — Tabular-num alignment
+   DEAL VALUE
    ================================================================ */
 .deal-value {
     text-align: right;
     font-weight: 600;
-    color: var(--navy);
+    color: var(--text-primary);
     font-variant-numeric: tabular-nums;
-    letter-spacing: -0.01em;
 }
 
 /* ================================================================
-   SEQUENCE TIMELINE — Elevated circles
+   SEQUENCE TIMELINE
    ================================================================ */
 .seq-circle {
     border-radius: 50%;
@@ -477,194 +466,153 @@ textarea:focus-visible {
     justify-content: center;
     color: white;
     font-weight: 700;
-    font-size: 0.875rem;
+    font-size: 14px;
     z-index: 10;
-    width: 3.5rem;
-    height: 3.5rem;
-    box-shadow: 0 2px 8px rgba(27, 42, 74, 0.12), 0 1px 3px rgba(27, 42, 74, 0.08);
-    transition: transform var(--transition), box-shadow var(--transition);
-}
-.seq-circle:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(27, 42, 74, 0.16), 0 2px 4px rgba(27, 42, 74, 0.1);
+    width: 48px;
+    height: 48px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 /* ================================================================
-   PIPELINE EXPAND BUTTON
+   PIPELINE / FUNNEL
    ================================================================ */
 .pipeline-expand-btn {
     width: 100%;
-    padding: 0.75rem;
-    font-size: 0.8125rem;
+    padding: 10px;
+    font-size: 13px;
     font-weight: 500;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: 6px;
     cursor: pointer;
-    color: var(--navy);
-    background: rgba(27, 42, 74, 0.02);
+    color: var(--accent);
+    background: transparent;
     border-top: 1px solid var(--border-light);
-    transition: all var(--transition);
+    transition: background var(--transition);
 }
-.pipeline-expand-btn:hover {
-    background: rgba(27, 42, 74, 0.04);
-    color: var(--navy-light);
+.pipeline-expand-btn:hover { background: var(--accent-light); }
+
+.funnel-chart-wrapper { position: relative; height: 200px; width: 100%; }
+.funnel-bar {
+    height: 6px;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    transition: width 400ms ease;
 }
 
 /* ================================================================
-   SETTINGS — Company config cards
+   SETTINGS — Company cards
    ================================================================ */
 .company-config-card {
     border: 1px solid var(--border-light);
-    border-radius: var(--radius-lg);
-    padding: 1.5rem;
-    min-height: 200px;
-    border-left: 4px solid #ccc;
-    box-shadow: var(--shadow-card);
-    transition: box-shadow var(--transition), transform var(--transition);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    min-height: 180px;
+    border-left: 4px solid var(--gray);
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow var(--transition);
 }
-.company-config-card:hover {
-    box-shadow: var(--shadow-card-hover);
-    transform: translateY(-1px);
-}
+.company-config-card:hover { box-shadow: var(--shadow-md); }
 
-/* ================================================================
-   SETTINGS — System info tiles
-   ================================================================ */
+/* System info tiles */
 .sys-info-tile {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    padding: 1rem;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-card);
-    transition: box-shadow var(--transition), transform var(--transition);
-}
-.sys-info-tile:hover {
-    box-shadow: var(--shadow-card-hover);
-    transform: translateY(-1px);
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
+    background: var(--bg-white);
 }
 .sys-info-tile .sys-icon {
-    width: 2.75rem;
-    height: 2.75rem;
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius);
 }
 .sys-info-tile .sys-icon i,
 .sys-info-tile .sys-icon svg {
-    width: 1.25rem;
-    height: 1.25rem;
+    width: 18px;
+    height: 18px;
 }
 
 /* ================================================================
-   TOKEN HEALTH INDICATORS
+   TOKEN HEALTH
    ================================================================ */
-.token-health {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.8125rem;
-}
-.token-dot {
-    width: 0.5rem;
-    height: 0.5rem;
-    border-radius: 50%;
-    flex-shrink: 0;
-}
-.token-active   { background: #10B981; }
-.token-expiring { background: #F59E0B; animation: pulse 2s infinite; }
-.token-expired  { background: #EF4444; }
-.token-status-label {
-    font-size: 0.6875rem;
-    font-weight: 600;
-}
-.token-status-label-active   { color: #059669; }
-.token-status-label-expiring { color: #D97706; }
-.token-status-label-expired  { color: #DC2626; }
+.token-health { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+.token-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.token-active   { background: var(--green); }
+.token-expiring { background: var(--orange); animation: pulse 2s infinite; }
+.token-expired  { background: var(--red); }
+.token-status-label { font-size: 12px; font-weight: 600; }
+.token-status-label-active   { color: #007A4B; }
+.token-status-label-expiring { color: #A56800; }
+.token-status-label-expired  { color: #B02236; }
 
 @keyframes pulse {
     0%, 100% { opacity: 1; }
-    50%      { opacity: 0.5; }
+    50% { opacity: 0.4; }
 }
 
 /* ================================================================
-   CONTENT PIPELINE PROGRESS BARS
+   CONTENT PIPELINE PROGRESS
    ================================================================ */
-.progress-stage-draft     { background-color: #9CA3AF; }
-.progress-stage-review    { background-color: #F59E0B; }
-.progress-stage-approved  { background-color: #10B981; }
-.progress-stage-published { background-color: #059669; }
+.progress-stage-draft     { background-color: var(--gray); }
+.progress-stage-review    { background-color: var(--orange); }
+.progress-stage-approved  { background-color: var(--green); }
+.progress-stage-published { background-color: #007A4B; }
 
 /* ================================================================
-   GBP METRIC CARDS — Subtle gradient tints
+   GBP METRIC CARDS — Clean, flat
    ================================================================ */
 .gbp-metric-card {
-    padding: 1rem;
-    border-radius: var(--radius-lg);
-    transition: transform var(--transition);
+    padding: 12px 16px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-light);
+    background: var(--bg-white);
 }
-.gbp-metric-card:hover {
-    transform: translateY(-1px);
-}
-.gbp-metric-views     { background: linear-gradient(135deg, #EFF6FF 0%, #F8FAFF 100%); }
-.gbp-metric-clicks    { background: linear-gradient(135deg, #ECFDF5 0%, #F7FDF9 100%); }
-.gbp-metric-calls     { background: linear-gradient(135deg, #FFFBEB 0%, #FFFDF5 100%); }
-.gbp-metric-directions { background: linear-gradient(135deg, #F5F3FF 0%, #FAF8FF 100%); }
+.gbp-metric-views     { border-left: 3px solid var(--blue); }
+.gbp-metric-clicks    { border-left: 3px solid var(--green); }
+.gbp-metric-calls     { border-left: 3px solid var(--orange); }
+.gbp-metric-directions { border-left: 3px solid var(--purple); }
 
 /* ================================================================
-   FUNNEL CHART
-   ================================================================ */
-.funnel-chart-wrapper {
-    position: relative;
-    height: 200px;
-    width: 100%;
-}
-.funnel-bar {
-    height: 0.5rem;
-    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-    transition: width 500ms ease;
-}
-
-/* ================================================================
-   CALENDAR OVERRIDES — FullCalendar brand-aligned
+   CALENDAR OVERRIDES — FullCalendar
    ================================================================ */
 .fc .fc-toolbar-title {
-    font-family: 'Playfair Display', serif !important;
-    color: var(--navy) !important;
-    font-size: 1.1rem !important;
-    font-weight: 600 !important;
+    color: var(--text-primary) !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    font-family: 'Inter', sans-serif !important;
 }
 .fc .fc-button-primary {
-    background-color: var(--navy) !important;
-    border-color: var(--navy) !important;
+    background-color: var(--accent) !important;
+    border-color: var(--accent) !important;
     font-family: 'Inter', sans-serif !important;
-    font-size: 0.8125rem !important;
+    font-size: 13px !important;
     font-weight: 500 !important;
-    border-radius: var(--radius-sm) !important;
+    border-radius: var(--radius) !important;
 }
-.fc .fc-button-primary:hover {
-    background-color: var(--navy-light) !important;
-}
+.fc .fc-button-primary:hover { background-color: var(--accent-hover) !important; }
 .fc .fc-button-primary:not(:disabled).fc-button-active {
-    background-color: var(--navy-dark) !important;
+    background-color: #004D9E !important;
 }
 .fc .fc-daygrid-day-number {
-    color: var(--navy);
+    color: var(--text-primary);
     font-weight: 500;
 }
 .fc .fc-col-header-cell-cushion {
-    color: var(--text-muted);
+    color: var(--text-secondary);
     font-weight: 600;
     text-transform: uppercase;
-    font-size: 0.6875rem;
+    font-size: 11px;
     letter-spacing: 0.05em;
 }
 .fc .fc-daygrid-day.fc-day-today {
-    background: rgba(27, 42, 74, 0.03) !important;
+    background: var(--accent-light) !important;
 }
 
 /* ================================================================
@@ -672,209 +620,89 @@ textarea:focus-visible {
    ================================================================ */
 .mc-spinner {
     display: inline-block;
-    width: 1.25rem;
-    height: 1.25rem;
+    width: 20px;
+    height: 20px;
     border: 2px solid var(--border);
-    border-top-color: var(--navy);
+    border-top-color: var(--accent);
     border-radius: 50%;
     animation: spin 0.6s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ================================================================
-   BUTTON HIERARCHY — Primary, Secondary, Ghost
-   ================================================================ */
-.btn-primary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 0.625rem 1.25rem;
-    background: var(--navy);
-    color: #fff;
-    font-size: 0.8125rem;
-    font-weight: 600;
-    border-radius: var(--radius-sm);
-    transition: all var(--transition);
-}
-.btn-primary:hover {
-    background: var(--navy-light);
-}
-
-.btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 0.5625rem 1.25rem;
-    background: transparent;
-    color: var(--navy);
-    font-size: 0.8125rem;
-    font-weight: 600;
-    border: 1px solid var(--navy);
-    border-radius: var(--radius-sm);
-    transition: all var(--transition);
-}
-.btn-secondary:hover {
-    background: var(--navy);
-    color: #fff;
-}
-
-.btn-ghost {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.375rem;
-    padding: 0.375rem 0.5rem;
-    background: transparent;
-    color: var(--navy);
-    font-size: 0.8125rem;
-    font-weight: 500;
-    transition: all var(--transition);
-}
-.btn-ghost:hover {
-    color: var(--navy-light);
-    text-decoration: underline;
-}
-
-/* ================================================================
-   EMPTY STATES — Friendly, helpful
+   EMPTY STATES
    ================================================================ */
 .empty-state {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 4rem 2rem;
+    padding: 48px 24px;
     text-align: center;
 }
 .empty-state-icon {
-    width: 3rem;
-    height: 3rem;
+    width: 40px;
+    height: 40px;
     color: var(--text-muted);
-    opacity: 0.4;
-    margin-bottom: 1rem;
+    opacity: 0.5;
+    margin-bottom: 12px;
 }
 .empty-state-title {
-    font-size: 0.875rem;
+    font-size: 14px;
     font-weight: 600;
-    color: var(--text-secondary);
-    margin-bottom: 0.25rem;
+    color: var(--text-primary);
+    margin-bottom: 4px;
 }
 .empty-state-text {
-    font-size: 0.75rem;
-    color: var(--text-muted);
+    font-size: 13px;
+    color: var(--text-secondary);
 }
 
 /* ================================================================
-   REDUCED MOTION — Accessibility
-   ================================================================ */
-@media (prefers-reduced-motion: reduce) {
-    .page-enter {
-        animation: none;
-    }
-    .page-fade {
-        transition: none;
-    }
-    .skeleton {
-        animation: none;
-        opacity: 0.6;
-    }
-    .seq-circle:hover {
-        transform: none;
-    }
-    .stat-card:hover,
-    .stat-card-lg:hover,
-    .company-config-card:hover,
-    .sys-info-tile:hover,
-    .gbp-metric-card:hover {
-        transform: none;
-    }
-}
-
-/* ================================================================
-   RESPONSIVE ADJUSTMENTS
-   ================================================================ */
-@media (max-width: 1024px) {
-    .stat-card {
-        padding: 1rem 1.25rem;
-    }
-    .stat-card .stat-value {
-        font-size: 1.25rem;
-    }
-    .stat-card-lg {
-        padding: 1.125rem 1.25rem;
-    }
-    .stat-card-lg .stat-value {
-        font-size: 1.5rem;
-    }
-    .stat-card-lg .stat-icon {
-        width: 2.5rem;
-        height: 2.5rem;
-    }
-    .seq-circle {
-        width: 2.75rem;
-        height: 2.75rem;
-        font-size: 0.75rem;
-    }
-    .company-config-card {
-        min-height: auto;
-    }
-    .mc-card-header {
-        padding: 0.875rem 1.25rem;
-    }
-    .mc-card-body {
-        padding: 1.25rem;
-    }
-}
-
-/* ================================================================
-   UTILITY: Link style
+   LINK
    ================================================================ */
 .mc-link {
-    color: var(--navy);
+    color: var(--accent);
     font-weight: 500;
     transition: color var(--transition);
 }
-.mc-link:hover {
-    color: var(--navy-light);
-    text-decoration: underline;
-}
+.mc-link:hover { color: var(--accent-hover); text-decoration: underline; }
 
 /* ================================================================
-   MC BADGES — Pill-shaped, restrained palette, consistent across pages
+   PAGE HEADER
    ================================================================ */
-.mc-badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.125rem 0.625rem;
-    border-radius: 9999px;
-    font-size: 0.6875rem;
-    font-weight: 600;
-    line-height: 1.5;
-    white-space: nowrap;
-    background: var(--border-light);
-    color: var(--text-secondary);
-}
-.mc-badge-info    { background: #EFF6FF; color: #1D4ED8; }
-.mc-badge-success { background: #ECFDF5; color: #047857; }
-.mc-badge-warning { background: #FFFBEB; color: #B45309; }
-.mc-badge-danger  { background: #FEF2F2; color: #B91C1C; }
-
-/* ================================================================
-   PAGE HEADER — Consistent h1 across all pages
-   ================================================================ */
-.page-header {
-    margin-bottom: 1.5rem;
-}
+.page-header { margin-bottom: 20px; }
 .page-header h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
+    font-size: 20px;
     font-weight: 700;
-    color: var(--navy);
+    color: var(--text-primary);
     line-height: 1.3;
 }
 .page-header p {
-    font-size: 0.8125rem;
-    color: var(--text-muted);
-    margin-top: 0.25rem;
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+
+/* ================================================================
+   REDUCED MOTION
+   ================================================================ */
+@media (prefers-reduced-motion: reduce) {
+    .page-enter { animation: none; }
+    .page-fade { transition: none; }
+    .skeleton { animation: none; opacity: 0.6; }
+}
+
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
+@media (max-width: 1024px) {
+    .stat-card { padding: 12px 16px; }
+    .stat-card .stat-value { font-size: 20px; }
+    .stat-card-lg { padding: 14px 16px; }
+    .stat-card-lg .stat-value { font-size: 24px; }
+    .seq-circle { width: 40px; height: 40px; font-size: 12px; }
+    .company-config-card { min-height: auto; }
+    .mc-card-header { padding: 10px 16px; }
+    .mc-card-body { padding: 16px; }
 }

@@ -52,7 +52,7 @@ window.PageAEO = {
                     <div class="stat-card">
                         <div class="flex items-center justify-between">
                             <div>
-                                <div class="${(st.avg_score || 0) >= 70 ? 'text-green-600' : (st.avg_score || 0) >= 40 ? 'text-amber-600' : 'text-navy'} text-2xl font-bold">${st.avg_score ? st.avg_score.toFixed(0) : 0}</div>
+                                <div class="${(st.avg_score || 0) >= 70 ? 'text-green-600' : (st.avg_score || 0) >= 40 ? 'text-amber-600' : 'text-[#323338]'} text-2xl font-bold">${st.avg_score ? st.avg_score.toFixed(0) : 0}</div>
                                 <div class="stat-label">Avg AEO Score</div>
                             </div>
                             <div class="stat-icon bg-amber-50">
@@ -77,7 +77,7 @@ window.PageAEO = {
                 <div class="mc-card">
                     <div class="mc-card-header">
                         <h3 class="flex items-center gap-2">
-                            <i data-lucide="search" class="w-4 h-4 text-navy/60"></i>
+                            <i data-lucide="search" class="w-4 h-4 text-[#323338]/60"></i>
                             Target Queries
                         </h3>
                         <span class="text-xs text-gray-400">${Array.isArray(qs) ? qs.length : 0} queries</span>
@@ -97,7 +97,7 @@ window.PageAEO = {
                                 <tbody>
                                     ${Array.isArray(qs) && qs.length ? qs.map(q => `
                                     <tr>
-                                        <td class="font-medium text-navy">${this._esc(q.query || q.text || '')}</td>
+                                        <td class="font-medium text-[#323338]">${this._esc(q.query || q.text || '')}</td>
                                         <td><span class="badge badge-scheduled">${this._esc(q.company || '')}</span></td>
                                         <td class="text-gray-600">${this._esc(q.category || q.intent || '')}</td>
                                         <td>

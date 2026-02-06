@@ -80,7 +80,7 @@ window.PageReviews = {
                 <div class="mc-card">
                     <div class="mc-card-header">
                         <h3 class="flex items-center gap-2">
-                            <i data-lucide="star" class="w-4 h-4 text-navy/60"></i>
+                            <i data-lucide="star" class="w-4 h-4 text-[#323338]/60"></i>
                             Recent Reviews
                         </h3>
                         <span class="text-xs text-gray-400">${Array.isArray(items) ? items.length : 0} reviews</span>
@@ -91,7 +91,7 @@ window.PageReviews = {
                             <div class="border border-gray-100 rounded-xl p-4 hover:border-gray-200 transition-colors">
                                 <div class="flex items-start justify-between mb-2">
                                     <div class="flex items-center gap-2">
-                                        <span class="font-medium text-navy text-sm">${this._esc(r.author || r.reviewer || 'Anonymous')}</span>
+                                        <span class="font-medium text-[#323338] text-sm">${this._esc(r.author || r.reviewer || 'Anonymous')}</span>
                                         <span class="badge badge-scheduled">${this._esc(r.company || '')}</span>
                                     </div>
                                     <div class="flex items-center gap-1.5">
