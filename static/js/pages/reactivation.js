@@ -1,21 +1,15 @@
 /**
  * Mission Control — Reactivation Page Module
- * Database reactivation lead pipeline, sequences, and funnel visualization.
+ * Premium redesign: skeleton loading, page-enter, breathing room, h-1.5 bars.
  */
 window.PageReactivation = {
     _funnelChart: null,
 
-    /**
-     * Format a number as US currency.
-     */
     _currency(val) {
         if (val == null) return '$0';
         return '$' + Number(val).toLocaleString('en-US');
     },
 
-    /**
-     * Format an ISO date string to a readable format (e.g. "Jan 15, 2026").
-     */
     _formatDate(iso) {
         if (!iso) return '--';
         const d = new Date(iso);
@@ -23,9 +17,6 @@ window.PageReactivation = {
         return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
     },
 
-    /**
-     * Return a score-badge CSS class based on lead score.
-     */
     _scoreBadgeClass(score) {
         if (score >= 80) return 'score-badge score-badge-green';
         if (score >= 60) return 'score-badge score-badge-blue';
@@ -33,17 +24,11 @@ window.PageReactivation = {
         return 'score-badge score-badge-red';
     },
 
-    /**
-     * Return the company-dot CSS class for a given company slug.
-     */
     _companyDotClass(slug) {
         if (!slug) return '';
         return 'company-dot company-dot-' + slug;
     },
 
-    /**
-     * Main render entry point. Called by app.js router.
-     */
     async render(company) {
         const container = document.getElementById('page-reactivation');
         if (!container) return;
@@ -64,13 +49,15 @@ window.PageReactivation = {
                 </div>
 
                 <!-- Loading -->
-                <div x-show="loading" class="flex items-center justify-center py-16">
-                    <div class="mc-spinner"></div>
-                    <span class="ml-3 text-sm text-gray-500">Loading reactivation data...</span>
+                <div x-show="loading" class="page-enter">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        ${Array(3).fill('<div class="skeleton skeleton-card" style="height:88px"></div>').join('')}
+                    </div>
+                    <div class="skeleton" style="height:320px;border-radius:12px"></div>
                 </div>
 
                 <!-- Tab: Pipeline -->
-                <div x-show="!loading && currentTab === 'pipeline'">
+                <div x-show="!loading && currentTab === 'pipeline'" class="page-enter">
                     <div class="mc-card">
                         <div class="mc-card-header">
                             <h3 class="flex items-center gap-2">
@@ -124,8 +111,12 @@ window.PageReactivation = {
                                         </template>
                                         <template x-if="leads.length === 0">
                                             <tr>
-                                                <td colspan="8" class="text-center py-8 text-gray-400">
-                                                    No leads found. Adjust filters or add new leads.
+                                                <td colspan="8">
+                                                    <div class="empty-state" style="padding:2rem 1rem">
+                                                        <i data-lucide="users" class="empty-state-icon" style="width:2rem;height:2rem"></i>
+                                                        <p class="empty-state-title">No leads found</p>
+                                                        <p class="empty-state-text">Adjust filters or add new leads.</p>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         </template>
@@ -154,7 +145,7 @@ window.PageReactivation = {
                 </div>
 
                 <!-- Tab: Sequences -->
-                <div x-show="!loading && currentTab === 'sequences'">
+                <div x-show="!loading && currentTab === 'sequences'" class="page-enter">
                     <div class="mc-card">
                         <div class="mc-card-header">
                             <h3 class="flex items-center gap-2">
@@ -166,7 +157,6 @@ window.PageReactivation = {
                         <div class="mc-card-body">
                             <!-- Sequence Timeline -->
                             <div class="relative">
-                                <!-- Connecting line -->
                                 <div class="absolute left-0 right-0 h-0.5 bg-gradient-to-r from-gray-200 via-sky-200 to-green-200 mx-16" style="top: 1.75rem;"></div>
 
                                 <div class="grid grid-cols-5 gap-4 relative">
@@ -262,9 +252,9 @@ window.PageReactivation = {
                 </div>
 
                 <!-- Tab: Funnel -->
-                <div x-show="!loading && currentTab === 'funnel'">
+                <div x-show="!loading && currentTab === 'funnel'" class="page-enter">
                     <!-- Funnel Stats Row -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                         <div class="stat-card">
                             <div class="flex items-center justify-between">
                                 <div>
@@ -316,7 +306,7 @@ window.PageReactivation = {
                     </div>
 
                     <!-- Funnel Breakdown -->
-                    <div class="mc-card mt-4">
+                    <div class="mc-card mt-6">
                         <div class="mc-card-header">
                             <h3>Stage Breakdown</h3>
                         </div>
@@ -331,8 +321,8 @@ window.PageReactivation = {
                                         </span>
                                         <span class="text-sm font-semibold" x-text="funnelData.counts?.new || 0"></span>
                                     </div>
-                                    <div class="w-full bg-gray-100 rounded-full h-2">
-                                        <div class="funnel-bar h-2 rounded-l-lg bg-blue-400" :style="'width:' + funnelBarWidth('new') + '%'"></div>
+                                    <div class="w-full bg-gray-100 rounded-full h-1.5">
+                                        <div class="funnel-bar h-1.5 rounded-l-lg bg-blue-400" :style="'width:' + funnelBarWidth('new') + '%'"></div>
                                     </div>
                                 </div>
                                 <!-- Contacted -->
@@ -344,8 +334,8 @@ window.PageReactivation = {
                                         </span>
                                         <span class="text-sm font-semibold" x-text="funnelData.counts?.contacted || 0"></span>
                                     </div>
-                                    <div class="w-full bg-gray-100 rounded-full h-2">
-                                        <div class="funnel-bar h-2 rounded-l-lg bg-purple-400" :style="'width:' + funnelBarWidth('contacted') + '%'"></div>
+                                    <div class="w-full bg-gray-100 rounded-full h-1.5">
+                                        <div class="funnel-bar h-1.5 rounded-l-lg bg-purple-400" :style="'width:' + funnelBarWidth('contacted') + '%'"></div>
                                     </div>
                                 </div>
                                 <!-- Engaged -->
@@ -357,8 +347,8 @@ window.PageReactivation = {
                                         </span>
                                         <span class="text-sm font-semibold" x-text="funnelData.counts?.engaged || 0"></span>
                                     </div>
-                                    <div class="w-full bg-gray-100 rounded-full h-2">
-                                        <div class="funnel-bar h-2 rounded-l-lg bg-indigo-400" :style="'width:' + funnelBarWidth('engaged') + '%'"></div>
+                                    <div class="w-full bg-gray-100 rounded-full h-1.5">
+                                        <div class="funnel-bar h-1.5 rounded-l-lg bg-indigo-400" :style="'width:' + funnelBarWidth('engaged') + '%'"></div>
                                     </div>
                                 </div>
                                 <!-- Converted -->
@@ -370,8 +360,8 @@ window.PageReactivation = {
                                         </span>
                                         <span class="text-sm font-semibold" x-text="funnelData.counts?.converted || 0"></span>
                                     </div>
-                                    <div class="w-full bg-gray-100 rounded-full h-2">
-                                        <div class="funnel-bar h-2 rounded-l-lg bg-green-500" :style="'width:' + funnelBarWidth('converted') + '%'"></div>
+                                    <div class="w-full bg-gray-100 rounded-full h-1.5">
+                                        <div class="funnel-bar h-1.5 rounded-l-lg bg-green-500" :style="'width:' + funnelBarWidth('converted') + '%'"></div>
                                     </div>
                                 </div>
                                 <!-- Dead -->
@@ -383,8 +373,8 @@ window.PageReactivation = {
                                         </span>
                                         <span class="text-sm font-semibold" x-text="funnelData.counts?.dead || 0"></span>
                                     </div>
-                                    <div class="w-full bg-gray-100 rounded-full h-2">
-                                        <div class="funnel-bar h-2 rounded-l-lg bg-gray-300" :style="'width:' + funnelBarWidth('dead') + '%'"></div>
+                                    <div class="w-full bg-gray-100 rounded-full h-1.5">
+                                        <div class="funnel-bar h-1.5 rounded-l-lg bg-gray-300" :style="'width:' + funnelBarWidth('dead') + '%'"></div>
                                     </div>
                                 </div>
                             </div>
@@ -427,7 +417,6 @@ window.PageReactivation = {
                 async loadData() {
                     const company = this._company || null;
 
-                    // Load all data in parallel
                     const [leadsRes, funnelRes, metricsRes, seqRes] = await Promise.all([
                         API.reactivation.leads(company),
                         API.reactivation.funnel(company),
@@ -440,7 +429,6 @@ window.PageReactivation = {
                     this.metricsData = metricsRes || {};
                     this.pipelineValue = metricsRes.total_pipeline_value || 0;
 
-                    // Process sequence data
                     const seqs = seqRes.sequences || {};
                     this.sequenceTotal = seqRes.total || 0;
                     this.sequenceSteps = {};
@@ -504,7 +492,6 @@ window.PageReactivation = {
                     const canvas = document.getElementById('funnel-chart');
                     if (!canvas) return;
 
-                    // Destroy existing chart
                     if (window.PageReactivation._funnelChart) {
                         window.PageReactivation._funnelChart.destroy();
                         window.PageReactivation._funnelChart = null;
@@ -516,11 +503,11 @@ window.PageReactivation = {
                     const stageLabels = ['New', 'Contacted', 'Engaged', 'Converted', 'Dead'];
                     const stageValues = stages.map(s => counts[s] || 0).concat([deadCount]);
                     const stageColors = [
-                        'rgba(59, 130, 246, 0.8)',   // blue - new
-                        'rgba(147, 51, 234, 0.8)',   // purple - contacted
-                        'rgba(99, 102, 241, 0.8)',   // indigo - engaged
-                        'rgba(34, 197, 94, 0.8)',    // green - converted
-                        'rgba(156, 163, 175, 0.6)',  // gray - dead
+                        'rgba(59, 130, 246, 0.8)',
+                        'rgba(147, 51, 234, 0.8)',
+                        'rgba(99, 102, 241, 0.8)',
+                        'rgba(34, 197, 94, 0.8)',
+                        'rgba(156, 163, 175, 0.6)',
                     ];
                     const stageBorders = [
                         'rgba(59, 130, 246, 1)',
@@ -551,6 +538,11 @@ window.PageReactivation = {
                             plugins: {
                                 legend: { display: false },
                                 tooltip: {
+                                    backgroundColor: '#1B2A4A',
+                                    titleFont: { family: 'Inter', size: 12 },
+                                    bodyFont: { family: 'Inter', size: 11 },
+                                    cornerRadius: 6,
+                                    padding: 10,
                                     callbacks: {
                                         label: function(ctx) {
                                             return ctx.parsed.x + ' leads';
@@ -563,13 +555,14 @@ window.PageReactivation = {
                                     beginAtZero: true,
                                     ticks: {
                                         stepSize: 1,
-                                        font: { size: 11 },
+                                        font: { family: 'Inter', size: 11 },
+                                        color: '#9ca3af',
                                     },
                                     grid: { color: 'rgba(0,0,0,0.05)' },
                                 },
                                 y: {
                                     ticks: {
-                                        font: { size: 12, weight: '500' },
+                                        font: { family: 'Inter', size: 12, weight: '500' },
                                         color: '#1B2A4A',
                                     },
                                     grid: { display: false },

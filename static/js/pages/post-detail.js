@@ -1,6 +1,6 @@
 /**
  * Mission Control — Post Detail Page
- * Displays individual post details with editing, approval, and scheduling controls.
+ * Premium redesign: skeleton loading, btn-primary/secondary, breathing room.
  */
 window.PagePostDetail = {
     container: null,
@@ -10,54 +10,56 @@ window.PagePostDetail = {
         if (!this.container) return;
 
         if (!postId) {
-            this.container.innerHTML = this._renderEmpty();
+            this.container.innerHTML = `
+                <div class="page-enter">
+                    <div class="mc-card">
+                        <div class="empty-state">
+                            <i data-lucide="file-text" class="empty-state-icon" style="width:3.5rem;height:3.5rem"></i>
+                            <p class="empty-state-title">Select a post from the calendar</p>
+                            <p class="empty-state-text">Click any post on the <a href="#calendar" class="mc-link">LinkedIn Calendar</a> to view details.</p>
+                        </div>
+                    </div>
+                </div>`;
             if (window.lucide) lucide.createIcons();
             return;
         }
 
-        this.container.innerHTML = this._renderLoading();
-        if (window.lucide) lucide.createIcons();
+        // Skeleton loading
+        this.container.innerHTML = `
+            <div class="page-enter">
+                <div class="skeleton" style="height:20px;width:140px;border-radius:6px;margin-bottom:16px"></div>
+                <div class="skeleton" style="height:140px;border-radius:12px;margin-bottom:24px"></div>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2">
+                        <div class="skeleton" style="height:280px;border-radius:12px"></div>
+                    </div>
+                    <div>
+                        <div class="skeleton" style="height:200px;border-radius:12px;margin-bottom:16px"></div>
+                        <div class="skeleton" style="height:240px;border-radius:12px"></div>
+                    </div>
+                </div>
+            </div>`;
 
         try {
             const post = await API.posts.get(postId);
-            this.container.innerHTML = this._renderPost(post);
+            this.container.innerHTML = `<div class="page-enter">${this._renderPost(post)}</div>`;
             if (window.lucide) lucide.createIcons();
             this._bindEvents(post);
         } catch (err) {
             console.error('PagePostDetail load error:', err);
-            this.container.innerHTML = this._renderError(err.message);
+            this.container.innerHTML = `
+                <div class="page-enter">
+                    <div class="mc-card">
+                        <div class="empty-state">
+                            <i data-lucide="alert-circle" class="empty-state-icon"></i>
+                            <p class="empty-state-title">Failed to load post</p>
+                            <p class="empty-state-text">${this._esc(err.message)}</p>
+                            <a href="#calendar" class="btn-ghost text-xs mt-3">Back to Calendar</a>
+                        </div>
+                    </div>
+                </div>`;
             if (window.lucide) lucide.createIcons();
         }
-    },
-
-    _renderEmpty() {
-        return `
-            <div class="flex flex-col items-center justify-center py-24 text-gray-400">
-                <i data-lucide="file-text" class="w-16 h-16 mb-4 opacity-50"></i>
-                <p class="text-lg font-medium text-gray-500">Select a post from the calendar</p>
-                <p class="text-sm mt-1">Click any post on the <a href="#calendar" class="text-blue-600 hover:underline">LinkedIn Calendar</a> to view details.</p>
-            </div>
-        `;
-    },
-
-    _renderLoading() {
-        return `
-            <div class="flex items-center justify-center py-24">
-                <div class="mc-spinner"></div>
-                <span class="ml-3 text-sm text-gray-500">Loading post details...</span>
-            </div>
-        `;
-    },
-
-    _renderError(message) {
-        return `
-            <div class="flex flex-col items-center justify-center py-24 text-red-400">
-                <i data-lucide="alert-circle" class="w-12 h-12 mb-3"></i>
-                <p class="text-sm font-medium text-red-600">Failed to load post</p>
-                <p class="text-xs text-red-400 mt-1">${this._esc(message)}</p>
-                <a href="#calendar" class="mt-4 text-sm text-blue-600 hover:underline">Back to Calendar</a>
-            </div>
-        `;
     },
 
     _renderPost(post) {
@@ -79,7 +81,7 @@ window.PagePostDetail = {
         return `
             <!-- Back button -->
             <div class="mb-4">
-                <a href="#calendar" class="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-navy transition-colors" id="pd-back-btn">
+                <a href="#calendar" class="btn-ghost text-xs" id="pd-back-btn">
                     <i data-lucide="arrow-left" class="w-4 h-4"></i>
                     Back to Calendar
                 </a>
@@ -118,8 +120,8 @@ window.PagePostDetail = {
                     <div class="mc-card">
                         <div class="mc-card-header">
                             <h3 class="text-sm font-semibold text-navy">Post Content</h3>
-                            <button id="pd-toggle-edit" class="text-xs text-navy/60 hover:text-navy font-medium transition-colors">
-                                <i data-lucide="pencil" class="w-3.5 h-3.5 inline mr-1"></i> Edit
+                            <button id="pd-toggle-edit" class="btn-ghost text-xs">
+                                <i data-lucide="pencil" class="w-3.5 h-3.5"></i> Edit
                             </button>
                         </div>
                         <div class="mc-card-body">
@@ -140,11 +142,11 @@ window.PagePostDetail = {
                                 <div class="flex items-center justify-between mt-3">
                                     <span id="pd-save-feedback" class="text-xs text-gray-400"></span>
                                     <div class="flex gap-2">
-                                        <button id="pd-cancel-edit" class="px-3 py-1.5 text-xs text-gray-500 hover:text-gray-700 border border-gray-300 rounded-lg transition-colors">
+                                        <button id="pd-cancel-edit" class="btn-secondary text-xs" style="padding:0.375rem 0.75rem">
                                             Cancel
                                         </button>
-                                        <button id="pd-save-content" class="px-4 py-1.5 text-xs text-white bg-navy hover:bg-navy-light rounded-lg font-medium transition-colors">
-                                            <i data-lucide="save" class="w-3.5 h-3.5 inline mr-1"></i> Save
+                                        <button id="pd-save-content" class="btn-primary text-xs" style="padding:0.375rem 0.75rem">
+                                            <i data-lucide="save" class="w-3.5 h-3.5"></i> Save
                                         </button>
                                     </div>
                                 </div>
@@ -160,21 +162,21 @@ window.PagePostDetail = {
                         </div>
                         <div class="mc-card-body">
                             <div class="grid grid-cols-3 gap-4">
-                                <div class="text-center p-4 rounded-lg bg-blue-50">
+                                <div class="text-center p-4 rounded-xl bg-blue-50">
                                     <div class="flex items-center justify-center mb-2">
                                         <i data-lucide="thumbs-up" class="w-5 h-5 text-blue-500"></i>
                                     </div>
                                     <div class="text-2xl font-bold text-navy">${engagement.likes || 0}</div>
                                     <div class="text-xs text-gray-500 uppercase tracking-wide mt-1">Likes</div>
                                 </div>
-                                <div class="text-center p-4 rounded-lg bg-green-50">
+                                <div class="text-center p-4 rounded-xl bg-green-50">
                                     <div class="flex items-center justify-center mb-2">
                                         <i data-lucide="message-circle" class="w-5 h-5 text-green-500"></i>
                                     </div>
                                     <div class="text-2xl font-bold text-navy">${engagement.comments || 0}</div>
                                     <div class="text-xs text-gray-500 uppercase tracking-wide mt-1">Comments</div>
                                 </div>
-                                <div class="text-center p-4 rounded-lg bg-purple-50">
+                                <div class="text-center p-4 rounded-xl bg-purple-50">
                                     <div class="flex items-center justify-center mb-2">
                                         <i data-lucide="share-2" class="w-5 h-5 text-purple-500"></i>
                                     </div>
@@ -196,22 +198,22 @@ window.PagePostDetail = {
                         </div>
                         <div class="mc-card-body space-y-3">
                             ${isDraft || isReview ? `
-                                <button id="pd-approve-btn" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors">
+                                <button id="pd-approve-btn" class="w-full btn-primary" style="background:#059669">
                                     <i data-lucide="check-circle" class="w-4 h-4"></i>
                                     Approve
                                 </button>
-                                <button id="pd-reject-btn" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-red-500 hover:bg-red-600 text-white rounded-lg text-sm font-medium transition-colors">
+                                <button id="pd-reject-btn" class="w-full btn-primary" style="background:#EF4444">
                                     <i data-lucide="x-circle" class="w-4 h-4"></i>
                                     Reject
                                 </button>
                             ` : ''}
                             ${isScheduled ? `
-                                <button id="pd-reschedule-btn" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-navy hover:bg-navy-light text-white rounded-lg text-sm font-medium transition-colors">
+                                <button id="pd-reschedule-btn" class="w-full btn-primary">
                                     <i data-lucide="calendar-clock" class="w-4 h-4"></i>
                                     Reschedule
                                 </button>
                             ` : ''}
-                            <a href="#calendar" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 border border-gray-300 text-gray-600 hover:bg-gray-50 rounded-lg text-sm font-medium transition-colors">
+                            <a href="#calendar" class="w-full btn-secondary text-center">
                                 <i data-lucide="arrow-left" class="w-4 h-4"></i>
                                 Back to Calendar
                             </a>
@@ -254,7 +256,7 @@ window.PagePostDetail = {
                                 <div>
                                     <dt class="text-gray-500 mb-1.5">Hashtags</dt>
                                     <dd class="flex flex-wrap gap-1">
-                                        ${hashtags.map(tag => `<span class="text-xs px-2 py-0.5 rounded bg-gray-100 text-gray-600">#${this._esc(tag)}</span>`).join('')}
+                                        ${hashtags.map(tag => `<span class="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-600">#${this._esc(tag)}</span>`).join('')}
                                     </dd>
                                 </div>
                                 ` : ''}
@@ -276,7 +278,6 @@ window.PagePostDetail = {
     _bindEvents(post) {
         const container = this.container;
 
-        // Toggle edit mode
         const toggleBtn = container.querySelector('#pd-toggle-edit');
         const viewEl = container.querySelector('#pd-content-view');
         const editEl = container.querySelector('#pd-content-edit');
@@ -288,30 +289,28 @@ window.PagePostDetail = {
                 if (isEditing) {
                     editEl.classList.add('hidden');
                     viewEl.classList.remove('hidden');
-                    toggleBtn.innerHTML = '<i data-lucide="pencil" class="w-3.5 h-3.5 inline mr-1"></i> Edit';
+                    toggleBtn.innerHTML = '<i data-lucide="pencil" class="w-3.5 h-3.5"></i> Edit';
                 } else {
                     viewEl.classList.add('hidden');
                     editEl.classList.remove('hidden');
-                    toggleBtn.innerHTML = '<i data-lucide="eye" class="w-3.5 h-3.5 inline mr-1"></i> View';
+                    toggleBtn.innerHTML = '<i data-lucide="eye" class="w-3.5 h-3.5"></i> View';
                     if (textarea) textarea.focus();
                 }
                 if (window.lucide) lucide.createIcons();
             });
         }
 
-        // Cancel edit
         const cancelBtn = container.querySelector('#pd-cancel-edit');
         if (cancelBtn) {
             cancelBtn.addEventListener('click', () => {
                 if (textarea) textarea.value = post.content || '';
                 editEl.classList.add('hidden');
                 viewEl.classList.remove('hidden');
-                toggleBtn.innerHTML = '<i data-lucide="pencil" class="w-3.5 h-3.5 inline mr-1"></i> Edit';
+                toggleBtn.innerHTML = '<i data-lucide="pencil" class="w-3.5 h-3.5"></i> Edit';
                 if (window.lucide) lucide.createIcons();
             });
         }
 
-        // Save content
         const saveBtn = container.querySelector('#pd-save-content');
         const feedbackEl = container.querySelector('#pd-save-feedback');
         if (saveBtn) {
@@ -325,15 +324,13 @@ window.PagePostDetail = {
                         feedbackEl.textContent = 'Saved successfully';
                         feedbackEl.className = 'text-xs text-green-600';
                     }
-                    // Update the view content
                     const viewContent = viewEl.querySelector('.prose');
                     if (viewContent) viewContent.textContent = newContent;
                     post.content = newContent;
-                    // Switch back to view mode after a brief pause
                     setTimeout(() => {
                         editEl.classList.add('hidden');
                         viewEl.classList.remove('hidden');
-                        toggleBtn.innerHTML = '<i data-lucide="pencil" class="w-3.5 h-3.5 inline mr-1"></i> Edit';
+                        toggleBtn.innerHTML = '<i data-lucide="pencil" class="w-3.5 h-3.5"></i> Edit';
                         if (feedbackEl) feedbackEl.textContent = '';
                         if (window.lucide) lucide.createIcons();
                     }, 1000);
@@ -344,13 +341,12 @@ window.PagePostDetail = {
                     }
                 } finally {
                     saveBtn.disabled = false;
-                    saveBtn.innerHTML = '<i data-lucide="save" class="w-3.5 h-3.5 inline mr-1"></i> Save';
+                    saveBtn.innerHTML = '<i data-lucide="save" class="w-3.5 h-3.5"></i> Save';
                     if (window.lucide) lucide.createIcons();
                 }
             });
         }
 
-        // Approve button
         const approveBtn = container.querySelector('#pd-approve-btn');
         if (approveBtn) {
             approveBtn.addEventListener('click', async () => {
@@ -359,7 +355,6 @@ window.PagePostDetail = {
                 try {
                     await API.posts.approve(post.id);
                     this._showFeedback('Post approved successfully', 'text-green-600');
-                    // Re-render with updated data
                     await this.render(post.id);
                 } catch (err) {
                     this._showFeedback('Failed to approve: ' + err.message, 'text-red-600');
@@ -370,7 +365,6 @@ window.PagePostDetail = {
             });
         }
 
-        // Reject button
         const rejectBtn = container.querySelector('#pd-reject-btn');
         if (rejectBtn) {
             rejectBtn.addEventListener('click', async () => {
@@ -389,14 +383,12 @@ window.PagePostDetail = {
             });
         }
 
-        // Reschedule button
         const rescheduleBtn = container.querySelector('#pd-reschedule-btn');
         if (rescheduleBtn) {
             rescheduleBtn.addEventListener('click', async () => {
                 const currentDate = post.scheduled_date ? post.scheduled_date.split('T')[0] : '';
                 const newDate = prompt('Enter new scheduled date (YYYY-MM-DD):', currentDate);
                 if (!newDate) return;
-                // Validate date format
                 if (!/^\d{4}-\d{2}-\d{2}$/.test(newDate)) {
                     this._showFeedback('Invalid date format. Use YYYY-MM-DD.', 'text-red-600');
                     return;

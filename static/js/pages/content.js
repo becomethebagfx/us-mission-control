@@ -1,6 +1,6 @@
 /**
  * Mission Control — Content Library Page
- * Article management with filtering, AEO scoring, and status workflows.
+ * Premium redesign: skeleton loading, consistent cards, breathing room.
  */
 window.PageContent = {
     container: null,
@@ -15,7 +15,6 @@ window.PageContent = {
         if (!this.container) return;
 
         this.container.innerHTML = this._renderLoading();
-        if (window.lucide) lucide.createIcons();
 
         try {
             const [stats, articles] = await Promise.all([
@@ -38,19 +37,28 @@ window.PageContent = {
 
     _renderLoading() {
         return `
-            <div class="flex items-center justify-center py-24">
-                <div class="mc-spinner"></div>
-                <span class="ml-3 text-sm text-gray-500">Loading content library...</span>
+            <div class="page-enter">
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-6">
+                    ${Array(6).fill('<div class="skeleton skeleton-card" style="height:88px"></div>').join('')}
+                </div>
+                <div class="skeleton" style="height:56px;border-radius:12px;margin-bottom:24px"></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                    ${Array(6).fill('<div class="skeleton" style="height:220px;border-radius:12px"></div>').join('')}
+                </div>
             </div>
         `;
     },
 
     _renderError(message) {
         return `
-            <div class="flex flex-col items-center justify-center py-24 text-red-400">
-                <i data-lucide="alert-circle" class="w-12 h-12 mb-3"></i>
-                <p class="text-sm font-medium text-red-600">Failed to load content</p>
-                <p class="text-xs text-red-400 mt-1">${this._esc(message)}</p>
+            <div class="page-enter">
+                <div class="mc-card">
+                    <div class="empty-state">
+                        <i data-lucide="alert-circle" class="empty-state-icon"></i>
+                        <p class="empty-state-title">Failed to load content</p>
+                        <p class="empty-state-text">${this._esc(message)}</p>
+                    </div>
+                </div>
             </div>
         `;
     },
@@ -60,35 +68,39 @@ window.PageContent = {
         const stats = this._stats || {};
 
         this.container.innerHTML = `
-            <!-- Stats Bar -->
-            ${this._renderStatsBar(stats)}
+            <div class="page-enter">
+                <!-- Stats Bar -->
+                ${this._renderStatsBar(stats)}
 
-            <!-- Filter Bar -->
-            ${this._renderFilterBar()}
+                <!-- Filter Bar -->
+                ${this._renderFilterBar()}
 
-            <!-- Main Content Area -->
-            <div class="flex gap-6 mt-6">
-                <!-- Article Grid -->
-                <div class="flex-1">
-                    ${filtered.length > 0 ? `
-                        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4" id="ct-article-grid">
-                            ${filtered.map(article => this._renderArticleCard(article)).join('')}
-                        </div>
-                        <div class="mt-4 text-xs text-gray-400 text-center">
-                            Showing ${filtered.length} of ${this._articles.length} articles
-                        </div>
-                    ` : `
-                        <div class="flex flex-col items-center justify-center py-16 text-gray-400">
-                            <i data-lucide="file-search" class="w-12 h-12 mb-3 opacity-50"></i>
-                            <p class="text-sm font-medium text-gray-500">No articles found</p>
-                            <p class="text-xs mt-1">Try adjusting your filters or search query.</p>
-                        </div>
-                    `}
-                </div>
+                <!-- Main Content Area -->
+                <div class="flex gap-6 mt-6">
+                    <!-- Article Grid -->
+                    <div class="flex-1">
+                        ${filtered.length > 0 ? `
+                            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" id="ct-article-grid">
+                                ${filtered.map(article => this._renderArticleCard(article)).join('')}
+                            </div>
+                            <div class="mt-4 text-xs text-gray-400 text-center">
+                                Showing ${filtered.length} of ${this._articles.length} articles
+                            </div>
+                        ` : `
+                            <div class="mc-card">
+                                <div class="empty-state">
+                                    <i data-lucide="file-search" class="empty-state-icon"></i>
+                                    <p class="empty-state-title">No articles found</p>
+                                    <p class="empty-state-text">Try adjusting your filters or search query.</p>
+                                </div>
+                            </div>
+                        `}
+                    </div>
 
-                <!-- Detail Panel (shown when article selected) -->
-                <div id="ct-detail-panel" class="${this._selectedArticle ? '' : 'hidden'} w-full lg:max-w-[380px] flex-shrink-0">
-                    ${this._selectedArticle ? this._renderDetailPanel(this._selectedArticle) : ''}
+                    <!-- Detail Panel (shown when article selected) -->
+                    <div id="ct-detail-panel" class="${this._selectedArticle ? '' : 'hidden'} w-full lg:max-w-[380px] flex-shrink-0">
+                        ${this._selectedArticle ? this._renderDetailPanel(this._selectedArticle) : ''}
+                    </div>
                 </div>
             </div>
         `;
@@ -178,7 +190,7 @@ window.PageContent = {
     _renderFilterBar() {
         return `
             <div class="mc-card">
-                <div class="mc-card-body">
+                <div class="mc-card-body" style="padding:1rem 1.5rem">
                     <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                         <!-- Status Filter -->
                         <div class="flex items-center gap-2">
@@ -220,7 +232,7 @@ window.PageContent = {
         const isSelected = this._selectedArticle && this._selectedArticle.id === article.id;
 
         return `
-            <div class="mc-card border border-gray-200 cursor-pointer transition-all duration-200 hover:shadow-lg hover:border-gray-300 ${isSelected ? 'ring-2 ring-navy/20 border-navy/30' : ''}"
+            <div class="mc-card cursor-pointer transition-all duration-200 ${isSelected ? 'ring-2 ring-navy/20 border-navy/30' : ''}"
                  data-article-id="${article.id}">
                 <div class="mc-card-body">
                     <!-- Header -->
@@ -245,8 +257,8 @@ window.PageContent = {
                         ` : ''}
                     </div>
                     <!-- AEO Score Bar -->
-                    <div class="w-full bg-gray-100 rounded-full h-2 mb-3">
-                        <div class="${aeoBarColor} h-2 rounded-full transition-all duration-500${aeoScore !== null && aeoScore > 80 ? ' shadow-[0_0_6px_rgba(34,197,94,0.5)] animate-pulse' : ''}" style="width: ${aeoScore !== null ? aeoScore : 0}%"></div>
+                    <div class="w-full bg-gray-100 rounded-full h-1.5 mb-3">
+                        <div class="${aeoBarColor} h-1.5 rounded-full transition-all duration-500${aeoScore !== null && aeoScore > 80 ? ' shadow-[0_0_6px_rgba(34,197,94,0.5)] animate-pulse' : ''}" style="width: ${aeoScore !== null ? aeoScore : 0}%"></div>
                     </div>
                     <!-- Tags -->
                     ${tags.length > 0 ? `
@@ -282,7 +294,7 @@ window.PageContent = {
                 <!-- Panel Header -->
                 <div class="mc-card-header">
                     <h3 class="text-sm font-semibold text-navy">Article Details</h3>
-                    <button id="ct-close-panel" class="text-gray-400 hover:text-gray-600 transition-colors">
+                    <button id="ct-close-panel" class="btn-ghost text-xs">
                         <i data-lucide="x" class="w-4 h-4"></i>
                     </button>
                 </div>
@@ -330,8 +342,8 @@ window.PageContent = {
                                 <span class="text-sm text-gray-400">Not scored</span>
                             `}
                         </div>
-                        <div class="w-full bg-gray-100 rounded-full h-2">
-                            <div class="${aeoBarColor} h-2 rounded-full transition-all duration-500" style="width: ${aeoScore !== null ? aeoScore : 0}%"></div>
+                        <div class="w-full bg-gray-100 rounded-full h-1.5">
+                            <div class="${aeoBarColor} h-1.5 rounded-full transition-all duration-500" style="width: ${aeoScore !== null ? aeoScore : 0}%"></div>
                         </div>
                         ${aeoScore !== null ? `
                             <p class="text-xs text-gray-400 mt-1">
@@ -353,13 +365,13 @@ window.PageContent = {
                     <!-- Action Buttons -->
                     <div class="border-t border-gray-100 pt-3 space-y-2">
                         ${isDraft || isReview ? `
-                            <button id="ct-approve-btn" data-id="${article.id}" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors">
+                            <button id="ct-approve-btn" data-id="${article.id}" class="w-full btn-primary">
                                 <i data-lucide="check-circle" class="w-4 h-4"></i>
                                 Approve Article
                             </button>
                         ` : ''}
                         ${isApproved ? `
-                            <button id="ct-publish-btn" data-id="${article.id}" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-navy hover:bg-navy-light text-white rounded-lg text-sm font-medium transition-colors">
+                            <button id="ct-publish-btn" data-id="${article.id}" class="w-full btn-primary">
                                 <i data-lucide="globe" class="w-4 h-4"></i>
                                 Publish Article
                             </button>
@@ -395,7 +407,6 @@ window.PageContent = {
     _bindEvents() {
         const container = this.container;
 
-        // Status filter
         const statusFilter = container.querySelector('#ct-status-filter');
         if (statusFilter) {
             statusFilter.addEventListener('change', (e) => {
@@ -404,7 +415,6 @@ window.PageContent = {
             });
         }
 
-        // Search input
         const searchInput = container.querySelector('#ct-search-input');
         if (searchInput) {
             let debounceTimer = null;
@@ -413,7 +423,6 @@ window.PageContent = {
                 debounceTimer = setTimeout(() => {
                     this._searchQuery = e.target.value;
                     this._renderPage();
-                    // Refocus and restore cursor position
                     const newInput = container.querySelector('#ct-search-input');
                     if (newInput) {
                         newInput.focus();
@@ -423,7 +432,6 @@ window.PageContent = {
             });
         }
 
-        // Article card clicks
         const articleCards = container.querySelectorAll('[data-article-id]');
         articleCards.forEach(card => {
             card.addEventListener('click', () => {
@@ -432,7 +440,6 @@ window.PageContent = {
                 if (article) {
                     this._selectedArticle = article;
                     this._renderPage();
-                    // Scroll detail panel into view on mobile
                     const panel = container.querySelector('#ct-detail-panel');
                     if (panel && window.innerWidth < 1024) {
                         panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -441,7 +448,6 @@ window.PageContent = {
             });
         });
 
-        // Close panel
         const closeBtn = container.querySelector('#ct-close-panel');
         if (closeBtn) {
             closeBtn.addEventListener('click', () => {
@@ -450,7 +456,6 @@ window.PageContent = {
             });
         }
 
-        // Approve button in detail panel
         const approveBtn = container.querySelector('#ct-approve-btn');
         if (approveBtn) {
             approveBtn.addEventListener('click', async (e) => {
@@ -461,14 +466,12 @@ window.PageContent = {
                 try {
                     await API.content.approve(id);
                     this._showDetailFeedback('Article approved', 'text-green-600');
-                    // Refresh data
                     const [stats, articles] = await Promise.all([
                         API.content.stats(this._company),
                         API.content.list(this._company, null),
                     ]);
                     this._stats = stats;
                     this._articles = articles;
-                    // Update selected article reference
                     this._selectedArticle = articles.find(a => String(a.id) === String(id)) || null;
                     setTimeout(() => this._renderPage(), 800);
                 } catch (err) {
@@ -480,7 +483,6 @@ window.PageContent = {
             });
         }
 
-        // Publish button in detail panel
         const publishBtn = container.querySelector('#ct-publish-btn');
         if (publishBtn) {
             publishBtn.addEventListener('click', async (e) => {
@@ -491,7 +493,6 @@ window.PageContent = {
                 try {
                     await API.content.publish(id);
                     this._showDetailFeedback('Article published', 'text-green-600');
-                    // Refresh data
                     const [stats, articles] = await Promise.all([
                         API.content.stats(this._company),
                         API.content.list(this._company, null),

@@ -1,12 +1,9 @@
 /**
  * Mission Control — Settings Page Module
- * OAuth token status, company configurations, and system information.
+ * Premium redesign: skeleton loading, breathing room, consistent cards.
  */
 window.PageSettings = {
 
-    /**
-     * Format an ISO date string to a readable format (e.g. "Jan 15, 2026").
-     */
     _formatDate(iso) {
         if (!iso) return '--';
         const d = new Date(iso);
@@ -14,9 +11,6 @@ window.PageSettings = {
         return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
     },
 
-    /**
-     * Main render entry point. Called by app.js router.
-     */
     async render() {
         const container = document.getElementById('page-settings');
         if (!container) return;
@@ -24,12 +18,17 @@ window.PageSettings = {
         container.innerHTML = `
             <div x-data="settingsPage()" x-init="init()" x-cloak>
                 <!-- Loading -->
-                <div x-show="loading" class="flex items-center justify-center py-16">
-                    <div class="mc-spinner"></div>
-                    <span class="ml-3 text-sm text-gray-500">Loading settings...</span>
+                <div x-show="loading" class="page-enter">
+                    <div class="space-y-8">
+                        <div class="skeleton" style="height:200px;border-radius:12px"></div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            ${Array(4).fill('<div class="skeleton" style="height:240px;border-radius:12px"></div>').join('')}
+                        </div>
+                        <div class="skeleton" style="height:160px;border-radius:12px"></div>
+                    </div>
                 </div>
 
-                <div x-show="!loading" class="space-y-6">
+                <div x-show="!loading" class="space-y-8 page-enter">
 
                     <!-- Section 1: OAuth Token Status -->
                     <div class="mc-card">
@@ -79,8 +78,11 @@ window.PageSettings = {
                                         </template>
                                         <template x-if="tokenList.length === 0">
                                             <tr>
-                                                <td colspan="5" class="text-center py-8 text-gray-400">
-                                                    No token data available.
+                                                <td colspan="5">
+                                                    <div class="empty-state" style="padding:2rem 1rem">
+                                                        <i data-lucide="shield-off" class="empty-state-icon" style="width:2rem;height:2rem"></i>
+                                                        <p class="empty-state-title">No token data available</p>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         </template>
@@ -100,7 +102,7 @@ window.PageSettings = {
                             <span class="text-xs text-gray-500" x-text="companies.length + ' companies (' + activeCompanyCount + ' active)'"></span>
                         </div>
                         <div class="mc-card-body">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <template x-for="co in companies" :key="co.slug">
                                     <div class="company-config-card"
                                          :style="'border-left-color:' + (co.accent_color || '#ccc')">
@@ -109,46 +111,40 @@ window.PageSettings = {
                                             <div class="w-5 h-5 rounded-full flex-shrink-0" :style="'background:' + (co.accent_color || '#ccc')"></div>
                                             <div class="min-w-0">
                                                 <h4 class="font-semibold text-navy" x-text="co.name"></h4>
-                                                <span class="text-xs text-gray-400" x-text="co.slug"></span>
+                                                <span class="text-[10px] text-gray-400 font-mono" x-text="co.slug"></span>
                                             </div>
                                             <span x-show="!co.active" class="badge badge-draft ml-auto flex-shrink-0">Coming Soon</span>
                                         </div>
 
                                         <!-- Company Details -->
                                         <div class="space-y-2 text-sm">
-                                            <!-- Tagline -->
                                             <div x-show="co.tagline" class="text-gray-600 italic text-xs mb-3" x-text="co.tagline"></div>
 
-                                            <!-- Website -->
                                             <div class="flex items-start gap-2" x-show="co.website">
                                                 <i data-lucide="globe" class="w-3.5 h-3.5 text-gray-400 mt-0.5 flex-shrink-0"></i>
                                                 <a :href="co.website" target="_blank" class="text-blue-600 hover:underline text-xs truncate" x-text="co.website"></a>
                                             </div>
 
-                                            <!-- Phone -->
                                             <div class="flex items-start gap-2" x-show="co.phone">
                                                 <i data-lucide="phone" class="w-3.5 h-3.5 text-gray-400 mt-0.5 flex-shrink-0"></i>
                                                 <span class="text-xs text-gray-600" x-text="co.phone"></span>
                                             </div>
 
-                                            <!-- Email -->
                                             <div class="flex items-start gap-2" x-show="co.email">
                                                 <i data-lucide="mail" class="w-3.5 h-3.5 text-gray-400 mt-0.5 flex-shrink-0"></i>
                                                 <a :href="'mailto:' + co.email" class="text-blue-600 hover:underline text-xs" x-text="co.email"></a>
                                             </div>
 
-                                            <!-- Address -->
                                             <div class="flex items-start gap-2" x-show="co.address">
                                                 <i data-lucide="map-pin" class="w-3.5 h-3.5 text-gray-400 mt-0.5 flex-shrink-0"></i>
                                                 <span class="text-xs text-gray-600" x-text="co.address"></span>
                                             </div>
 
-                                            <!-- Services -->
                                             <div x-show="co.services && co.services.length > 0" class="mt-3 pt-3 border-t border-gray-100">
-                                                <p class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-2">Services</p>
+                                                <p class="text-[10px] font-medium text-gray-500 uppercase tracking-wide mb-2">Services</p>
                                                 <div class="flex flex-wrap gap-1.5">
                                                     <template x-for="svc in (co.services || [])" :key="svc">
-                                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs bg-gray-100 text-gray-600" x-text="svc"></span>
+                                                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-gray-100 text-gray-600" x-text="svc"></span>
                                                     </template>
                                                 </div>
                                             </div>
@@ -175,7 +171,7 @@ window.PageSettings = {
                                         <i data-lucide="layout-dashboard" class="w-5 h-5 text-navy"></i>
                                     </div>
                                     <div>
-                                        <p class="text-xs text-gray-500 font-medium">App Name</p>
+                                        <p class="text-[10px] text-gray-500 font-medium uppercase tracking-wide">App Name</p>
                                         <p class="text-sm font-semibold text-navy" x-text="systemInfo.app_name || '--'"></p>
                                     </div>
                                 </div>
@@ -186,7 +182,7 @@ window.PageSettings = {
                                         <i data-lucide="tag" class="w-5 h-5 text-blue-600"></i>
                                     </div>
                                     <div>
-                                        <p class="text-xs text-gray-500 font-medium">Version</p>
+                                        <p class="text-[10px] text-gray-500 font-medium uppercase tracking-wide">Version</p>
                                         <p class="text-sm font-semibold text-navy" x-text="'v' + (systemInfo.version || '0.0.0')"></p>
                                     </div>
                                 </div>
@@ -202,7 +198,7 @@ window.PageSettings = {
                                            :class="systemInfo.demo_mode ? 'text-amber-600' : 'text-green-600'"></i>
                                     </div>
                                     <div>
-                                        <p class="text-xs text-gray-500 font-medium">Demo Mode</p>
+                                        <p class="text-[10px] text-gray-500 font-medium uppercase tracking-wide">Demo Mode</p>
                                         <p class="text-sm font-semibold" :class="systemInfo.demo_mode ? 'text-amber-600' : 'text-green-600'" x-text="systemInfo.demo_mode ? 'Enabled' : 'Disabled'"></p>
                                     </div>
                                 </div>
@@ -213,7 +209,7 @@ window.PageSettings = {
                                         <i data-lucide="monitor" class="w-5 h-5 text-gray-600"></i>
                                     </div>
                                     <div>
-                                        <p class="text-xs text-gray-500 font-medium">Host</p>
+                                        <p class="text-[10px] text-gray-500 font-medium uppercase tracking-wide">Host</p>
                                         <p class="text-sm font-mono font-semibold text-navy" x-text="(systemInfo.host || '--') + ':' + (systemInfo.port || '--')"></p>
                                     </div>
                                 </div>
@@ -224,7 +220,7 @@ window.PageSettings = {
                                         <i data-lucide="folder" class="w-5 h-5 text-gray-600"></i>
                                     </div>
                                     <div class="min-w-0">
-                                        <p class="text-xs text-gray-500 font-medium">Data Directory</p>
+                                        <p class="text-[10px] text-gray-500 font-medium uppercase tracking-wide">Data Directory</p>
                                         <p class="text-sm font-mono font-semibold text-navy truncate" x-text="systemInfo.data_dir || '--'" style="max-width: 200px;"></p>
                                     </div>
                                 </div>
@@ -235,7 +231,7 @@ window.PageSettings = {
                                         <i data-lucide="building-2" class="w-5 h-5 text-green-600"></i>
                                     </div>
                                     <div>
-                                        <p class="text-xs text-gray-500 font-medium">Active Companies</p>
+                                        <p class="text-[10px] text-gray-500 font-medium uppercase tracking-wide">Active Companies</p>
                                         <p class="text-sm font-semibold text-navy" x-text="(systemInfo.active_companies_count || 0) + ' / ' + (systemInfo.companies_count || 0)"></p>
                                     </div>
                                 </div>
@@ -277,13 +273,10 @@ window.PageSettings = {
                         API.settings.system(),
                     ]);
 
-                    // Tokens: the API returns {tokens: {...}, total_companies: N}
-                    // tokens can be a dict keyed by company name or a list
                     const tokensRaw = tokensRes.tokens || {};
                     if (Array.isArray(tokensRaw)) {
                         this.tokenList = tokensRaw;
                     } else {
-                        // Convert dict to array
                         this.tokenList = Object.entries(tokensRaw).map(([key, val]) => ({
                             company: val.company || key,
                             company_slug: val.company_slug || key,
@@ -292,11 +285,9 @@ window.PageSettings = {
                         }));
                     }
 
-                    // Companies
                     this.companies = companiesRes.companies || [];
                     this.activeCompanyCount = companiesRes.active || 0;
 
-                    // System
                     this.systemInfo = systemRes || {};
                 },
 

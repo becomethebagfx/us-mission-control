@@ -1,7 +1,6 @@
 /**
  * Mission Control — Calendar Page
- * Renders a FullCalendar instance into #page-calendar with
- * company-colored events and click-to-navigate for posts.
+ * Premium redesign: skeleton loading, card-wrapped calendar, breathing room.
  */
 window.PageCalendar = {
     _calendar: null,
@@ -16,29 +15,48 @@ window.PageCalendar = {
             this._calendar = null;
         }
 
-        // Show loading state
+        // Skeleton loading state
         container.innerHTML = `
-            <div class="flex items-center justify-center py-20">
-                <div class="mc-spinner"></div>
-                <span class="ml-3 text-sm text-gray-500">Loading calendar...</span>
+            <div class="page-enter">
+                <div class="skeleton" style="height:48px;border-radius:12px;margin-bottom:24px;max-width:320px"></div>
+                <div class="mc-card">
+                    <div class="mc-card-body">
+                        <div class="skeleton" style="height:560px;border-radius:8px"></div>
+                    </div>
+                </div>
             </div>`;
 
         try {
-            // Fetch events from API
             const events = await API.calendar.events(company);
 
-            // Prepare container — FullCalendar needs an empty div
-            container.innerHTML = '<div id="fc-container" style="min-height: 600px;"></div>';
+            container.innerHTML = `
+                <div class="page-enter">
+                    <div class="mc-card">
+                        <div class="mc-card-header">
+                            <h3 class="flex items-center gap-2">
+                                <i data-lucide="calendar" class="w-4 h-4 text-navy/60"></i>
+                                LinkedIn Calendar
+                            </h3>
+                            <span class="text-xs text-gray-400">${(events || []).length} events</span>
+                        </div>
+                        <div class="mc-card-body">
+                            <div id="fc-container" style="min-height: 600px;"></div>
+                        </div>
+                    </div>
+                </div>`;
 
             this._initCalendar(events || []);
+            if (window.lucide) lucide.createIcons();
         } catch (err) {
             console.error('PageCalendar.render error:', err);
             container.innerHTML = `
-                <div class="mc-card">
-                    <div class="mc-card-body text-center py-12">
-                        <i data-lucide="alert-triangle" class="w-8 h-8 text-red-400 mx-auto mb-3"></i>
-                        <p class="text-sm text-gray-600">Failed to load calendar events.</p>
-                        <p class="text-xs text-gray-400 mt-1">${this._esc(err.message)}</p>
+                <div class="page-enter">
+                    <div class="mc-card">
+                        <div class="empty-state">
+                            <i data-lucide="calendar-x" class="empty-state-icon"></i>
+                            <p class="empty-state-title">Failed to load calendar events</p>
+                            <p class="empty-state-text">${this._esc(err.message)}</p>
+                        </div>
                     </div>
                 </div>`;
             if (window.lucide) lucide.createIcons();
@@ -53,7 +71,6 @@ window.PageCalendar = {
         const calendarEl = document.getElementById('fc-container');
         if (!calendarEl) return;
 
-        // Company color map for fallback when event has no color
         const companyColors = {
             'us-framing': '#4A90D9',
             'us-drywall': '#B8860B',
@@ -61,7 +78,6 @@ window.PageCalendar = {
             'us-development': '#C4AF94',
         };
 
-        // Map API events into FullCalendar event objects
         const events = rawEvents.map(ev => ({
             id: String(ev.id),
             title: ev.title || 'Untitled',
@@ -79,7 +95,6 @@ window.PageCalendar = {
         }));
 
         this._calendar = new FullCalendar.Calendar(calendarEl, {
-            // Views
             initialView: 'dayGridMonth',
             headerToolbar: {
                 left: 'prev,next today',
@@ -92,28 +107,19 @@ window.PageCalendar = {
                 week: 'Week',
                 day: 'Day',
             },
-
-            // Appearance
             height: 'auto',
             dayMaxEvents: 3,
             nowIndicator: true,
-            firstDay: 0, // Sunday
-
-            // Events
+            firstDay: 0,
             events: events,
-
-            // Click handler — navigate to post detail for post events
             eventClick: function(info) {
                 const props = info.event.extendedProps || {};
                 if (props.type === 'post') {
-                    // Extract post ID from event id (may be prefixed, e.g. "post-123")
                     const eventId = info.event.id;
                     const postId = eventId.replace(/^post-/, '');
                     window.location.hash = '#post-detail/' + postId;
                 }
             },
-
-            // Tooltip on hover via native title attribute
             eventDidMount: function(info) {
                 const props = info.event.extendedProps || {};
                 const parts = [info.event.title];
