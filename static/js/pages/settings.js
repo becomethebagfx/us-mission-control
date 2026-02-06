@@ -42,7 +42,7 @@ window.PageSettings = {
                         </div>
                         <div class="mc-card-body p-0">
                             <div class="overflow-x-auto">
-                                <table class="mc-table">
+                                <table class="mc-table mc-table-divided">
                                     <thead>
                                         <tr>
                                             <th>Company</th>
@@ -100,17 +100,18 @@ window.PageSettings = {
                             <span class="text-xs text-gray-500" x-text="companies.length + ' companies (' + activeCompanyCount + ' active)'"></span>
                         </div>
                         <div class="mc-card-body">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                                 <template x-for="co in companies" :key="co.slug">
-                                    <div class="border border-gray-200 rounded-xl p-5 hover:shadow-md transition-shadow">
+                                    <div class="company-config-card"
+                                         :style="'border-left-color:' + (co.accent_color || '#ccc')">
                                         <!-- Company Header -->
                                         <div class="flex items-center gap-3 mb-4">
-                                            <div class="w-4 h-4 rounded-full" :style="'background:' + (co.accent_color || '#ccc')"></div>
-                                            <div>
+                                            <div class="w-5 h-5 rounded-full flex-shrink-0" :style="'background:' + (co.accent_color || '#ccc')"></div>
+                                            <div class="min-w-0">
                                                 <h4 class="font-semibold text-navy" x-text="co.name"></h4>
                                                 <span class="text-xs text-gray-400" x-text="co.slug"></span>
                                             </div>
-                                            <span x-show="!co.active" class="badge badge-draft ml-auto">Coming Soon</span>
+                                            <span x-show="!co.active" class="badge badge-draft ml-auto flex-shrink-0">Coming Soon</span>
                                         </div>
 
                                         <!-- Company Details -->
@@ -169,70 +170,73 @@ window.PageSettings = {
                         <div class="mc-card-body">
                             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                 <!-- App Name -->
-                                <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                                    <div class="w-9 h-9 rounded-lg bg-navy/10 flex items-center justify-center">
-                                        <i data-lucide="layout-dashboard" class="w-4 h-4 text-navy"></i>
+                                <div class="sys-info-tile" style="background: linear-gradient(135deg, rgba(27,42,74,0.04) 0%, rgba(27,42,74,0.08) 100%);">
+                                    <div class="sys-icon bg-navy/10">
+                                        <i data-lucide="layout-dashboard" class="w-5 h-5 text-navy"></i>
                                     </div>
                                     <div>
-                                        <p class="text-xs text-gray-500">App Name</p>
-                                        <p class="text-sm font-medium text-navy" x-text="systemInfo.app_name || '--'"></p>
+                                        <p class="text-xs text-gray-500 font-medium">App Name</p>
+                                        <p class="text-sm font-semibold text-navy" x-text="systemInfo.app_name || '--'"></p>
                                     </div>
                                 </div>
 
                                 <!-- Version -->
-                                <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                                    <div class="w-9 h-9 rounded-lg bg-sky/10 flex items-center justify-center">
-                                        <i data-lucide="tag" class="w-4 h-4 text-sky"></i>
+                                <div class="sys-info-tile" style="background: linear-gradient(135deg, rgba(14,165,233,0.04) 0%, rgba(14,165,233,0.08) 100%);">
+                                    <div class="sys-icon bg-sky/10">
+                                        <i data-lucide="tag" class="w-5 h-5 text-sky"></i>
                                     </div>
                                     <div>
-                                        <p class="text-xs text-gray-500">Version</p>
-                                        <p class="text-sm font-medium text-navy" x-text="'v' + (systemInfo.version || '0.0.0')"></p>
+                                        <p class="text-xs text-gray-500 font-medium">Version</p>
+                                        <p class="text-sm font-semibold text-navy" x-text="'v' + (systemInfo.version || '0.0.0')"></p>
                                     </div>
                                 </div>
 
                                 <!-- Demo Mode -->
-                                <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                                    <div class="w-9 h-9 rounded-lg flex items-center justify-center"
+                                <div class="sys-info-tile"
+                                     :style="systemInfo.demo_mode
+                                         ? 'background: linear-gradient(135deg, rgba(245,158,11,0.04) 0%, rgba(245,158,11,0.08) 100%)'
+                                         : 'background: linear-gradient(135deg, rgba(34,197,94,0.04) 0%, rgba(34,197,94,0.08) 100%)'">
+                                    <div class="sys-icon"
                                          :class="systemInfo.demo_mode ? 'bg-amber-50' : 'bg-green-50'">
-                                        <i data-lucide="flask-conical" class="w-4 h-4"
+                                        <i data-lucide="flask-conical" class="w-5 h-5"
                                            :class="systemInfo.demo_mode ? 'text-amber-600' : 'text-green-600'"></i>
                                     </div>
                                     <div>
-                                        <p class="text-xs text-gray-500">Demo Mode</p>
-                                        <p class="text-sm font-medium" :class="systemInfo.demo_mode ? 'text-amber-600' : 'text-green-600'" x-text="systemInfo.demo_mode ? 'Enabled' : 'Disabled'"></p>
+                                        <p class="text-xs text-gray-500 font-medium">Demo Mode</p>
+                                        <p class="text-sm font-semibold" :class="systemInfo.demo_mode ? 'text-amber-600' : 'text-green-600'" x-text="systemInfo.demo_mode ? 'Enabled' : 'Disabled'"></p>
                                     </div>
                                 </div>
 
                                 <!-- Host -->
-                                <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                                    <div class="w-9 h-9 rounded-lg bg-gray-200 flex items-center justify-center">
-                                        <i data-lucide="monitor" class="w-4 h-4 text-gray-600"></i>
+                                <div class="sys-info-tile" style="background: linear-gradient(135deg, rgba(107,114,128,0.04) 0%, rgba(107,114,128,0.08) 100%);">
+                                    <div class="sys-icon bg-gray-100">
+                                        <i data-lucide="monitor" class="w-5 h-5 text-gray-600"></i>
                                     </div>
                                     <div>
-                                        <p class="text-xs text-gray-500">Host</p>
-                                        <p class="text-sm font-mono text-navy" x-text="(systemInfo.host || '--') + ':' + (systemInfo.port || '--')"></p>
+                                        <p class="text-xs text-gray-500 font-medium">Host</p>
+                                        <p class="text-sm font-mono font-semibold text-navy" x-text="(systemInfo.host || '--') + ':' + (systemInfo.port || '--')"></p>
                                     </div>
                                 </div>
 
                                 <!-- Data Directory -->
-                                <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                                    <div class="w-9 h-9 rounded-lg bg-gray-200 flex items-center justify-center">
-                                        <i data-lucide="folder" class="w-4 h-4 text-gray-600"></i>
+                                <div class="sys-info-tile" style="background: linear-gradient(135deg, rgba(107,114,128,0.04) 0%, rgba(107,114,128,0.08) 100%);">
+                                    <div class="sys-icon bg-gray-100">
+                                        <i data-lucide="folder" class="w-5 h-5 text-gray-600"></i>
                                     </div>
-                                    <div>
-                                        <p class="text-xs text-gray-500">Data Directory</p>
-                                        <p class="text-sm font-mono text-navy truncate" x-text="systemInfo.data_dir || '--'" style="max-width: 200px;"></p>
+                                    <div class="min-w-0">
+                                        <p class="text-xs text-gray-500 font-medium">Data Directory</p>
+                                        <p class="text-sm font-mono font-semibold text-navy truncate" x-text="systemInfo.data_dir || '--'" style="max-width: 200px;"></p>
                                     </div>
                                 </div>
 
                                 <!-- Active Companies -->
-                                <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                                    <div class="w-9 h-9 rounded-lg bg-green-50 flex items-center justify-center">
-                                        <i data-lucide="building-2" class="w-4 h-4 text-green-600"></i>
+                                <div class="sys-info-tile" style="background: linear-gradient(135deg, rgba(34,197,94,0.04) 0%, rgba(34,197,94,0.08) 100%);">
+                                    <div class="sys-icon bg-green-50">
+                                        <i data-lucide="building-2" class="w-5 h-5 text-green-600"></i>
                                     </div>
                                     <div>
-                                        <p class="text-xs text-gray-500">Active Companies</p>
-                                        <p class="text-sm font-medium text-navy" x-text="(systemInfo.active_companies_count || 0) + ' / ' + (systemInfo.companies_count || 0)"></p>
+                                        <p class="text-xs text-gray-500 font-medium">Active Companies</p>
+                                        <p class="text-sm font-semibold text-navy" x-text="(systemInfo.active_companies_count || 0) + ' / ' + (systemInfo.companies_count || 0)"></p>
                                     </div>
                                 </div>
                             </div>

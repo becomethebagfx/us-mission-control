@@ -68,11 +68,31 @@ document.addEventListener('alpine:init', () => {
                 this.pageSubtitle = this.pageMeta.home.subtitle;
             }
 
-            // Trigger page load
+            // Trigger page load with fade transition
+            const container = document.getElementById('page-container');
+            if (container) {
+                container.classList.remove('page-fade-active');
+                container.classList.add('page-fade-enter');
+            }
             this.$nextTick(() => {
-                this.loadPage(this.currentPage);
-                if (window.lucide) lucide.createIcons();
+                this.loadPage(this.currentPage).then(() => {
+                    if (window.lucide) lucide.createIcons();
+                    // Fade in after render
+                    requestAnimationFrame(() => {
+                        if (container) {
+                            container.classList.remove('page-fade-enter');
+                            container.classList.add('page-fade-active');
+                        }
+                    });
+                });
             });
+        },
+
+        // Get active company color for indicator
+        getActiveCompanyColor() {
+            if (!this.activeCompany) return 'transparent';
+            const key = Object.keys(this.companies).find(k => this.companies[k].slug === this.activeCompany);
+            return key ? this.companies[key].color : 'transparent';
         },
 
         // Company filter change

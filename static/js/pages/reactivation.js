@@ -24,13 +24,13 @@ window.PageReactivation = {
     },
 
     /**
-     * Return a Tailwind text color class based on lead score.
+     * Return a score-badge CSS class based on lead score.
      */
-    _scoreColor(score) {
-        if (score >= 80) return 'text-green-600 font-semibold';
-        if (score >= 60) return 'text-sky font-medium';
-        if (score >= 40) return 'text-amber-600';
-        return 'text-red-500';
+    _scoreBadgeClass(score) {
+        if (score >= 80) return 'score-badge score-badge-green';
+        if (score >= 60) return 'score-badge score-badge-blue';
+        if (score >= 40) return 'score-badge score-badge-amber';
+        return 'score-badge score-badge-red';
     },
 
     /**
@@ -77,7 +77,11 @@ window.PageReactivation = {
                                 <i data-lucide="users" class="w-4 h-4 text-sky"></i>
                                 Lead Pipeline
                             </h3>
-                            <span class="text-xs text-gray-500" x-text="leads.length + ' leads'"></span>
+                            <div class="flex items-center gap-3">
+                                <span class="text-xs text-gray-500" x-text="leads.length + ' leads'"></span>
+                                <span x-show="leads.length > pipelineLimit && !pipelineExpanded"
+                                      class="text-xs text-gray-400" x-text="'Showing top ' + pipelineLimit"></span>
+                            </div>
                         </div>
                         <div class="mc-card-body p-0">
                             <div class="overflow-x-auto">
@@ -95,7 +99,7 @@ window.PageReactivation = {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <template x-for="lead in sortedLeads" :key="lead.id">
+                                        <template x-for="lead in visibleLeads" :key="lead.id">
                                             <tr>
                                                 <td class="font-medium text-navy" x-text="lead.name"></td>
                                                 <td>
@@ -108,9 +112,9 @@ window.PageReactivation = {
                                                     </span>
                                                 </td>
                                                 <td class="text-xs text-gray-600" x-text="lead.project_type"></td>
-                                                <td class="text-right font-medium" x-text="formatCurrency(lead.deal_value)"></td>
+                                                <td class="deal-value" x-text="formatCurrency(lead.deal_value)"></td>
                                                 <td class="text-center">
-                                                    <span :class="scoreColor(lead.score)" x-text="lead.score"></span>
+                                                    <span :class="scoreBadgeClass(lead.score)" x-text="lead.score"></span>
                                                 </td>
                                                 <td class="text-center">
                                                     <span class="badge" :class="'badge-' + lead.status" x-text="lead.status"></span>
@@ -127,6 +131,23 @@ window.PageReactivation = {
                                         </template>
                                     </tbody>
                                 </table>
+                            </div>
+                            <!-- Show more / Show less toggle -->
+                            <div x-show="leads.length > pipelineLimit">
+                                <button class="pipeline-expand-btn" @click="pipelineExpanded = !pipelineExpanded">
+                                    <template x-if="!pipelineExpanded">
+                                        <span class="flex items-center gap-2">
+                                            <i data-lucide="chevrons-down" class="w-4 h-4"></i>
+                                            <span x-text="'Show all ' + leads.length + ' leads'"></span>
+                                        </span>
+                                    </template>
+                                    <template x-if="pipelineExpanded">
+                                        <span class="flex items-center gap-2">
+                                            <i data-lucide="chevrons-up" class="w-4 h-4"></i>
+                                            <span x-text="'Show top ' + pipelineLimit + ' only'"></span>
+                                        </span>
+                                    </template>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -146,17 +167,18 @@ window.PageReactivation = {
                             <!-- Sequence Timeline -->
                             <div class="relative">
                                 <!-- Connecting line -->
-                                <div class="absolute top-6 left-0 right-0 h-0.5 bg-gray-200 mx-16"></div>
+                                <div class="absolute left-0 right-0 h-0.5 bg-gradient-to-r from-gray-200 via-sky-200 to-green-200 mx-16" style="top: 1.75rem;"></div>
 
                                 <div class="grid grid-cols-5 gap-4 relative">
                                     <!-- Step 0: Not Started -->
                                     <div class="flex flex-col items-center">
-                                        <div class="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-sm z-10"
+                                        <div class="seq-circle"
                                              :class="sequenceSteps['0'] > 0 ? 'bg-gray-400' : 'bg-gray-200'">
                                             <i data-lucide="inbox" class="w-5 h-5"></i>
                                         </div>
                                         <div class="mt-3 text-center">
-                                            <p class="text-xs font-medium text-gray-700">Not Started</p>
+                                            <p class="text-xs font-semibold text-gray-700">Not Started</p>
+                                            <p class="text-xs text-gray-400 mt-0.5">Awaiting outreach</p>
                                             <p class="text-2xl font-bold text-navy mt-1" x-text="sequenceSteps['0'] || 0"></p>
                                             <p class="text-xs text-gray-400">leads</p>
                                         </div>
@@ -164,12 +186,12 @@ window.PageReactivation = {
 
                                     <!-- Step 1: Touch 1 -->
                                     <div class="flex flex-col items-center">
-                                        <div class="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-sm z-10"
+                                        <div class="seq-circle"
                                              :class="sequenceSteps['1'] > 0 ? 'bg-sky' : 'bg-gray-200'">
                                             1
                                         </div>
                                         <div class="mt-3 text-center">
-                                            <p class="text-xs font-medium text-gray-700">Touch 1</p>
+                                            <p class="text-xs font-semibold text-gray-700">Touch 1</p>
                                             <p class="text-xs text-gray-400 mt-0.5">Initial Outreach</p>
                                             <p class="text-2xl font-bold text-navy mt-1" x-text="sequenceSteps['1'] || 0"></p>
                                             <p class="text-xs text-gray-400">leads</p>
@@ -178,12 +200,12 @@ window.PageReactivation = {
 
                                     <!-- Step 2: Touch 2 -->
                                     <div class="flex flex-col items-center">
-                                        <div class="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-sm z-10"
+                                        <div class="seq-circle"
                                              :class="sequenceSteps['2'] > 0 ? 'bg-indigo-500' : 'bg-gray-200'">
                                             2
                                         </div>
                                         <div class="mt-3 text-center">
-                                            <p class="text-xs font-medium text-gray-700">Touch 2</p>
+                                            <p class="text-xs font-semibold text-gray-700">Touch 2</p>
                                             <p class="text-xs text-gray-400 mt-0.5">Value Follow-Up</p>
                                             <p class="text-2xl font-bold text-navy mt-1" x-text="sequenceSteps['2'] || 0"></p>
                                             <p class="text-xs text-gray-400">leads</p>
@@ -192,12 +214,12 @@ window.PageReactivation = {
 
                                     <!-- Step 3: Touch 3 -->
                                     <div class="flex flex-col items-center">
-                                        <div class="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-sm z-10"
+                                        <div class="seq-circle"
                                              :class="sequenceSteps['3'] > 0 ? 'bg-purple-500' : 'bg-gray-200'">
                                             3
                                         </div>
                                         <div class="mt-3 text-center">
-                                            <p class="text-xs font-medium text-gray-700">Touch 3</p>
+                                            <p class="text-xs font-semibold text-gray-700">Touch 3</p>
                                             <p class="text-xs text-gray-400 mt-0.5">Case Study Send</p>
                                             <p class="text-2xl font-bold text-navy mt-1" x-text="sequenceSteps['3'] || 0"></p>
                                             <p class="text-xs text-gray-400">leads</p>
@@ -206,12 +228,12 @@ window.PageReactivation = {
 
                                     <!-- Step 4: Touch 4 -->
                                     <div class="flex flex-col items-center">
-                                        <div class="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-sm z-10"
+                                        <div class="seq-circle"
                                              :class="sequenceSteps['4'] > 0 ? 'bg-green-500' : 'bg-gray-200'">
                                             4
                                         </div>
                                         <div class="mt-3 text-center">
-                                            <p class="text-xs font-medium text-gray-700">Touch 4</p>
+                                            <p class="text-xs font-semibold text-gray-700">Touch 4</p>
                                             <p class="text-xs text-gray-400 mt-0.5">Final Offer</p>
                                             <p class="text-2xl font-bold text-navy mt-1" x-text="sequenceSteps['4'] || 0"></p>
                                             <p class="text-xs text-gray-400">leads</p>
@@ -383,6 +405,8 @@ window.PageReactivation = {
                 sequenceSteps: {},
                 sequenceTotal: 0,
                 pipelineValue: 0,
+                pipelineLimit: 15,
+                pipelineExpanded: false,
                 _company: '',
 
                 async init(company) {
@@ -429,6 +453,14 @@ window.PageReactivation = {
                     return [...this.leads].sort((a, b) => (b.score || 0) - (a.score || 0));
                 },
 
+                get visibleLeads() {
+                    const sorted = this.sortedLeads;
+                    if (this.pipelineExpanded || sorted.length <= this.pipelineLimit) {
+                        return sorted;
+                    }
+                    return sorted.slice(0, this.pipelineLimit);
+                },
+
                 formatCurrency(val) {
                     if (val == null) return '$0';
                     return '$' + Number(val).toLocaleString('en-US');
@@ -441,11 +473,11 @@ window.PageReactivation = {
                     return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
                 },
 
-                scoreColor(score) {
-                    if (score >= 80) return 'text-green-600 font-semibold';
-                    if (score >= 60) return 'text-sky font-medium';
-                    if (score >= 40) return 'text-amber-600';
-                    return 'text-red-500';
+                scoreBadgeClass(score) {
+                    if (score >= 80) return 'score-badge score-badge-green';
+                    if (score >= 60) return 'score-badge score-badge-blue';
+                    if (score >= 40) return 'score-badge score-badge-amber';
+                    return 'score-badge score-badge-red';
                 },
 
                 companyDotClass(slug) {

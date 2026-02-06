@@ -13,6 +13,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/dashboard.css">
+    <!-- Favicon: MC monogram -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231B2A4A'/><text x='16' y='22' font-family='Inter,sans-serif' font-size='14' font-weight='700' fill='white' text-anchor='middle'>MC</text></svg>">
     <script>
         tailwind.config = {
             theme: {
@@ -38,7 +40,7 @@
 </head>
 <body class="bg-gray-50 font-body" x-data="dashboard" x-init="init()">
     <!-- Sidebar -->
-    <aside class="fixed left-0 top-0 h-full w-64 bg-navy text-white z-30 flex flex-col shadow-xl"
+    <aside class="fixed left-0 top-0 h-full w-64 sidebar-gradient text-white z-30 flex flex-col shadow-xl"
            :class="sidebarOpen ? '' : '-translate-x-full lg:translate-x-0'"
            style="transition: transform 0.2s">
         <!-- Logo -->
@@ -48,24 +50,29 @@
         </div>
 
         <!-- Company Filter -->
-        <div class="px-4 py-3 border-b border-navy-light">
-            <select x-model="activeCompany" @change="onCompanyChange()"
-                    class="w-full bg-navy-light text-sm text-white rounded px-3 py-2 border border-navy-light focus:border-sky focus:outline-none">
-                <option value="">All Companies</option>
-                <template x-for="(co, key) in companies" :key="key">
-                    <option :value="co.slug" x-text="co.name"></option>
-                </template>
-            </select>
+        <div class="px-4 py-3 border-b border-navy-light/50">
+            <label class="text-[10px] uppercase tracking-widest text-gray-500 mb-1.5 block font-medium">Company</label>
+            <div class="company-indicator" :style="'--company-color:' + getActiveCompanyColor()">
+                <select x-model="activeCompany" @change="onCompanyChange()"
+                        class="w-full company-select text-sm text-white rounded-lg px-3 py-2 focus:outline-none appearance-none cursor-pointer pr-8"
+                        :style="activeCompany ? 'border-color:' + getActiveCompanyColor() : ''">
+                    <option value="">All Companies</option>
+                    <template x-for="(co, key) in companies" :key="key">
+                        <option :value="co.slug" x-text="co.name"></option>
+                    </template>
+                </select>
+            </div>
         </div>
 
         <!-- Nav -->
         <nav class="flex-1 py-4 overflow-y-auto">
             <template x-for="item in navItems" :key="item.hash">
                 <a :href="item.hash"
-                   class="flex items-center gap-3 px-6 py-2.5 text-sm transition-colors"
-                   :class="currentPage === item.page ? 'bg-navy-light text-white font-medium' : 'text-gray-300 hover:bg-navy-light/50 hover:text-white'"
+                   class="flex items-center gap-3 px-6 py-2.5 text-sm transition-all duration-150"
+                   :class="currentPage === item.page ? 'nav-active text-white font-medium' : 'text-gray-400 hover:bg-white/5 hover:text-white'"
                    @click="sidebarOpen = false">
-                    <i :data-lucide="item.icon" class="w-4 h-4"></i>
+                    <i :data-lucide="item.icon" class="w-4 h-4"
+                       :class="currentPage === item.page ? 'text-sky' : ''"></i>
                     <span x-text="item.label"></span>
                 </a>
             </template>
@@ -90,21 +97,22 @@
     <!-- Main Content -->
     <main class="lg:ml-64 min-h-screen">
         <!-- Top Bar -->
-        <header class="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between sticky top-0 z-10">
+        <header class="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between sticky top-0 z-10">
             <div>
-                <h2 class="text-lg font-semibold text-navy font-display" x-text="pageTitle"></h2>
-                <p class="text-xs text-gray-500 mt-0.5" x-text="pageSubtitle"></p>
+                <div class="flex items-center text-sm">
+                    <span class="text-gray-400 font-medium">Mission Control</span>
+                    <span class="breadcrumb-sep"></span>
+                    <span class="text-navy font-semibold" x-text="pageTitle"></span>
+                </div>
+                <p class="text-xs text-gray-400 mt-0.5" x-text="pageSubtitle"></p>
             </div>
             <div class="flex items-center gap-3">
-                <span class="text-xs px-2 py-1 rounded-full"
-                      :class="activeCompany ? 'bg-sky/10 text-sky' : 'bg-gray-100 text-gray-500'"
-                      x-text="activeCompany ? companies[Object.keys(companies).find(k => companies[k].slug === activeCompany)]?.name : 'All Companies'">
-                </span>
+                <span class="text-[11px] text-gray-400" x-text="new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })"></span>
             </div>
         </header>
 
         <!-- Page Container -->
-        <div class="p-6">
+        <div id="page-container" class="p-6 page-fade page-fade-active">
             <!-- Home -->
             <div x-show="currentPage === 'home'" x-cloak>
                 <div id="page-home"></div>

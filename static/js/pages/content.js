@@ -87,7 +87,7 @@ window.PageContent = {
                 </div>
 
                 <!-- Detail Panel (shown when article selected) -->
-                <div id="ct-detail-panel" class="${this._selectedArticle ? '' : 'hidden'} w-full lg:w-[420px] flex-shrink-0">
+                <div id="ct-detail-panel" class="${this._selectedArticle ? '' : 'hidden'} w-full lg:max-w-[380px] flex-shrink-0">
                     ${this._selectedArticle ? this._renderDetailPanel(this._selectedArticle) : ''}
                 </div>
             </div>
@@ -104,7 +104,7 @@ window.PageContent = {
         const aeoColor = typeof avgAeo === 'number' ? (avgAeo > 70 ? 'text-green-600' : avgAeo >= 40 ? 'text-yellow-600' : 'text-red-600') : 'text-gray-400';
 
         return `
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-6">
                 <div class="stat-card">
                     <div class="flex items-center justify-between">
                         <div>
@@ -212,7 +212,7 @@ window.PageContent = {
 
     _renderArticleCard(article) {
         const companyColor = this._companyColor(article.company_slug);
-        const statusClass = 'badge badge-' + (article.status || 'draft');
+        const statusPill = this._statusPill(article.status || 'draft');
         const aeoScore = article.aeo_score != null ? Math.round(article.aeo_score) : null;
         const aeoBarColor = aeoScore !== null ? (aeoScore > 70 ? 'bg-green-500' : aeoScore >= 40 ? 'bg-yellow-500' : 'bg-red-500') : 'bg-gray-200';
         const aeoTextColor = aeoScore !== null ? (aeoScore > 70 ? 'text-green-600' : aeoScore >= 40 ? 'text-yellow-600' : 'text-red-600') : 'text-gray-400';
@@ -220,7 +220,7 @@ window.PageContent = {
         const isSelected = this._selectedArticle && this._selectedArticle.id === article.id;
 
         return `
-            <div class="mc-card cursor-pointer transition-shadow hover:shadow-md ${isSelected ? 'ring-2 ring-sky' : ''}"
+            <div class="mc-card border border-gray-200 cursor-pointer transition-all duration-200 hover:shadow-lg hover:border-gray-300 ${isSelected ? 'ring-2 ring-sky border-sky/30' : ''}"
                  data-article-id="${article.id}">
                 <div class="mc-card-body">
                     <!-- Header -->
@@ -229,11 +229,11 @@ window.PageContent = {
                             <span class="company-dot" style="background:${companyColor}"></span>
                             <span class="text-xs text-gray-500">${this._esc(article.company || '')}</span>
                         </div>
-                        <span class="${statusClass}">${this._esc(article.status || 'draft')}</span>
+                        ${statusPill}
                     </div>
                     <!-- Title -->
                     <h4 class="text-sm font-semibold text-navy leading-snug mb-2 line-clamp-2">${this._esc(article.title || 'Untitled')}</h4>
-                    ${article.topic ? `<p class="text-xs text-gray-500 mb-3">${this._esc(article.topic)}</p>` : ''}
+                    ${article.topic && article.topic !== article.title ? `<p class="text-xs text-gray-500 mb-3">${this._esc(article.topic)}</p>` : ''}
                     <!-- Word Count + AEO Score -->
                     <div class="flex items-center justify-between mb-3">
                         <span class="text-xs text-gray-400">
@@ -245,8 +245,8 @@ window.PageContent = {
                         ` : ''}
                     </div>
                     <!-- AEO Score Bar -->
-                    <div class="w-full bg-gray-100 rounded-full h-1.5 mb-3">
-                        <div class="${aeoBarColor} h-1.5 rounded-full transition-all duration-500" style="width: ${aeoScore !== null ? aeoScore : 0}%"></div>
+                    <div class="w-full bg-gray-100 rounded-full h-2 mb-3">
+                        <div class="${aeoBarColor} h-2 rounded-full transition-all duration-500${aeoScore !== null && aeoScore > 80 ? ' shadow-[0_0_6px_rgba(34,197,94,0.5)] animate-pulse' : ''}" style="width: ${aeoScore !== null ? aeoScore : 0}%"></div>
                     </div>
                     <!-- Tags -->
                     ${tags.length > 0 ? `
@@ -262,7 +262,7 @@ window.PageContent = {
 
     _renderDetailPanel(article) {
         const companyColor = this._companyColor(article.company_slug);
-        const statusClass = 'badge badge-' + (article.status || 'draft');
+        const statusPillDetail = this._statusPill(article.status || 'draft');
         const aeoScore = article.aeo_score != null ? Math.round(article.aeo_score) : null;
         const aeoBarColor = aeoScore !== null ? (aeoScore > 70 ? 'bg-green-500' : aeoScore >= 40 ? 'bg-yellow-500' : 'bg-red-500') : 'bg-gray-200';
         const aeoTextColor = aeoScore !== null ? (aeoScore > 70 ? 'text-green-600' : aeoScore >= 40 ? 'text-yellow-600' : 'text-red-600') : 'text-gray-400';
@@ -292,10 +292,10 @@ window.PageContent = {
                         <div class="flex items-center gap-1.5 mb-2">
                             <span class="company-dot" style="background:${companyColor}"></span>
                             <span class="text-xs text-gray-500">${this._esc(article.company || '')}</span>
-                            <span class="ml-auto ${statusClass}">${this._esc(article.status || 'draft')}</span>
+                            <span class="ml-auto">${statusPillDetail}</span>
                         </div>
                         <h4 class="text-base font-display font-semibold text-navy leading-snug">${this._esc(article.title || 'Untitled')}</h4>
-                        ${article.topic ? `<p class="text-xs text-gray-500 mt-1">${this._esc(article.topic)}</p>` : ''}
+                        ${article.topic && article.topic !== article.title ? `<p class="text-xs text-gray-500 mt-1">${this._esc(article.topic)}</p>` : ''}
                     </div>
 
                     <!-- Meta Info -->
@@ -518,6 +518,17 @@ window.PageContent = {
             msg.className = 'text-sm ' + colorClass;
             fb.classList.remove('hidden');
         }
+    },
+
+    _statusPill(status) {
+        const config = {
+            draft:     { bg: 'bg-gray-100',     text: 'text-gray-600',    dot: 'bg-gray-400',    label: 'Draft' },
+            review:    { bg: 'bg-amber-50',     text: 'text-amber-700',   dot: 'bg-amber-400',   label: 'In Review' },
+            approved:  { bg: 'bg-emerald-50',   text: 'text-emerald-700', dot: 'bg-emerald-500', label: 'Approved' },
+            published: { bg: 'bg-green-50',     text: 'text-green-700',   dot: 'bg-green-500',   label: 'Published' },
+        };
+        const c = config[status] || config.draft;
+        return `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${c.bg} ${c.text}"><span class="w-1.5 h-1.5 rounded-full ${c.dot}"></span>${c.label}</span>`;
     },
 
     _companyColor(slug) {
