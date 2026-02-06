@@ -1,0 +1,207 @@
+{
+  "version": "1.0",
+  "updated_at": "2026-02-05T21:45:22.495898",
+  "count": 8,
+  "assets": {
+    "4dfd6d4fa8ba": {
+      "id": "4dfd6d4fa8ba",
+      "company": "us_framing",
+      "type": "stat_card",
+      "title": "Stat Card: 0.78 EMR Safety Rating",
+      "template": "stat_card",
+      "platform": "linkedin_post",
+      "width": 1200,
+      "height": 627,
+      "status": "generated",
+      "file_path": "/Users/bjwet/us-construction-marketing/automation/asset-generator/output/stat_cards/usf_stat_emr_safety_rating_1200x627.png",
+      "file_size_bytes": 29446,
+      "created_at": "2026-02-05T21:45:22.365970",
+      "tags": [
+        "stat",
+        "infographic",
+        "usf",
+        "linkedin_post"
+      ],
+      "variables": {
+        "stat_value": "0.78",
+        "stat_label": "EMR Safety Rating",
+        "stat_description": "Our Experience Modification Rate reflects an unwavering commitment to jobsite safety across every project."
+      }
+    },
+    "153fbca29615": {
+      "id": "153fbca29615",
+      "company": "us_framing",
+      "type": "stat_card",
+      "title": "Stat Card: 2.5M+ Square Feet Framed",
+      "template": "stat_card",
+      "platform": "linkedin_post",
+      "width": 1200,
+      "height": 627,
+      "status": "generated",
+      "file_path": "/Users/bjwet/us-construction-marketing/automation/asset-generator/output/stat_cards/usf_stat_square_feet_framed_1200x627.png",
+      "file_size_bytes": 26987,
+      "created_at": "2026-02-05T21:45:22.384382",
+      "tags": [
+        "stat",
+        "infographic",
+        "usf",
+        "linkedin_post"
+      ],
+      "variables": {
+        "stat_value": "2.5M+",
+        "stat_label": "Square Feet Framed",
+        "stat_description": "Total square footage of steel and wood framing installed across commercial and residential projects."
+      }
+    },
+    "6f0e600bcde6": {
+      "id": "6f0e600bcde6",
+      "company": "us_drywall",
+      "type": "stat_card",
+      "title": "Stat Card: 340+ Projects Completed",
+      "template": "stat_card",
+      "platform": "linkedin_post",
+      "width": 1200,
+      "height": 627,
+      "status": "generated",
+      "file_path": "/Users/bjwet/us-construction-marketing/automation/asset-generator/output/stat_cards/usd_stat_projects_completed_1200x627.png",
+      "file_size_bytes": 26411,
+      "created_at": "2026-02-05T21:45:22.402110",
+      "tags": [
+        "stat",
+        "infographic",
+        "usd",
+        "linkedin_post"
+      ],
+      "variables": {
+        "stat_value": "340+",
+        "stat_label": "Projects Completed",
+        "stat_description": "Commercial drywall and finishing projects delivered on time, from Level 3 to Level 5 finishes."
+      }
+    },
+    "5c4e31910092": {
+      "id": "5c4e31910092",
+      "company": "us_exteriors",
+      "type": "stat_card",
+      "title": "Stat Card: 15 Years in Business",
+      "template": "stat_card",
+      "platform": "linkedin_post",
+      "width": 1200,
+      "height": 627,
+      "status": "generated",
+      "file_path": "/Users/bjwet/us-construction-marketing/automation/asset-generator/output/stat_cards/use_stat_years_in_business_1200x627.png",
+      "file_size_bytes": 24380,
+      "created_at": "2026-02-05T21:45:22.420602",
+      "tags": [
+        "stat",
+        "infographic",
+        "use",
+        "linkedin_post"
+      ],
+      "variables": {
+        "stat_value": "15",
+        "stat_label": "Years in Business",
+        "stat_description": "A decade and a half of building envelope expertise, from EIFS to metal panels to waterproofing systems."
+      }
+    },
+    "fea88008a1c1": {
+      "id": "fea88008a1c1",
+      "company": "us_development",
+      "type": "stat_card",
+      "title": "Stat Card: $120M+ Projects Under Management",
+      "template": "stat_card",
+      "platform": "linkedin_post",
+      "width": 1200,
+      "height": 627,
+      "status": "generated",
+      "file_path": "/Users/bjwet/us-construction-marketing/automation/asset-generator/output/stat_cards/usdv_stat_projects_under_management_1200x627.png",
+      "file_size_bytes": 32256,
+      "created_at": "2026-02-05T21:45:22.438543",
+      "tags": [
+        "stat",
+        "infographic",
+        "usdv",
+        "linkedin_post"
+      ],
+      "variables": {
+        "stat_value": "$120M+",
+        "stat_label": "Projects Under Management",
+        "stat_description": "Total value of development projects currently under management across the Southwest."
+      }
+    },
+    "04f96a503162": {
+      "id": "04f96a503162",
+      "company": "us_interiors",
+      "type": "stat_card",
+      "title": "Stat Card: 98% Client Retention Rate",
+      "template": "stat_card",
+      "platform": "linkedin_post",
+      "width": 1200,
+      "height": 627,
+      "status": "generated",
+      "file_path": "/Users/bjwet/us-construction-marketing/automation/asset-generator/output/stat_cards/usi_stat_client_retention_rate_1200x627.png",
+      "file_size_bytes": 28876,
+      "created_at": "2026-02-05T21:45:22.456867",
+      "tags": [
+        "stat",
+        "infographic",
+        "usi",
+        "linkedin_post"
+      ],
+      "variables": {
+        "stat_value": "98%",
+        "stat_label": "Client Retention Rate",
+        "stat_description": "Repeat business from general contractors and property managers who trust our interior finish quality."
+      }
+    },
+    "6bf54a3fa15b": {
+      "id": "6bf54a3fa15b",
+      "company": "us_drywall",
+      "type": "stat_card",
+      "title": "Stat Card: 1.2M Board Feet Installed Annually",
+      "template": "stat_card",
+      "platform": "linkedin_post",
+      "width": 1200,
+      "height": 627,
+      "status": "generated",
+      "file_path": "/Users/bjwet/us-construction-marketing/automation/asset-generator/output/stat_cards/usd_stat_board_feet_installed_annually_1200x627.png",
+      "file_size_bytes": 25696,
+      "created_at": "2026-02-05T21:45:22.475187",
+      "tags": [
+        "stat",
+        "infographic",
+        "usd",
+        "linkedin_post"
+      ],
+      "variables": {
+        "stat_value": "1.2M",
+        "stat_label": "Board Feet Installed Annually",
+        "stat_description": "Annual drywall installation volume across commercial, healthcare, and hospitality sectors."
+      }
+    },
+    "deea5525937f": {
+      "id": "deea5525937f",
+      "company": "us_framing",
+      "type": "stat_card",
+      "title": "Stat Card: 48hr Average Bid Turnaround",
+      "template": "stat_card",
+      "platform": "linkedin_post",
+      "width": 1200,
+      "height": 627,
+      "status": "generated",
+      "file_path": "/Users/bjwet/us-construction-marketing/automation/asset-generator/output/stat_cards/usf_stat_average_bid_turnaround_1200x627.png",
+      "file_size_bytes": 27079,
+      "created_at": "2026-02-05T21:45:22.494164",
+      "tags": [
+        "stat",
+        "infographic",
+        "usf",
+        "linkedin_post"
+      ],
+      "variables": {
+        "stat_value": "48hr",
+        "stat_label": "Average Bid Turnaround",
+        "stat_description": "From plan review to detailed estimate in under two business days. Speed without sacrificing accuracy."
+      }
+    }
+  }
+}
