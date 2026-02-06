@@ -152,6 +152,7 @@ class DashboardConfig:
         "http://localhost:8000",
         "http://127.0.0.1:8000",
         "https://us-mission-control.onrender.com",
+        "https://us-marketing-dashboard.onrender.com",
     ]
 
     # Data paths
