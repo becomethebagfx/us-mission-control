@@ -538,7 +538,7 @@ window.PageReactivation = {
                             plugins: {
                                 legend: { display: false },
                                 tooltip: {
-                                    backgroundColor: '#1B2A4A',
+                                    backgroundColor: '#323338',
                                     titleFont: { family: 'Inter', size: 12 },
                                     bodyFont: { family: 'Inter', size: 11 },
                                     cornerRadius: 6,
@@ -563,7 +563,7 @@ window.PageReactivation = {
                                 y: {
                                     ticks: {
                                         font: { family: 'Inter', size: 12, weight: '500' },
-                                        color: '#1B2A4A',
+                                        color: '#323338',
                                     },
                                     grid: { display: false },
                                 },

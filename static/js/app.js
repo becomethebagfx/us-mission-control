@@ -13,10 +13,10 @@ document.addEventListener('alpine:init', () => {
 
         // Companies registry
         companies: {
-            us_framing: { name: 'US Framing', slug: 'us-framing', color: '#4A90D9', accent: 'sky' },
-            us_drywall: { name: 'US Drywall', slug: 'us-drywall', color: '#B8860B', accent: 'gold' },
-            us_exteriors: { name: 'US Exteriors', slug: 'us-exteriors', color: '#2D5F2D', accent: 'forest' },
-            us_development: { name: 'US Development', slug: 'us-development', color: '#C4AF94', accent: 'tan' },
+            us_framing: { name: 'US Framing', slug: 'us-framing', color: '#579BFC', accent: 'blue' },
+            us_drywall: { name: 'US Drywall', slug: 'us-drywall', color: '#FDAB3D', accent: 'amber' },
+            us_exteriors: { name: 'US Exteriors', slug: 'us-exteriors', color: '#00C875', accent: 'green' },
+            us_development: { name: 'US Development', slug: 'us-development', color: '#C4C4C4', accent: 'gray' },
         },
 
         // Navigation items

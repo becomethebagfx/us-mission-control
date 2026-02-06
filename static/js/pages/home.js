@@ -296,14 +296,14 @@ window.PageHome = {
             type: 'bar',
             data: {
                 labels: ['New', 'Contacted', 'Engaged', 'Converted'],
-                datasets: [{ label: 'Leads', data: data, backgroundColor: ['#1B2A4A', '#2A3D66', '#4A90D9', '#2D5F2D'], borderRadius: 4, barThickness: 20 }],
+                datasets: [{ label: 'Leads', data: data, backgroundColor: ['#323338', '#579BFC', '#FDAB3D', '#00C875'], borderRadius: 4, barThickness: 20 }],
             },
             options: {
                 indexAxis: 'y', responsive: true, maintainAspectRatio: false,
-                plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1B2A4A', titleFont: { family: 'Inter', size: 12 }, bodyFont: { family: 'Inter', size: 11 }, cornerRadius: 6, padding: 10 } },
+                plugins: { legend: { display: false }, tooltip: { backgroundColor: '#323338', titleFont: { family: 'Inter', size: 12 }, bodyFont: { family: 'Inter', size: 11 }, cornerRadius: 6, padding: 10 } },
                 scales: {
                     x: { beginAtZero: true, grid: { color: '#f3f4f6' }, ticks: { font: { family: 'Inter', size: 11 }, color: '#9ca3af', precision: 0 } },
-                    y: { grid: { display: false }, ticks: { font: { family: 'Inter', size: 11, weight: '500' }, color: '#1B2A4A' } },
+                    y: { grid: { display: false }, ticks: { font: { family: 'Inter', size: 11, weight: '500' }, color: '#323338' } },
                 },
             },
         });

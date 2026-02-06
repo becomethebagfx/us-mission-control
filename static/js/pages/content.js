@@ -534,10 +534,10 @@ window.PageContent = {
 
     _companyColor(slug) {
         const colors = {
-            'us-framing': '#4A90D9',
-            'us-drywall': '#B8860B',
-            'us-exteriors': '#2D5F2D',
-            'us-development': '#C4AF94',
+            'us-framing': '#579BFC',
+            'us-drywall': '#FDAB3D',
+            'us-exteriors': '#00C875',
+            'us-development': '#C4C4C4',
         };
         return colors[slug] || '#6B7280';
     },

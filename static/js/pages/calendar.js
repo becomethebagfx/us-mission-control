@@ -72,10 +72,10 @@ window.PageCalendar = {
         if (!calendarEl) return;
 
         const companyColors = {
-            'us-framing': '#4A90D9',
-            'us-drywall': '#B8860B',
-            'us-exteriors': '#2D5F2D',
-            'us-development': '#C4AF94',
+            'us-framing': '#579BFC',
+            'us-drywall': '#FDAB3D',
+            'us-exteriors': '#00C875',
+            'us-development': '#C4C4C4',
         };
 
         const events = rawEvents.map(ev => ({
@@ -83,8 +83,8 @@ window.PageCalendar = {
             title: ev.title || 'Untitled',
             start: ev.start,
             end: ev.end || null,
-            backgroundColor: ev.color || companyColors[ev.company_slug] || '#4A90D9',
-            borderColor: ev.color || companyColors[ev.company_slug] || '#4A90D9',
+            backgroundColor: ev.color || companyColors[ev.company_slug] || '#579BFC',
+            borderColor: ev.color || companyColors[ev.company_slug] || '#579BFC',
             textColor: '#ffffff',
             extendedProps: {
                 company: ev.company || '',
