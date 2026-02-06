@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission Control — US Construction Marketing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#1B2A4A',
+                        'navy-light': '#2A3D66',
+                        'navy-dark': '#111D35',
+                        gold: '#B8860B',
+                        forest: '#2D5F2D',
+                        sky: '#4A90D9',
+                        tan: '#C4AF94',
+                        brown: '#8B5E3C',
+                    },
+                    fontFamily: {
+                        display: ['Playfair Display', 'serif'],
+                        body: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-gray-50 font-body" x-data="dashboard" x-init="init()">
+    <!-- Sidebar -->
+    <aside class="fixed left-0 top-0 h-full w-64 bg-navy text-white z-30 flex flex-col shadow-xl"
+           :class="sidebarOpen ? '' : '-translate-x-full lg:translate-x-0'"
+           style="transition: transform 0.2s">
+        <!-- Logo -->
+        <div class="px-6 py-5 border-b border-navy-light">
+            <h1 class="font-display text-lg leading-tight">Mission Control</h1>
+            <p class="text-xs text-gray-400 mt-1">US Construction Marketing</p>
+        </div>
+
+        <!-- Company Filter -->
+        <div class="px-4 py-3 border-b border-navy-light">
+            <select x-model="activeCompany" @change="onCompanyChange()"
+                    class="w-full bg-navy-light text-sm text-white rounded px-3 py-2 border border-navy-light focus:border-sky focus:outline-none">
+                <option value="">All Companies</option>
+                <template x-for="(co, key) in companies" :key="key">
+                    <option :value="co.slug" x-text="co.name"></option>
+                </template>
+            </select>
+        </div>
+
+        <!-- Nav -->
+        <nav class="flex-1 py-4 overflow-y-auto">
+            <template x-for="item in navItems" :key="item.hash">
+                <a :href="item.hash"
+                   class="flex items-center gap-3 px-6 py-2.5 text-sm transition-colors"
+                   :class="currentPage === item.page ? 'bg-navy-light text-white font-medium' : 'text-gray-300 hover:bg-navy-light/50 hover:text-white'"
+                   @click="sidebarOpen = false">
+                    <i :data-lucide="item.icon" class="w-4 h-4"></i>
+                    <span x-text="item.label"></span>
+                </a>
+            </template>
+        </nav>
+
+        <!-- Footer -->
+        <div class="px-6 py-4 border-t border-navy-light text-xs text-gray-500">
+            <p>v1.0.0 &middot; Demo Mode</p>
+        </div>
+    </aside>
+
+    <!-- Mobile hamburger -->
+    <button @click="sidebarOpen = !sidebarOpen"
+            class="lg:hidden fixed top-4 left-4 z-40 bg-navy text-white p-2 rounded-lg shadow-lg">
+        <i data-lucide="menu" class="w-5 h-5"></i>
+    </button>
+
+    <!-- Overlay -->
+    <div x-show="sidebarOpen" @click="sidebarOpen = false"
+         class="lg:hidden fixed inset-0 bg-black/50 z-20" x-transition.opacity></div>
+
+    <!-- Main Content -->
+    <main class="lg:ml-64 min-h-screen">
+        <!-- Top Bar -->
+        <header class="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between sticky top-0 z-10">
+            <div>
+                <h2 class="text-lg font-semibold text-navy font-display" x-text="pageTitle"></h2>
+                <p class="text-xs text-gray-500 mt-0.5" x-text="pageSubtitle"></p>
+            </div>
+            <div class="flex items-center gap-3">
+                <span class="text-xs px-2 py-1 rounded-full"
+                      :class="activeCompany ? 'bg-sky/10 text-sky' : 'bg-gray-100 text-gray-500'"
+                      x-text="activeCompany ? companies[Object.keys(companies).find(k => companies[k].slug === activeCompany)]?.name : 'All Companies'">
+                </span>
+            </div>
+        </header>
+
+        <!-- Page Container -->
+        <div class="p-6">
+            <!-- Home -->
+            <div x-show="currentPage === 'home'" x-cloak>
+                <div id="page-home"></div>
+            </div>
+
+            <!-- Calendar -->
+            <div x-show="currentPage === 'calendar'" x-cloak>
+                <div id="page-calendar"></div>
+            </div>
+
+            <!-- Post Detail -->
+            <div x-show="currentPage === 'post-detail'" x-cloak>
+                <div id="page-post-detail"></div>
+            </div>
+
+            <!-- Content Library -->
+            <div x-show="currentPage === 'content'" x-cloak>
+                <div id="page-content"></div>
+            </div>
+
+            <!-- Reactivation -->
+            <div x-show="currentPage === 'reactivation'" x-cloak>
+                <div id="page-reactivation"></div>
+            </div>
+
+            <!-- Settings -->
+            <div x-show="currentPage === 'settings'" x-cloak>
+                <div id="page-settings"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="/static/js/api.js"></script>
+    <script src="/static/js/pages/home.js"></script>
+    <script src="/static/js/pages/calendar.js"></script>
+    <script src="/static/js/pages/post-detail.js"></script>
+    <script src="/static/js/pages/content.js"></script>
+    <script src="/static/js/pages/reactivation.js"></script>
+    <script src="/static/js/pages/settings.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

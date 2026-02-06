@@ -1,0 +1,139 @@
+/* Mission Control Dashboard — Custom Styles */
+
+[x-cloak] { display: none !important; }
+
+/* Stat cards */
+.stat-card {
+    @apply bg-white rounded-xl border border-gray-200 p-5 transition-shadow hover:shadow-md;
+}
+.stat-card .stat-value {
+    @apply text-2xl font-bold text-navy;
+}
+.stat-card .stat-label {
+    @apply text-xs text-gray-500 uppercase tracking-wide mt-1;
+}
+.stat-card .stat-icon {
+    @apply w-10 h-10 rounded-lg flex items-center justify-center;
+}
+
+/* Status badges */
+.badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+}
+.badge-scheduled { @apply bg-blue-100 text-blue-700; }
+.badge-published { @apply bg-green-100 text-green-700; }
+.badge-draft { @apply bg-gray-100 text-gray-600; }
+.badge-rejected { @apply bg-red-100 text-red-700; }
+.badge-review { @apply bg-yellow-100 text-yellow-700; }
+.badge-approved { @apply bg-emerald-100 text-emerald-700; }
+.badge-active { @apply bg-green-100 text-green-700; }
+.badge-expiring { @apply bg-amber-100 text-amber-700; }
+.badge-expired { @apply bg-red-100 text-red-700; }
+.badge-disconnected { @apply bg-gray-100 text-gray-500; }
+.badge-new { @apply bg-blue-100 text-blue-700; }
+.badge-contacted { @apply bg-purple-100 text-purple-700; }
+.badge-engaged { @apply bg-indigo-100 text-indigo-700; }
+.badge-converted { @apply bg-green-100 text-green-700; }
+.badge-dead { @apply bg-gray-100 text-gray-400; }
+.badge-generated { @apply bg-cyan-100 text-cyan-700; }
+
+/* Company color dots */
+.company-dot {
+    @apply w-2.5 h-2.5 rounded-full inline-block mr-1.5;
+}
+.company-dot-us-framing { background: #4A90D9; }
+.company-dot-us-drywall { background: #B8860B; }
+.company-dot-us-exteriors { background: #2D5F2D; }
+.company-dot-us-development { background: #C4AF94; }
+
+/* Table styles */
+.mc-table {
+    @apply w-full text-sm;
+}
+.mc-table thead {
+    @apply border-b border-gray-200;
+}
+.mc-table th {
+    @apply text-left text-xs font-medium text-gray-500 uppercase tracking-wider px-4 py-3;
+}
+.mc-table td {
+    @apply px-4 py-3 border-b border-gray-100;
+}
+.mc-table tr:hover td {
+    @apply bg-gray-50;
+}
+
+/* Card containers */
+.mc-card {
+    @apply bg-white rounded-xl border border-gray-200 overflow-hidden;
+}
+.mc-card-header {
+    @apply px-5 py-4 border-b border-gray-100 flex items-center justify-between;
+}
+.mc-card-header h3 {
+    @apply text-sm font-semibold text-navy;
+}
+.mc-card-body {
+    @apply p-5;
+}
+
+/* Tabs */
+.mc-tabs {
+    @apply flex border-b border-gray-200 mb-4;
+}
+.mc-tab {
+    @apply px-4 py-2 text-sm font-medium cursor-pointer border-b-2 transition-colors -mb-px;
+}
+.mc-tab-active {
+    @apply border-sky text-sky;
+}
+.mc-tab-inactive {
+    @apply border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300;
+}
+
+/* Loading spinner */
+.mc-spinner {
+    @apply inline-block w-5 h-5 border-2 border-gray-300 border-t-sky rounded-full;
+    animation: spin 0.6s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Token health indicators */
+.token-health {
+    @apply flex items-center gap-2 text-sm;
+}
+.token-dot {
+    @apply w-2.5 h-2.5 rounded-full;
+}
+.token-active { @apply bg-green-500; }
+.token-expiring { @apply bg-amber-500 animate-pulse; }
+.token-expired { @apply bg-red-500; }
+
+/* Funnel chart container */
+.funnel-bar {
+    @apply h-8 rounded-r-lg transition-all duration-500;
+}
+
+/* Calendar overrides */
+.fc .fc-toolbar-title {
+    font-family: 'Playfair Display', serif !important;
+    color: #1B2A4A !important;
+    font-size: 1.1rem !important;
+}
+.fc .fc-button-primary {
+    background-color: #1B2A4A !important;
+    border-color: #1B2A4A !important;
+}
+.fc .fc-button-primary:hover {
+    background-color: #2A3D66 !important;
+}
+.fc .fc-daygrid-day-number {
+    color: #1B2A4A;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .stat-card .stat-value {
+        font-size: 1.25rem;
+    }
+}
