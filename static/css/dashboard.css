@@ -766,6 +766,32 @@ textarea:focus-visible {
 }
 
 /* ================================================================
+   REDUCED MOTION — Accessibility
+   ================================================================ */
+@media (prefers-reduced-motion: reduce) {
+    .page-enter {
+        animation: none;
+    }
+    .page-fade {
+        transition: none;
+    }
+    .skeleton {
+        animation: none;
+        opacity: 0.6;
+    }
+    .seq-circle:hover {
+        transform: none;
+    }
+    .stat-card:hover,
+    .stat-card-lg:hover,
+    .company-config-card:hover,
+    .sys-info-tile:hover,
+    .gbp-metric-card:hover {
+        transform: none;
+    }
+}
+
+/* ================================================================
    RESPONSIVE ADJUSTMENTS
    ================================================================ */
 @media (max-width: 1024px) {
@@ -813,6 +839,26 @@ textarea:focus-visible {
     color: var(--navy-light);
     text-decoration: underline;
 }
+
+/* ================================================================
+   MC BADGES — Pill-shaped, restrained palette, consistent across pages
+   ================================================================ */
+.mc-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.125rem 0.625rem;
+    border-radius: 9999px;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    line-height: 1.5;
+    white-space: nowrap;
+    background: var(--border-light);
+    color: var(--text-secondary);
+}
+.mc-badge-info    { background: #EFF6FF; color: #1D4ED8; }
+.mc-badge-success { background: #ECFDF5; color: #047857; }
+.mc-badge-warning { background: #FFFBEB; color: #B45309; }
+.mc-badge-danger  { background: #FEF2F2; color: #B91C1C; }
 
 /* ================================================================
    PAGE HEADER — Consistent h1 across all pages
