@@ -22,8 +22,8 @@ COMPANIES: Dict[str, Dict[str, Any]] = {
     "us_construction": {
         "name": "US Construction",
         "slug": "us-construction",
-        "accent_color": "#1B2A4A",
-        "accent_name": "navy",
+        "accent_color": "#6B7B8D",
+        "accent_name": "steel",
         "website": "https://us-construction.onrender.com",
         "phone": "(502) 555-0100",
         "email": "info@usconstruction.com",
