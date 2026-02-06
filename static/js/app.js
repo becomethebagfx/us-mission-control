@@ -29,6 +29,7 @@ document.addEventListener('alpine:init', () => {
             { page: 'reviews', hash: '#reviews', label: 'Reviews', icon: 'star' },
             { page: 'brand-audit', hash: '#brand-audit', label: 'Brand Audit', icon: 'shield-check' },
             { page: 'assets', hash: '#assets', label: 'Visual Assets', icon: 'image' },
+            { page: 'quality', hash: '#quality', label: 'Quality Loop', icon: 'refresh-cw' },
             { page: 'reactivation', hash: '#reactivation', label: 'Reactivation', icon: 'users' },
             { page: 'settings', hash: '#settings', label: 'Settings', icon: 'settings' },
         ],
@@ -44,6 +45,7 @@ document.addEventListener('alpine:init', () => {
             reviews: { title: 'Review Management', subtitle: 'Monitor and respond to customer reviews' },
             'brand-audit': { title: 'Brand Consistency', subtitle: 'NAP accuracy, visual identity, and voice' },
             assets: { title: 'Visual Assets', subtitle: 'Templates, social cards, and showcases' },
+            quality: { title: 'Quality Loop', subtitle: 'Recursive content improvement engine' },
             reactivation: { title: 'Database Reactivation', subtitle: 'Lead pipeline and sequences' },
             settings: { title: 'Settings', subtitle: 'OAuth tokens, companies, and system info' },
         },
@@ -141,6 +143,9 @@ document.addEventListener('alpine:init', () => {
                         break;
                     case 'assets':
                         if (window.PageAssets) await PageAssets.render(company);
+                        break;
+                    case 'quality':
+                        if (window.PageQuality) await PageQuality.render(company);
                         break;
                     case 'reactivation':
                         if (window.PageReactivation) await PageReactivation.render(company);

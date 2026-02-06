@@ -167,6 +167,7 @@ class DashboardConfig:
     REVIEWS_FILE = DATA_DIR / "reviews.json"
     BRAND_AUDIT_FILE = DATA_DIR / "brand_audit.json"
     ASSETS_FILE = DATA_DIR / "assets.json"
+    QUALITY_FILE = DATA_DIR / "quality.json"
 
     # Companies
     COMPANIES = COMPANIES

@@ -41,7 +41,7 @@ app.add_middleware(
 
 # ── Routers ───────────────────────────────────────────────────────
 from routers import dashboard, calendar, posts, content, reactivation, settings
-from routers import gbp, aeo, reviews, brand_audit, assets
+from routers import gbp, aeo, reviews, brand_audit, assets, quality
 
 app.include_router(dashboard.router, prefix="/api/dashboard", tags=["Dashboard"])
 app.include_router(calendar.router, prefix="/api/calendar", tags=["Calendar"])
@@ -54,6 +54,7 @@ app.include_router(aeo.router, prefix="/api/aeo", tags=["AEO"])
 app.include_router(reviews.router, prefix="/api/reviews", tags=["Reviews"])
 app.include_router(brand_audit.router, prefix="/api/brand-audit", tags=["Brand Audit"])
 app.include_router(assets.router, prefix="/api/assets", tags=["Assets"])
+app.include_router(quality.router, prefix="/api/quality", tags=["Quality Loop"])
 
 
 # ── Health Check ──────────────────────────────────────────────────

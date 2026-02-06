@@ -93,4 +93,10 @@ const API = {
         list: (company) => API.get('/assets/', { company }),
         stats: () => API.get('/assets/stats'),
     },
+    quality: {
+        runs: (company, contentType, status) => API.get('/quality/runs', { company, content_type: contentType, status }),
+        run: (id) => API.get(`/quality/runs/${id}`),
+        stats: (company) => API.get('/quality/stats', { company }),
+        contentTypes: () => API.get('/quality/content-types'),
+    },
 };

@@ -751,6 +751,102 @@ def generate_assets() -> Dict[str, Any]:
     return {"assets": assets}
 
 
+def generate_quality() -> List[Dict[str, Any]]:
+    """Generate quality loop run data."""
+    content_types = [
+        "linkedin_post", "outreach_email", "aeo_capsule",
+        "gbp_post", "review_response", "blog_article",
+    ]
+    content_labels = {
+        "linkedin_post": "LinkedIn Post",
+        "outreach_email": "Outreach Email",
+        "aeo_capsule": "AEO Capsule",
+        "gbp_post": "GBP Post",
+        "review_response": "Review Response",
+        "blog_article": "Blog Article",
+    }
+    criteria_by_type = {
+        "linkedin_post": ["Thumb-Stop Power", "Industry Relevance", "Value Proposition", "CTA Strength", "Brand Voice", "Emotional Trigger"],
+        "outreach_email": ["Subject Line", "Hook Strength", "Personalization", "CTA Clarity", "Objection Handling", "Brevity"],
+        "aeo_capsule": ["Word Count Compliance", "Self-Containment", "Specificity", "Query Alignment", "Citation Worthiness"],
+        "gbp_post": ["Local Relevance", "Visual Description", "CTA Effectiveness", "Character Count", "Keyword Presence"],
+        "review_response": ["Empathy & Tone", "Brand Voice", "Specificity", "Resolution Path", "Professionalism"],
+        "blog_article": ["Search Intent Match", "Depth vs Competitors", "Unique Angle", "AEO-Ready Sections", "Readability", "Keyword Integration"],
+    }
+    personas = ["Skeptical GC", "Busy Developer", "Competitor CMO"]
+
+    runs = []
+    for i in range(24):
+        ct = random.choice(content_types)
+        company_key = random.choice(_ACTIVE_KEYS)
+        co = _company_info(company_key)
+
+        num_iterations = random.randint(1, 5)
+        passed = random.random() < 0.65
+        if passed:
+            final_iter_score = round(random.uniform(9.0, 9.8), 1)
+        else:
+            final_iter_score = round(random.uniform(7.0, 8.9), 1)
+
+        iterations = []
+        for j in range(num_iterations):
+            if j == num_iterations - 1:
+                overall = final_iter_score
+            else:
+                overall = round(random.uniform(5.5, 8.5), 1)
+
+            criteria_scores = []
+            for cname in criteria_by_type[ct]:
+                score = round(max(0, min(10, overall + random.uniform(-1.5, 1.5))), 1)
+                criteria_scores.append({
+                    "name": cname,
+                    "score": score,
+                    "feedback": f"{'Strong' if score >= 8 else 'Needs work on'} {cname.lower()}",
+                    "weight": round(random.uniform(0.8, 2.0), 1),
+                })
+
+            adversarial = []
+            if j >= 1 or overall >= 8.0:
+                for persona in personas:
+                    adversarial.append({
+                        "persona": persona,
+                        "critique": f"{persona} feedback on iteration {j + 1}",
+                        "severity": random.choice(["low", "medium", "high"]),
+                        "suggestion": f"Suggested improvement from {persona}",
+                    })
+
+            iterations.append({
+                "iteration": j + 1,
+                "content": f"Generated {content_labels[ct]} content v{j + 1} for {co['name']}",
+                "criteria_scores": criteria_scores,
+                "adversarial_feedback": adversarial,
+                "overall_score": overall,
+                "passed": j == num_iterations - 1 and passed,
+            })
+
+        score_progression = [it["overall_score"] for it in iterations]
+        status = "passed" if passed else "max_iterations"
+
+        run = {
+            "id": f"ql-{random.randint(100000, 999999):06x}",
+            "content_type": ct,
+            "company_slug": co["slug"],
+            "company": co["name"],
+            "input_brief": {"topic": f"Generated topic {i + 1}", "company": co["name"]},
+            "iterations": iterations,
+            "status": status,
+            "iteration_count": num_iterations,
+            "final_content": iterations[-1]["content"] if iterations else "",
+            "final_score": final_iter_score,
+            "score_progression": score_progression,
+            "created_at": _random_date(45, 0),
+            "completed_at": _random_date(44, 0),
+        }
+        runs.append(run)
+
+    return runs
+
+
 # ── Main Entry Point ────────────────────────────────────────────────
 
 def seed_all_mock_data() -> Dict[str, Path]:
@@ -773,6 +869,7 @@ def seed_all_mock_data() -> Dict[str, Path]:
         "reviews.json": generate_reviews,
         "brand_audit.json": generate_brand_audit,
         "assets.json": generate_assets,
+        "quality.json": generate_quality,
     }
 
     written: Dict[str, Path] = {}
