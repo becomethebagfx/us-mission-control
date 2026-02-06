@@ -19,6 +19,23 @@ DATA_DIR.mkdir(exist_ok=True)
 
 # ── Company Registry ─────────────────────────────────────────────
 COMPANIES: Dict[str, Dict[str, Any]] = {
+    "us_construction": {
+        "name": "US Construction",
+        "slug": "us-construction",
+        "accent_color": "#1B2A4A",
+        "accent_name": "navy",
+        "website": "https://us-construction.onrender.com",
+        "phone": "(502) 555-0100",
+        "email": "info@usconstruction.com",
+        "address": "4700 Shelbyville Rd, Suite 100, Louisville, KY 40207",
+        "services": [
+            "Turnkey Vertical Integration",
+            "Multi-Trade Coordination",
+            "One Call Framing Through Finish",
+        ],
+        "tagline": "One Call. Framing Through Finish.",
+        "is_parent": True,
+    },
     "us_framing": {
         "name": "US Framing",
         "slug": "us-framing",
@@ -79,19 +96,21 @@ COMPANIES: Dict[str, Dict[str, Any]] = {
     "us_interiors": {
         "name": "US Interiors",
         "slug": "us-interiors",
-        "accent_color": "#8B5E3C",
-        "accent_name": "brown",
-        "website": None,
-        "phone": None,
-        "email": None,
-        "address": None,
+        "accent_color": "#5B7B99",
+        "accent_name": "slate",
+        "website": "https://us-interiors.onrender.com",
+        "phone": "(502) 555-0190",
+        "email": "info@usinteriors.com",
+        "address": "4700 Shelbyville Rd, Suite 215, Louisville, KY 40207",
         "services": [
-            "Interior Finishing",
-            "Trim & Millwork",
-            "Detail Work",
+            "Acoustical Ceilings",
+            "Specialty Finishes",
+            "Painting & Coatings",
+            "Millwork & Trim",
+            "Wall Coverings",
+            "Interior Restoration",
         ],
-        "tagline": "Premium commercial interior finishing",
-        "status": "coming_soon",
+        "tagline": "Interior Finishing. Perfected.",
     },
     "us_development": {
         "name": "US Development",
@@ -103,14 +122,14 @@ COMPANIES: Dict[str, Dict[str, Any]] = {
         "email": "info@usdevelopment.com",
         "address": "4965 US Highway 42, Suite 220, Louisville, KY 40222",
         "services": [
-            "Construction Management",
-            "General Contracting",
-            "Pre-Construction Services",
-            "Turnkey Development",
-            "Multi-Trade Coordination",
+            "Land Acquisition & Site Selection",
+            "Entitlements & Permitting",
+            "Project Financing & Capital Stack",
             "Owner's Representation",
+            "Pre-Development Services",
+            "Asset Management",
         ],
-        "tagline": "Turnkey construction management",
+        "tagline": "Real Estate Development",
     },
 }
 
