@@ -74,7 +74,7 @@ window.PageReactivation = {
                     <div class="mc-card">
                         <div class="mc-card-header">
                             <h3 class="flex items-center gap-2">
-                                <i data-lucide="users" class="w-4 h-4 text-sky"></i>
+                                <i data-lucide="users" class="w-4 h-4 text-navy/60"></i>
                                 Lead Pipeline
                             </h3>
                             <div class="flex items-center gap-3">
@@ -103,7 +103,7 @@ window.PageReactivation = {
                                             <tr>
                                                 <td class="font-medium text-navy" x-text="lead.name"></td>
                                                 <td>
-                                                    <a :href="'mailto:' + lead.email" class="text-sky hover:underline text-xs" x-text="lead.email"></a>
+                                                    <a :href="'mailto:' + lead.email" class="text-blue-600 hover:underline text-xs" x-text="lead.email"></a>
                                                 </td>
                                                 <td>
                                                     <span class="flex items-center gap-1">
@@ -158,7 +158,7 @@ window.PageReactivation = {
                     <div class="mc-card">
                         <div class="mc-card-header">
                             <h3 class="flex items-center gap-2">
-                                <i data-lucide="git-branch" class="w-4 h-4 text-sky"></i>
+                                <i data-lucide="git-branch" class="w-4 h-4 text-navy/60"></i>
                                 4-Touch Reactivation Sequence
                             </h3>
                             <span class="text-xs text-gray-500" x-text="sequenceTotal + ' total leads'"></span>
@@ -271,8 +271,8 @@ window.PageReactivation = {
                                     <div class="stat-value" x-text="funnelData.total || 0"></div>
                                     <div class="stat-label">Total Leads</div>
                                 </div>
-                                <div class="stat-icon bg-sky/10">
-                                    <i data-lucide="users" class="w-5 h-5 text-sky"></i>
+                                <div class="stat-icon bg-blue-50">
+                                    <i data-lucide="users" class="w-5 h-5 text-blue-600"></i>
                                 </div>
                             </div>
                         </div>
@@ -304,7 +304,7 @@ window.PageReactivation = {
                     <div class="mc-card">
                         <div class="mc-card-header">
                             <h3 class="flex items-center gap-2">
-                                <i data-lucide="bar-chart-3" class="w-4 h-4 text-sky"></i>
+                                <i data-lucide="bar-chart-3" class="w-4 h-4 text-navy/60"></i>
                                 Reactivation Funnel
                             </h3>
                         </div>

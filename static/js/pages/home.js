@@ -88,13 +88,13 @@ window.PageHome = {
                 label: 'Scheduled Posts',
                 value: this._num(li.scheduled),
                 icon: 'send',
-                color: 'bg-sky-50 text-sky-600',
+                color: 'bg-blue-50 text-blue-600',
             },
             {
                 label: 'Published Articles',
                 value: this._num(co.published),
                 icon: 'file-check',
-                color: 'bg-green-50 text-green-600',
+                color: 'bg-emerald-50 text-emerald-600',
             },
             {
                 label: 'Active Leads',
@@ -106,7 +106,7 @@ window.PageHome = {
                 label: 'Pipeline Value',
                 value: this._currency(re.pipeline_value),
                 icon: 'dollar-sign',
-                color: 'bg-emerald-50 text-emerald-600',
+                color: 'bg-emerald-50/60 text-emerald-600',
             },
         ];
 
@@ -170,10 +170,10 @@ window.PageHome = {
             <div class="mc-card">
                 <div class="mc-card-header">
                     <h3 class="flex items-center gap-2">
-                        <i data-lucide="linkedin" class="w-4 h-4 text-sky"></i>
+                        <i data-lucide="linkedin" class="w-4 h-4 text-blue-500"></i>
                         Post Queue
                     </h3>
-                    <a href="#calendar" class="text-xs text-sky hover:underline">View All</a>
+                    <a href="#calendar" class="text-xs text-navy/60 hover:text-navy hover:underline font-medium">View All</a>
                 </div>
                 <div class="mc-card-body">
                     ${listHTML}
@@ -200,10 +200,10 @@ window.PageHome = {
             <div class="mc-card">
                 <div class="mc-card-header">
                     <h3 class="flex items-center gap-2">
-                        <i data-lucide="file-text" class="w-4 h-4 text-gold"></i>
+                        <i data-lucide="file-text" class="w-4 h-4 text-amber-600"></i>
                         Content Pipeline
                     </h3>
-                    <a href="#content" class="text-xs text-sky hover:underline">Manage</a>
+                    <a href="#content" class="text-xs text-navy/60 hover:text-navy hover:underline font-medium">Manage</a>
                 </div>
                 <div class="mc-card-body">
                     <div class="space-y-3">
@@ -245,10 +245,10 @@ window.PageHome = {
             <div class="mc-card">
                 <div class="mc-card-header">
                     <h3 class="flex items-center gap-2">
-                        <i data-lucide="filter" class="w-4 h-4 text-forest"></i>
+                        <i data-lucide="filter" class="w-4 h-4 text-emerald-600"></i>
                         Lead Funnel
                     </h3>
-                    <a href="#reactivation" class="text-xs text-sky hover:underline">Details</a>
+                    <a href="#reactivation" class="text-xs text-navy/60 hover:text-navy hover:underline font-medium">Details</a>
                 </div>
                 <div class="mc-card-body">
                     <div class="funnel-chart-wrapper">
@@ -313,10 +313,10 @@ window.PageHome = {
             <div class="mc-card">
                 <div class="mc-card-header">
                     <h3 class="flex items-center gap-2">
-                        <i data-lucide="shield-check" class="w-4 h-4 text-sky"></i>
+                        <i data-lucide="shield-check" class="w-4 h-4 text-navy/60"></i>
                         Token Health
                     </h3>
-                    <a href="#settings" class="text-xs text-sky hover:underline">Manage</a>
+                    <a href="#settings" class="text-xs text-navy/60 hover:text-navy hover:underline font-medium">Manage</a>
                 </div>
                 <div class="mc-card-body">
                     ${rows.join('')}
@@ -340,7 +340,7 @@ window.PageHome = {
             <div class="mc-card">
                 <div class="mc-card-header">
                     <h3 class="flex items-center gap-2">
-                        <i data-lucide="map" class="w-4 h-4 text-forest"></i>
+                        <i data-lucide="map" class="w-4 h-4 text-emerald-600"></i>
                         Google Business Profile
                     </h3>
                 </div>
@@ -394,10 +394,10 @@ window.PageHome = {
                     label: 'Leads',
                     data: data,
                     backgroundColor: [
-                        '#1B2A4A',  // navy — New
-                        '#2A3D66',  // navy-light — Contacted
-                        '#4A90D9',  // sky — Engaged
-                        '#2D5F2D',  // forest — Converted
+                        '#1B2A4A',  // navy -- New
+                        '#3B4F6E',  // navy-muted -- Contacted
+                        '#4A90D9',  // blue -- Engaged
+                        '#059669',  // emerald -- Converted
                     ],
                     borderRadius: 4,
                     barThickness: 22,

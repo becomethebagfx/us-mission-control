@@ -1,8 +1,86 @@
-/* Mission Control Dashboard — Custom Styles */
+/* Mission Control Dashboard — Premium Design System v2.0
+   Steve Jobs / Jony Ive design philosophy: Restraint, purpose, breathing room.
+   Navy-first palette, Playfair + Inter typography, calm confident spacing. */
 
 [x-cloak] { display: none !important; }
 
-/* Page transitions */
+/* ================================================================
+   CSS CUSTOM PROPERTIES — Design Tokens
+   ================================================================ */
+:root {
+    --navy:         #1B2A4A;
+    --navy-light:   #2A3F6B;
+    --navy-dark:    #0F1A2E;
+    --navy-muted:   #3B4F6E;
+    --gold:         #B8860B;
+    --gold-light:   #D4A843;
+    --text-primary: #1A1A2E;
+    --text-secondary: #4B5563;
+    --text-muted:   #9CA3AF;
+    --border:       #E5E7EB;
+    --border-light: #F3F4F6;
+    --bg-page:      #F8F9FB;
+    --bg-card:      #FFFFFF;
+    --radius-sm:    6px;
+    --radius-md:    10px;
+    --radius-lg:    12px;
+    --shadow-card:  0 1px 3px rgba(27,42,74,0.05), 0 1px 2px rgba(27,42,74,0.03);
+    --shadow-card-hover: 0 4px 12px rgba(27,42,74,0.08), 0 2px 4px rgba(27,42,74,0.04);
+    --shadow-elevated: 0 8px 24px rgba(27,42,74,0.1), 0 2px 8px rgba(27,42,74,0.04);
+    --transition: 200ms ease;
+}
+
+/* ================================================================
+   BASE — Body, Typography, Scrollbar
+   ================================================================ */
+body {
+    background: var(--bg-page);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom thin scrollbar — navy theme */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(27, 42, 74, 0.15);
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(27, 42, 74, 0.25);
+}
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(27, 42, 74, 0.15) transparent;
+}
+
+/* ================================================================
+   FOCUS STATES — Accessibility
+   ================================================================ */
+*:focus-visible {
+    outline: 2px solid #4A90D9;
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+button:focus-visible,
+a:focus-visible,
+select:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid #4A90D9;
+    outline-offset: 2px;
+}
+
+/* ================================================================
+   PAGE TRANSITIONS — Subtle fade-in on route change
+   ================================================================ */
 @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -10,330 +88,8 @@
 .page-enter {
     animation: fadeInUp 0.35s ease-out both;
 }
-
-/* Stat cards */
-.stat-card {
-    @apply bg-white rounded-xl border border-gray-200 p-5 transition-all duration-200;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-}
-.stat-card:hover {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    transform: translateY(-1px);
-}
-.stat-card .stat-value {
-    @apply text-2xl font-bold text-navy;
-}
-.stat-card .stat-label {
-    @apply text-xs text-gray-500 uppercase tracking-wide mt-1;
-}
-.stat-card .stat-icon {
-    @apply w-10 h-10 rounded-lg flex items-center justify-center;
-}
-
-/* Hero stat cards (larger variant for dashboard overview) */
-.stat-card-lg {
-    @apply bg-white rounded-2xl border border-gray-200 transition-all duration-200;
-    padding: 1.5rem 1.75rem;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-}
-.stat-card-lg:hover {
-    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-    transform: translateY(-2px);
-}
-.stat-card-lg .stat-value {
-    @apply text-3xl font-extrabold text-navy tracking-tight;
-}
-.stat-card-lg .stat-label {
-    @apply text-xs text-gray-500 uppercase tracking-widest mt-1.5 font-medium;
-    letter-spacing: 0.08em;
-}
-.stat-card-lg .stat-icon {
-    @apply w-12 h-12 rounded-xl flex items-center justify-center;
-}
-
-/* Status badges */
-.badge {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
-}
-.badge-scheduled { @apply bg-blue-100 text-blue-700; }
-.badge-published { @apply bg-green-100 text-green-700; }
-.badge-draft { @apply bg-gray-100 text-gray-600; }
-.badge-rejected { @apply bg-red-100 text-red-700; }
-.badge-review { @apply bg-yellow-100 text-yellow-700; }
-.badge-approved { @apply bg-emerald-100 text-emerald-700; }
-.badge-active { @apply bg-green-100 text-green-700; }
-.badge-expiring { @apply bg-amber-100 text-amber-700; }
-.badge-expired { @apply bg-red-100 text-red-700; }
-.badge-disconnected { @apply bg-gray-100 text-gray-500; }
-.badge-new { @apply bg-blue-100 text-blue-700; }
-.badge-contacted { @apply bg-purple-100 text-purple-700; }
-.badge-engaged { @apply bg-indigo-100 text-indigo-700; }
-.badge-converted { @apply bg-green-100 text-green-700; }
-.badge-dead { @apply bg-gray-100 text-gray-400; }
-.badge-generated { @apply bg-cyan-100 text-cyan-700; }
-
-/* Company color dots */
-.company-dot {
-    @apply w-2.5 h-2.5 rounded-full inline-block mr-1.5;
-}
-.company-dot-us-framing { background: #4A90D9; }
-.company-dot-us-drywall { background: #B8860B; }
-.company-dot-us-exteriors { background: #2D5F2D; }
-.company-dot-us-development { background: #C4AF94; }
-
-/* Table styles */
-.mc-table {
-    @apply w-full text-sm;
-}
-.mc-table thead {
-    @apply border-b border-gray-200;
-}
-.mc-table thead th {
-    @apply bg-gray-50/80;
-}
-.mc-table th {
-    @apply text-left text-xs font-medium text-gray-500 uppercase tracking-wider px-4 py-3;
-}
-.mc-table td {
-    @apply px-4 py-3.5 border-b border-gray-100;
-}
-.mc-table tbody tr:nth-child(even) td {
-    @apply bg-gray-50/50;
-}
-.mc-table tr:hover td {
-    @apply bg-sky-50/40;
-}
-
-/* Card containers */
-.mc-card {
-    @apply bg-white rounded-xl border border-gray-200 overflow-hidden transition-all duration-200;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-}
-.mc-card:hover {
-    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
-}
-.mc-card-header {
-    @apply px-5 py-4 border-b border-gray-100 flex items-center justify-between;
-}
-.mc-card-header h3 {
-    @apply text-sm font-semibold text-navy;
-}
-.mc-card-body {
-    @apply p-5;
-}
-
-/* Tabs — refined with stronger active state */
-.mc-tabs {
-    @apply flex border-b border-gray-200 mb-6 gap-1;
-}
-.mc-tab {
-    @apply px-5 py-2.5 text-sm font-medium cursor-pointer transition-all duration-200 -mb-px rounded-t-lg;
-    border-bottom: 3px solid transparent;
-}
-.mc-tab-active {
-    border-bottom: 3px solid #0ea5e9;
-    @apply text-sky;
-    background: rgba(14, 165, 233, 0.05);
-}
-.mc-tab-inactive {
-    @apply text-gray-500;
-    border-bottom: 3px solid transparent;
-}
-.mc-tab-inactive:hover {
-    @apply text-gray-700;
-    background: rgba(0, 0, 0, 0.02);
-    border-bottom: 3px solid #d1d5db;
-}
-
-/* Score circle badges — color-coded by score value */
-.score-badge {
-    @apply inline-flex items-center justify-center w-9 h-9 rounded-full text-xs font-bold;
-}
-.score-badge-green {
-    @apply bg-green-100 text-green-700;
-    box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.15);
-}
-.score-badge-blue {
-    @apply bg-sky-100 text-sky-700;
-    box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.15);
-}
-.score-badge-amber {
-    @apply bg-amber-100 text-amber-700;
-    box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.15);
-}
-.score-badge-red {
-    @apply bg-red-100 text-red-700;
-    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.15);
-}
-
-/* Deal value column — tabular numbers for alignment */
-.deal-value {
-    @apply text-right font-semibold text-navy;
-    font-variant-numeric: tabular-nums;
-    letter-spacing: -0.01em;
-}
-
-/* Sequence timeline circles — elevated with shadows */
-.seq-circle {
-    @apply rounded-full flex items-center justify-center text-white font-bold text-sm z-10;
-    width: 3.5rem;
-    height: 3.5rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.08);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.seq-circle:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16), 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Pipeline show-more button */
-.pipeline-expand-btn {
-    @apply w-full py-3 text-sm font-medium text-sky hover:text-sky-700
-           transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer;
-    background: rgba(14, 165, 233, 0.04);
-    border-top: 1px solid rgba(14, 165, 233, 0.1);
-}
-.pipeline-expand-btn:hover {
-    background: rgba(14, 165, 233, 0.08);
-}
-
-/* Settings: OAuth token table — column dividers for scannability */
-.mc-table-divided td {
-    @apply border-r border-gray-100;
-}
-.mc-table-divided td:last-child {
-    @apply border-r-0;
-}
-.mc-table-divided th {
-    @apply border-r border-gray-100;
-}
-.mc-table-divided th:last-child {
-    @apply border-r-0;
-}
-.mc-table-divided td {
-    @apply px-5 py-4;
-}
-.mc-table-divided th {
-    @apply px-5;
-}
-
-/* Settings: Company config cards — accent left border */
-.company-config-card {
-    @apply border border-gray-200 rounded-xl p-5 transition-all duration-200;
-    min-height: 220px;
-    border-left: 4px solid #ccc;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-}
-.company-config-card:hover {
-    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-    transform: translateY(-1px);
-}
-
-/* Settings: System info tiles — elevated with color tint */
-.sys-info-tile {
-    @apply flex items-center gap-4 p-4 rounded-xl transition-all duration-200;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-}
-.sys-info-tile:hover {
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    transform: translateY(-1px);
-}
-.sys-info-tile .sys-icon {
-    @apply w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0;
-}
-.sys-info-tile .sys-icon i,
-.sys-info-tile .sys-icon svg {
-    width: 1.25rem;
-    height: 1.25rem;
-}
-
-/* Loading spinner */
-.mc-spinner {
-    @apply inline-block w-5 h-5 border-2 border-gray-300 border-t-sky rounded-full;
-    animation: spin 0.6s linear infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-
-/* Token health indicators */
-.token-health {
-    @apply flex items-center gap-2 text-sm;
-}
-.token-dot {
-    @apply w-3 h-3 rounded-full flex-shrink-0;
-}
-.token-active { @apply bg-green-500; }
-.token-expiring { @apply bg-amber-500 animate-pulse; }
-.token-expired { @apply bg-red-500; }
-.token-status-label {
-    @apply text-xs font-medium;
-}
-.token-status-label-active { @apply text-green-600; }
-.token-status-label-expiring { @apply text-amber-600; }
-.token-status-label-expired { @apply text-red-600; }
-
-/* Content pipeline stage progress bars */
-.progress-stage-draft {
-    background-color: #9CA3AF;
-}
-.progress-stage-review {
-    background-color: #F59E0B;
-}
-.progress-stage-approved {
-    background-color: #10B981;
-}
-.progress-stage-published {
-    background-color: #22C55E;
-}
-
-/* GBP metric card tints */
-.gbp-metric-card {
-    @apply rounded-xl p-4 transition-all duration-200;
-}
-.gbp-metric-views {
-    background: linear-gradient(135deg, #EFF6FF 0%, #F0F9FF 100%);
-}
-.gbp-metric-clicks {
-    background: linear-gradient(135deg, #ECFDF5 0%, #F0FDF4 100%);
-}
-.gbp-metric-calls {
-    background: linear-gradient(135deg, #FFF7ED 0%, #FFFBEB 100%);
-}
-.gbp-metric-directions {
-    background: linear-gradient(135deg, #F5F3FF 0%, #FAF5FF 100%);
-}
-
-/* Funnel chart wrapper — explicit height for Chart.js */
-.funnel-chart-wrapper {
-    position: relative;
-    height: 200px;
-    width: 100%;
-}
-
-/* Funnel chart container */
-.funnel-bar {
-    @apply h-8 rounded-r-lg transition-all duration-500;
-}
-
-/* Calendar overrides */
-.fc .fc-toolbar-title {
-    font-family: 'Playfair Display', serif !important;
-    color: #1B2A4A !important;
-    font-size: 1.1rem !important;
-}
-.fc .fc-button-primary {
-    background-color: #1B2A4A !important;
-    border-color: #1B2A4A !important;
-}
-.fc .fc-button-primary:hover {
-    background-color: #2A3D66 !important;
-}
-.fc .fc-daygrid-day-number {
-    color: #1B2A4A;
-}
-
-/* Page fade transition (shell-level) */
 .page-fade {
-    transition: opacity 0.2s ease;
+    transition: opacity 0.25s ease;
 }
 .page-fade-enter {
     opacity: 0;
@@ -342,32 +98,66 @@
     opacity: 1;
 }
 
-/* Sidebar gradient — subtle navy to navy-dark */
-.sidebar-gradient {
-    background: linear-gradient(180deg, #1B2A4A 0%, #111D35 100%);
+/* ================================================================
+   SKELETON LOADING — Pulse animation
+   ================================================================ */
+@keyframes skeletonPulse {
+    0%, 100% { opacity: 0.5; }
+    50%      { opacity: 0.8; }
+}
+.skeleton {
+    background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+    background-size: 200% 100%;
+    animation: skeletonPulse 1.5s ease-in-out infinite;
+    border-radius: var(--radius-sm);
+}
+.skeleton-text {
+    height: 12px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+.skeleton-card {
+    height: 120px;
+    border-radius: var(--radius-lg);
 }
 
-/* Nav active state — left accent bar + tinted background */
+/* ================================================================
+   SIDEBAR — Clean, minimal navy gradient
+   ================================================================ */
+.sidebar-gradient {
+    background: linear-gradient(180deg, var(--navy) 0%, var(--navy-dark) 100%);
+}
+
+/* Nav active — subtle left accent, quiet highlight */
 .nav-active {
-    background: rgba(74, 144, 217, 0.15);
-    border-left: 3px solid #4A90D9;
+    background: rgba(255, 255, 255, 0.07);
+    border-left: 3px solid var(--gold);
+    padding-left: calc(1.5rem - 3px);
 }
 .nav-active svg,
 .nav-active i {
-    color: #4A90D9;
+    color: var(--gold-light);
 }
 
-/* Company filter select — lifted from background */
+/* Company filter select */
 .company-select {
-    background-color: rgba(42, 61, 102, 0.8);
-    border: 1px solid rgba(74, 144, 217, 0.25);
-    transition: border-color 0.2s ease;
+    background-color: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: border-color var(--transition), background-color var(--transition);
+}
+.company-select:hover {
+    background-color: rgba(255, 255, 255, 0.09);
 }
 .company-select:focus {
-    border-color: #4A90D9;
+    border-color: var(--gold);
+    background-color: rgba(255, 255, 255, 0.09);
+}
+.company-select option {
+    background: var(--navy);
+    color: #fff;
 }
 
-/* Company color indicator in sidebar */
+/* Company color indicator dot in sidebar */
 .company-indicator {
     position: relative;
 }
@@ -381,20 +171,607 @@
     height: 8px;
     border-radius: 50%;
     background: var(--company-color, transparent);
-    transition: background 0.2s ease;
+    transition: background var(--transition);
 }
 
-/* Breadcrumb separator */
+/* ================================================================
+   TOP BAR — Breadcrumb
+   ================================================================ */
 .breadcrumb-sep::before {
     content: '/';
-    color: #cbd5e1;
+    color: var(--border);
     margin: 0 8px;
     font-size: 12px;
     font-weight: 300;
 }
 
-/* Responsive */
+/* ================================================================
+   STAT CARDS — Two sizes, unified, hoverable
+   ================================================================ */
+.stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.5rem;
+    box-shadow: var(--shadow-card);
+    transition: box-shadow var(--transition), transform var(--transition);
+}
+.stat-card:hover {
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-1px);
+}
+.stat-card .stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--navy);
+    line-height: 1.2;
+}
+.stat-card .stat-label {
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+}
+.stat-card .stat-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: var(--radius-md);
+}
+
+/* Large stat cards — dashboard hero row */
+.stat-card-lg {
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 1.75rem;
+    box-shadow: var(--shadow-card);
+    transition: box-shadow var(--transition), transform var(--transition);
+}
+.stat-card-lg:hover {
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-1px);
+}
+.stat-card-lg .stat-value {
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--navy);
+    line-height: 1.2;
+}
+.stat-card-lg .stat-label {
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-top: 0.375rem;
+}
+.stat-card-lg .stat-icon {
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: var(--radius-md);
+}
+
+/* ================================================================
+   STATUS BADGES — Consistent pill-shaped, restrained palette
+   ================================================================ */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.125rem 0.625rem;
+    border-radius: 9999px;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    line-height: 1.5;
+    white-space: nowrap;
+}
+.badge-scheduled   { background: #EFF6FF; color: #1D4ED8; }
+.badge-published   { background: #ECFDF5; color: #047857; }
+.badge-draft       { background: #F3F4F6; color: #6B7280; }
+.badge-rejected    { background: #FEF2F2; color: #B91C1C; }
+.badge-review      { background: #FFFBEB; color: #B45309; }
+.badge-approved    { background: #ECFDF5; color: #047857; }
+.badge-active      { background: #ECFDF5; color: #047857; }
+.badge-expiring    { background: #FFFBEB; color: #B45309; }
+.badge-expired     { background: #FEF2F2; color: #B91C1C; }
+.badge-disconnected { background: #F3F4F6; color: #9CA3AF; }
+.badge-new         { background: #EFF6FF; color: #1D4ED8; }
+.badge-contacted   { background: #F5F3FF; color: #7C3AED; }
+.badge-engaged     { background: #EEF2FF; color: #4338CA; }
+.badge-converted   { background: #ECFDF5; color: #047857; }
+.badge-dead        { background: #F3F4F6; color: #9CA3AF; }
+.badge-generated   { background: #ECFEFF; color: #0E7490; }
+
+/* ================================================================
+   COMPANY COLOR DOTS
+   ================================================================ */
+.company-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 0.375rem;
+    flex-shrink: 0;
+}
+.company-dot-us-framing    { background: #4A90D9; }
+.company-dot-us-drywall    { background: #B8860B; }
+.company-dot-us-exteriors  { background: #2D5F2D; }
+.company-dot-us-development { background: #C4AF94; }
+.company-dot-us-interiors  { background: #5B7B99; }
+
+/* ================================================================
+   TABLES — Clean, alternating rows, sticky headers
+   ================================================================ */
+.mc-table {
+    width: 100%;
+    font-size: 0.8125rem;
+    border-collapse: collapse;
+}
+.mc-table thead {
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+.mc-table th {
+    text-align: left;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    padding: 0.75rem 1rem;
+    background: #FAFBFC;
+}
+.mc-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-secondary);
+}
+.mc-table tbody tr:nth-child(even) td {
+    background: rgba(248, 249, 251, 0.5);
+}
+.mc-table tbody tr:hover td {
+    background: rgba(27, 42, 74, 0.02);
+}
+
+/* Divided table variant (settings) */
+.mc-table-divided td,
+.mc-table-divided th {
+    border-right: 1px solid var(--border-light);
+}
+.mc-table-divided td:last-child,
+.mc-table-divided th:last-child {
+    border-right: none;
+}
+.mc-table-divided td {
+    padding: 0.875rem 1.25rem;
+}
+.mc-table-divided th {
+    padding: 0.75rem 1.25rem;
+}
+
+/* ================================================================
+   CARD CONTAINERS — 12px radius, consistent shadow, breathing room
+   ================================================================ */
+.mc-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    transition: box-shadow var(--transition);
+}
+.mc-card:hover {
+    box-shadow: var(--shadow-card-hover);
+}
+.mc-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-light);
+}
+.mc-card-header h3 {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--navy);
+}
+.mc-card-body {
+    padding: 1.5rem;
+}
+
+/* ================================================================
+   TABS — Navy-brand active state, clean underline
+   ================================================================ */
+.mc-tabs {
+    display: flex;
+    gap: 0.25rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+}
+.mc-tab {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+.mc-tab-active {
+    border-bottom-color: var(--navy);
+    color: var(--navy);
+    background: rgba(27, 42, 74, 0.03);
+}
+.mc-tab-inactive {
+    color: var(--text-muted);
+    border-bottom-color: transparent;
+}
+.mc-tab-inactive:hover {
+    color: var(--text-secondary);
+    background: rgba(0, 0, 0, 0.015);
+    border-bottom-color: var(--border);
+}
+
+/* ================================================================
+   SCORE BADGES — Circle, color-coded by value
+   ================================================================ */
+.score-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    font-size: 0.6875rem;
+    font-weight: 700;
+}
+.score-badge-green {
+    background: #ECFDF5;
+    color: #047857;
+}
+.score-badge-blue {
+    background: rgba(27, 42, 74, 0.06);
+    color: var(--navy);
+}
+.score-badge-amber {
+    background: #FFFBEB;
+    color: #B45309;
+}
+.score-badge-red {
+    background: #FEF2F2;
+    color: #B91C1C;
+}
+
+/* ================================================================
+   DEAL VALUE — Tabular-num alignment
+   ================================================================ */
+.deal-value {
+    text-align: right;
+    font-weight: 600;
+    color: var(--navy);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+}
+
+/* ================================================================
+   SEQUENCE TIMELINE — Elevated circles
+   ================================================================ */
+.seq-circle {
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 0.875rem;
+    z-index: 10;
+    width: 3.5rem;
+    height: 3.5rem;
+    box-shadow: 0 2px 8px rgba(27, 42, 74, 0.12), 0 1px 3px rgba(27, 42, 74, 0.08);
+    transition: transform var(--transition), box-shadow var(--transition);
+}
+.seq-circle:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(27, 42, 74, 0.16), 0 2px 4px rgba(27, 42, 74, 0.1);
+}
+
+/* ================================================================
+   PIPELINE EXPAND BUTTON
+   ================================================================ */
+.pipeline-expand-btn {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    color: var(--navy);
+    background: rgba(27, 42, 74, 0.02);
+    border-top: 1px solid var(--border-light);
+    transition: all var(--transition);
+}
+.pipeline-expand-btn:hover {
+    background: rgba(27, 42, 74, 0.04);
+    color: var(--navy-light);
+}
+
+/* ================================================================
+   SETTINGS — Company config cards
+   ================================================================ */
+.company-config-card {
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    min-height: 200px;
+    border-left: 4px solid #ccc;
+    box-shadow: var(--shadow-card);
+    transition: box-shadow var(--transition), transform var(--transition);
+}
+.company-config-card:hover {
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-1px);
+}
+
+/* ================================================================
+   SETTINGS — System info tiles
+   ================================================================ */
+.sys-info-tile {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    transition: box-shadow var(--transition), transform var(--transition);
+}
+.sys-info-tile:hover {
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-1px);
+}
+.sys-info-tile .sys-icon {
+    width: 2.75rem;
+    height: 2.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: var(--radius-md);
+}
+.sys-info-tile .sys-icon i,
+.sys-info-tile .sys-icon svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+/* ================================================================
+   TOKEN HEALTH INDICATORS
+   ================================================================ */
+.token-health {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8125rem;
+}
+.token-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+.token-active   { background: #10B981; }
+.token-expiring { background: #F59E0B; animation: pulse 2s infinite; }
+.token-expired  { background: #EF4444; }
+.token-status-label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+}
+.token-status-label-active   { color: #059669; }
+.token-status-label-expiring { color: #D97706; }
+.token-status-label-expired  { color: #DC2626; }
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.5; }
+}
+
+/* ================================================================
+   CONTENT PIPELINE PROGRESS BARS
+   ================================================================ */
+.progress-stage-draft     { background-color: #9CA3AF; }
+.progress-stage-review    { background-color: #F59E0B; }
+.progress-stage-approved  { background-color: #10B981; }
+.progress-stage-published { background-color: #059669; }
+
+/* ================================================================
+   GBP METRIC CARDS — Subtle gradient tints
+   ================================================================ */
+.gbp-metric-card {
+    padding: 1rem;
+    border-radius: var(--radius-lg);
+    transition: transform var(--transition);
+}
+.gbp-metric-card:hover {
+    transform: translateY(-1px);
+}
+.gbp-metric-views     { background: linear-gradient(135deg, #EFF6FF 0%, #F8FAFF 100%); }
+.gbp-metric-clicks    { background: linear-gradient(135deg, #ECFDF5 0%, #F7FDF9 100%); }
+.gbp-metric-calls     { background: linear-gradient(135deg, #FFFBEB 0%, #FFFDF5 100%); }
+.gbp-metric-directions { background: linear-gradient(135deg, #F5F3FF 0%, #FAF8FF 100%); }
+
+/* ================================================================
+   FUNNEL CHART
+   ================================================================ */
+.funnel-chart-wrapper {
+    position: relative;
+    height: 200px;
+    width: 100%;
+}
+.funnel-bar {
+    height: 0.5rem;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    transition: width 500ms ease;
+}
+
+/* ================================================================
+   CALENDAR OVERRIDES — FullCalendar brand-aligned
+   ================================================================ */
+.fc .fc-toolbar-title {
+    font-family: 'Playfair Display', serif !important;
+    color: var(--navy) !important;
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+}
+.fc .fc-button-primary {
+    background-color: var(--navy) !important;
+    border-color: var(--navy) !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.8125rem !important;
+    font-weight: 500 !important;
+    border-radius: var(--radius-sm) !important;
+}
+.fc .fc-button-primary:hover {
+    background-color: var(--navy-light) !important;
+}
+.fc .fc-button-primary:not(:disabled).fc-button-active {
+    background-color: var(--navy-dark) !important;
+}
+.fc .fc-daygrid-day-number {
+    color: var(--navy);
+    font-weight: 500;
+}
+.fc .fc-col-header-cell-cushion {
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.6875rem;
+    letter-spacing: 0.05em;
+}
+.fc .fc-daygrid-day.fc-day-today {
+    background: rgba(27, 42, 74, 0.03) !important;
+}
+
+/* ================================================================
+   LOADING SPINNER
+   ================================================================ */
+.mc-spinner {
+    display: inline-block;
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 2px solid var(--border);
+    border-top-color: var(--navy);
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ================================================================
+   BUTTON HIERARCHY — Primary, Secondary, Ghost
+   ================================================================ */
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    background: var(--navy);
+    color: #fff;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition);
+}
+.btn-primary:hover {
+    background: var(--navy-light);
+}
+
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5625rem 1.25rem;
+    background: transparent;
+    color: var(--navy);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    border: 1px solid var(--navy);
+    border-radius: var(--radius-sm);
+    transition: all var(--transition);
+}
+.btn-secondary:hover {
+    background: var(--navy);
+    color: #fff;
+}
+
+.btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.5rem;
+    background: transparent;
+    color: var(--navy);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    transition: all var(--transition);
+}
+.btn-ghost:hover {
+    color: var(--navy-light);
+    text-decoration: underline;
+}
+
+/* ================================================================
+   EMPTY STATES — Friendly, helpful
+   ================================================================ */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    text-align: center;
+}
+.empty-state-icon {
+    width: 3rem;
+    height: 3rem;
+    color: var(--text-muted);
+    opacity: 0.4;
+    margin-bottom: 1rem;
+}
+.empty-state-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
+}
+.empty-state-text {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* ================================================================
+   RESPONSIVE ADJUSTMENTS
+   ================================================================ */
 @media (max-width: 1024px) {
+    .stat-card {
+        padding: 1rem 1.25rem;
+    }
     .stat-card .stat-value {
         font-size: 1.25rem;
     }
@@ -416,4 +793,42 @@
     .company-config-card {
         min-height: auto;
     }
+    .mc-card-header {
+        padding: 0.875rem 1.25rem;
+    }
+    .mc-card-body {
+        padding: 1.25rem;
+    }
+}
+
+/* ================================================================
+   UTILITY: Link style
+   ================================================================ */
+.mc-link {
+    color: var(--navy);
+    font-weight: 500;
+    transition: color var(--transition);
+}
+.mc-link:hover {
+    color: var(--navy-light);
+    text-decoration: underline;
+}
+
+/* ================================================================
+   PAGE HEADER — Consistent h1 across all pages
+   ================================================================ */
+.page-header {
+    margin-bottom: 1.5rem;
+}
+.page-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.3;
+}
+.page-header p {
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
 }

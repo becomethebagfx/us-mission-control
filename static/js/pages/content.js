@@ -166,8 +166,8 @@ window.PageContent = {
                             <div class="${aeoColor} text-2xl font-bold">${avgAeo}${typeof avgAeo === 'number' ? '%' : ''}</div>
                             <div class="stat-label">Avg AEO Score</div>
                         </div>
-                        <div class="stat-icon bg-sky/10">
-                            <i data-lucide="brain" class="w-5 h-5 text-sky"></i>
+                        <div class="stat-icon bg-blue-50">
+                            <i data-lucide="brain" class="w-5 h-5 text-blue-600"></i>
                         </div>
                     </div>
                 </div>
@@ -184,7 +184,7 @@ window.PageContent = {
                         <div class="flex items-center gap-2">
                             <i data-lucide="filter" class="w-4 h-4 text-gray-400"></i>
                             <select id="ct-status-filter"
-                                class="border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-700 focus:ring-2 focus:ring-sky/30 focus:border-sky outline-none bg-white">
+                                class="border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-700 focus:ring-2 focus:ring-navy/10 focus:border-navy/40 outline-none bg-white">
                                 <option value="">All Statuses</option>
                                 <option value="draft" ${this._filterStatus === 'draft' ? 'selected' : ''}>Draft</option>
                                 <option value="review" ${this._filterStatus === 'review' ? 'selected' : ''}>In Review</option>
@@ -198,7 +198,7 @@ window.PageContent = {
                             <input type="text" id="ct-search-input"
                                 value="${this._esc(this._searchQuery)}"
                                 placeholder="Search articles by title or topic..."
-                                class="w-full border border-gray-300 rounded-lg pl-9 pr-3 py-2 text-sm text-gray-700 focus:ring-2 focus:ring-sky/30 focus:border-sky outline-none">
+                                class="w-full border border-gray-200 rounded-lg pl-9 pr-3 py-2 text-sm text-gray-700 focus:ring-2 focus:ring-navy/10 focus:border-navy/40 outline-none">
                         </div>
                         <!-- Result count -->
                         <div class="text-xs text-gray-400 whitespace-nowrap self-center">
@@ -220,7 +220,7 @@ window.PageContent = {
         const isSelected = this._selectedArticle && this._selectedArticle.id === article.id;
 
         return `
-            <div class="mc-card border border-gray-200 cursor-pointer transition-all duration-200 hover:shadow-lg hover:border-gray-300 ${isSelected ? 'ring-2 ring-sky border-sky/30' : ''}"
+            <div class="mc-card border border-gray-200 cursor-pointer transition-all duration-200 hover:shadow-lg hover:border-gray-300 ${isSelected ? 'ring-2 ring-navy/20 border-navy/30' : ''}"
                  data-article-id="${article.id}">
                 <div class="mc-card-body">
                     <!-- Header -->
@@ -345,7 +345,7 @@ window.PageContent = {
                     <div class="border-t border-gray-100 pt-3">
                         <p class="text-xs text-gray-500 mb-2">Tags</p>
                         <div class="flex flex-wrap gap-1.5">
-                            ${tags.map(tag => `<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-sky/10 text-sky">${this._esc(tag)}</span>`).join('')}
+                            ${tags.map(tag => `<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-navy/5 text-navy/70">${this._esc(tag)}</span>`).join('')}
                         </div>
                     </div>
                     ` : ''}
@@ -359,7 +359,7 @@ window.PageContent = {
                             </button>
                         ` : ''}
                         ${isApproved ? `
-                            <button id="ct-publish-btn" data-id="${article.id}" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-sky hover:bg-sky/90 text-white rounded-lg text-sm font-medium transition-colors">
+                            <button id="ct-publish-btn" data-id="${article.id}" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-navy hover:bg-navy-light text-white rounded-lg text-sm font-medium transition-colors">
                                 <i data-lucide="globe" class="w-4 h-4"></i>
                                 Publish Article
                             </button>

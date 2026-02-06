@@ -35,7 +35,7 @@ window.PageSettings = {
                     <div class="mc-card">
                         <div class="mc-card-header">
                             <h3 class="flex items-center gap-2">
-                                <i data-lucide="shield-check" class="w-4 h-4 text-sky"></i>
+                                <i data-lucide="shield-check" class="w-4 h-4 text-navy/60"></i>
                                 OAuth Token Status
                             </h3>
                             <span class="text-xs text-gray-500" x-text="tokenList.length + ' companies'"></span>
@@ -94,7 +94,7 @@ window.PageSettings = {
                     <div class="mc-card">
                         <div class="mc-card-header">
                             <h3 class="flex items-center gap-2">
-                                <i data-lucide="building-2" class="w-4 h-4 text-sky"></i>
+                                <i data-lucide="building-2" class="w-4 h-4 text-navy/60"></i>
                                 Company Configurations
                             </h3>
                             <span class="text-xs text-gray-500" x-text="companies.length + ' companies (' + activeCompanyCount + ' active)'"></span>
@@ -122,7 +122,7 @@ window.PageSettings = {
                                             <!-- Website -->
                                             <div class="flex items-start gap-2" x-show="co.website">
                                                 <i data-lucide="globe" class="w-3.5 h-3.5 text-gray-400 mt-0.5 flex-shrink-0"></i>
-                                                <a :href="co.website" target="_blank" class="text-sky hover:underline text-xs truncate" x-text="co.website"></a>
+                                                <a :href="co.website" target="_blank" class="text-blue-600 hover:underline text-xs truncate" x-text="co.website"></a>
                                             </div>
 
                                             <!-- Phone -->
@@ -134,7 +134,7 @@ window.PageSettings = {
                                             <!-- Email -->
                                             <div class="flex items-start gap-2" x-show="co.email">
                                                 <i data-lucide="mail" class="w-3.5 h-3.5 text-gray-400 mt-0.5 flex-shrink-0"></i>
-                                                <a :href="'mailto:' + co.email" class="text-sky hover:underline text-xs" x-text="co.email"></a>
+                                                <a :href="'mailto:' + co.email" class="text-blue-600 hover:underline text-xs" x-text="co.email"></a>
                                             </div>
 
                                             <!-- Address -->
@@ -163,7 +163,7 @@ window.PageSettings = {
                     <div class="mc-card">
                         <div class="mc-card-header">
                             <h3 class="flex items-center gap-2">
-                                <i data-lucide="server" class="w-4 h-4 text-sky"></i>
+                                <i data-lucide="server" class="w-4 h-4 text-navy/60"></i>
                                 System Information
                             </h3>
                         </div>
@@ -182,8 +182,8 @@ window.PageSettings = {
 
                                 <!-- Version -->
                                 <div class="sys-info-tile" style="background: linear-gradient(135deg, rgba(14,165,233,0.04) 0%, rgba(14,165,233,0.08) 100%);">
-                                    <div class="sys-icon bg-sky/10">
-                                        <i data-lucide="tag" class="w-5 h-5 text-sky"></i>
+                                    <div class="sys-icon bg-blue-50">
+                                        <i data-lucide="tag" class="w-5 h-5 text-blue-600"></i>
                                     </div>
                                     <div>
                                         <p class="text-xs text-gray-500 font-medium">Version</p>

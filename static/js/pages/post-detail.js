@@ -35,7 +35,7 @@ window.PagePostDetail = {
             <div class="flex flex-col items-center justify-center py-24 text-gray-400">
                 <i data-lucide="file-text" class="w-16 h-16 mb-4 opacity-50"></i>
                 <p class="text-lg font-medium text-gray-500">Select a post from the calendar</p>
-                <p class="text-sm mt-1">Click any post on the <a href="#calendar" class="text-sky hover:underline">LinkedIn Calendar</a> to view details.</p>
+                <p class="text-sm mt-1">Click any post on the <a href="#calendar" class="text-blue-600 hover:underline">LinkedIn Calendar</a> to view details.</p>
             </div>
         `;
     },
@@ -55,7 +55,7 @@ window.PagePostDetail = {
                 <i data-lucide="alert-circle" class="w-12 h-12 mb-3"></i>
                 <p class="text-sm font-medium text-red-600">Failed to load post</p>
                 <p class="text-xs text-red-400 mt-1">${this._esc(message)}</p>
-                <a href="#calendar" class="mt-4 text-sm text-sky hover:underline">Back to Calendar</a>
+                <a href="#calendar" class="mt-4 text-sm text-blue-600 hover:underline">Back to Calendar</a>
             </div>
         `;
     },
@@ -118,7 +118,7 @@ window.PagePostDetail = {
                     <div class="mc-card">
                         <div class="mc-card-header">
                             <h3 class="text-sm font-semibold text-navy">Post Content</h3>
-                            <button id="pd-toggle-edit" class="text-xs text-sky hover:text-sky/80 font-medium transition-colors">
+                            <button id="pd-toggle-edit" class="text-xs text-navy/60 hover:text-navy font-medium transition-colors">
                                 <i data-lucide="pencil" class="w-3.5 h-3.5 inline mr-1"></i> Edit
                             </button>
                         </div>
@@ -128,14 +128,14 @@ window.PagePostDetail = {
                                 <div class="prose prose-sm max-w-none text-gray-700 whitespace-pre-wrap leading-relaxed">${this._esc(post.content || 'No content yet.')}</div>
                                 ${hashtags.length > 0 ? `
                                     <div class="flex flex-wrap gap-2 mt-4 pt-4 border-t border-gray-100">
-                                        ${hashtags.map(tag => `<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-sky/10 text-sky">#${this._esc(tag)}</span>`).join('')}
+                                        ${hashtags.map(tag => `<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-navy/5 text-navy/70">#${this._esc(tag)}</span>`).join('')}
                                     </div>
                                 ` : ''}
                             </div>
                             <!-- Edit mode (hidden initially) -->
                             <div id="pd-content-edit" class="hidden">
                                 <textarea id="pd-content-textarea"
-                                    class="w-full h-48 border border-gray-300 rounded-lg p-3 text-sm text-gray-700 focus:ring-2 focus:ring-sky/30 focus:border-sky outline-none resize-y font-body"
+                                    class="w-full h-48 border border-gray-200 rounded-lg p-3 text-sm text-gray-700 focus:ring-2 focus:ring-navy/10 focus:border-navy/40 outline-none resize-y font-body"
                                     placeholder="Write your post content...">${this._esc(post.content || '')}</textarea>
                                 <div class="flex items-center justify-between mt-3">
                                     <span id="pd-save-feedback" class="text-xs text-gray-400"></span>
@@ -143,7 +143,7 @@ window.PagePostDetail = {
                                         <button id="pd-cancel-edit" class="px-3 py-1.5 text-xs text-gray-500 hover:text-gray-700 border border-gray-300 rounded-lg transition-colors">
                                             Cancel
                                         </button>
-                                        <button id="pd-save-content" class="px-4 py-1.5 text-xs text-white bg-sky hover:bg-sky/90 rounded-lg font-medium transition-colors">
+                                        <button id="pd-save-content" class="px-4 py-1.5 text-xs text-white bg-navy hover:bg-navy-light rounded-lg font-medium transition-colors">
                                             <i data-lucide="save" class="w-3.5 h-3.5 inline mr-1"></i> Save
                                         </button>
                                     </div>
@@ -206,7 +206,7 @@ window.PagePostDetail = {
                                 </button>
                             ` : ''}
                             ${isScheduled ? `
-                                <button id="pd-reschedule-btn" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-sky hover:bg-sky/90 text-white rounded-lg text-sm font-medium transition-colors">
+                                <button id="pd-reschedule-btn" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-navy hover:bg-navy-light text-white rounded-lg text-sm font-medium transition-colors">
                                     <i data-lucide="calendar-clock" class="w-4 h-4"></i>
                                     Reschedule
                                 </button>
@@ -405,7 +405,7 @@ window.PagePostDetail = {
                 rescheduleBtn.textContent = 'Rescheduling...';
                 try {
                     await API.posts.reschedule(post.id, newDate);
-                    this._showFeedback('Post rescheduled to ' + newDate, 'text-sky');
+                    this._showFeedback('Post rescheduled to ' + newDate, 'text-navy');
                     await this.render(post.id);
                 } catch (err) {
                     this._showFeedback('Failed to reschedule: ' + err.message, 'text-red-600');

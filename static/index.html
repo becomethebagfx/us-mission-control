@@ -11,6 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/dashboard.css">
     <!-- Favicon: MC monogram -->
@@ -38,23 +39,30 @@
         }
     </script>
 </head>
-<body class="bg-gray-50 font-body" x-data="dashboard" x-init="init()">
+<body class="font-body" x-data="dashboard" x-init="init()">
     <!-- Sidebar -->
-    <aside class="fixed left-0 top-0 h-full w-64 sidebar-gradient text-white z-30 flex flex-col shadow-xl"
+    <aside class="fixed left-0 top-0 h-full w-64 sidebar-gradient text-white z-30 flex flex-col"
            :class="sidebarOpen ? '' : '-translate-x-full lg:translate-x-0'"
            style="transition: transform 0.2s">
         <!-- Logo -->
-        <div class="px-6 py-5 border-b border-navy-light">
-            <h1 class="font-display text-lg leading-tight">Mission Control</h1>
-            <p class="text-xs text-gray-400 mt-1">US Construction Marketing</p>
+        <div class="px-6 py-5 border-b border-white/[0.06]">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0">
+                    <span class="text-xs font-bold text-white/90">MC</span>
+                </div>
+                <div>
+                    <h1 class="font-display text-sm font-bold leading-tight tracking-tight">Mission Control</h1>
+                    <p class="text-[10px] text-white/30 mt-0.5 tracking-wide">US Construction Marketing</p>
+                </div>
+            </div>
         </div>
 
         <!-- Company Filter -->
-        <div class="px-4 py-3 border-b border-navy-light/50">
-            <label class="text-[10px] uppercase tracking-widest text-gray-500 mb-1.5 block font-medium">Company</label>
+        <div class="px-5 py-3.5 border-b border-white/[0.06]">
+            <label class="text-[10px] uppercase tracking-widest text-white/25 mb-1.5 block font-semibold">Company</label>
             <div class="company-indicator" :style="'--company-color:' + getActiveCompanyColor()">
                 <select x-model="activeCompany" @change="onCompanyChange()"
-                        class="w-full company-select text-sm text-white rounded-lg px-3 py-2 focus:outline-none appearance-none cursor-pointer pr-8"
+                        class="w-full company-select text-xs text-white/80 rounded-lg px-3 py-2 focus:outline-none appearance-none cursor-pointer pr-8"
                         :style="activeCompany ? 'border-color:' + getActiveCompanyColor() : ''">
                     <option value="">All Companies</option>
                     <template x-for="(co, key) in companies" :key="key">
@@ -68,18 +76,17 @@
         <nav class="flex-1 py-4 overflow-y-auto">
             <template x-for="item in navItems" :key="item.hash">
                 <a :href="item.hash"
-                   class="flex items-center gap-3 px-6 py-2.5 text-sm transition-all duration-150"
-                   :class="currentPage === item.page ? 'nav-active text-white font-medium' : 'text-gray-400 hover:bg-white/5 hover:text-white'"
+                   class="flex items-center gap-3 px-6 py-2 text-[13px] transition-all duration-150"
+                   :class="currentPage === item.page ? 'nav-active text-white font-medium' : 'text-white/40 hover:bg-white/[0.03] hover:text-white/70'"
                    @click="sidebarOpen = false">
-                    <i :data-lucide="item.icon" class="w-4 h-4"
-                       :class="currentPage === item.page ? 'text-sky' : ''"></i>
+                    <i :data-lucide="item.icon" class="w-[16px] h-[16px] flex-shrink-0 opacity-80"></i>
                     <span x-text="item.label"></span>
                 </a>
             </template>
         </nav>
 
         <!-- Footer -->
-        <div class="px-6 py-4 border-t border-navy-light text-xs text-gray-500">
+        <div class="px-6 py-3.5 border-t border-white/[0.06] text-[10px] text-white/20">
             <p>v1.0.0 &middot; Demo Mode</p>
         </div>
     </aside>
@@ -87,32 +94,31 @@
     <!-- Mobile hamburger -->
     <button @click="sidebarOpen = !sidebarOpen"
             class="lg:hidden fixed top-4 left-4 z-40 bg-navy text-white p-2 rounded-lg shadow-lg">
-        <i data-lucide="menu" class="w-5 h-5"></i>
+        <i data-lucide="menu" class="w-4 h-4"></i>
     </button>
 
     <!-- Overlay -->
     <div x-show="sidebarOpen" @click="sidebarOpen = false"
-         class="lg:hidden fixed inset-0 bg-black/50 z-20" x-transition.opacity></div>
+         class="lg:hidden fixed inset-0 bg-black/40 z-20 backdrop-blur-sm" x-transition.opacity></div>
 
     <!-- Main Content -->
     <main class="lg:ml-64 min-h-screen">
         <!-- Top Bar -->
-        <header class="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between sticky top-0 z-10">
+        <header class="bg-white/80 backdrop-blur-md border-b border-gray-200/60 px-8 py-3 flex items-center justify-between sticky top-0 z-10">
             <div>
-                <div class="flex items-center text-sm">
+                <div class="flex items-center text-xs">
                     <span class="text-gray-400 font-medium">Mission Control</span>
                     <span class="breadcrumb-sep"></span>
                     <span class="text-navy font-semibold" x-text="pageTitle"></span>
                 </div>
-                <p class="text-xs text-gray-400 mt-0.5" x-text="pageSubtitle"></p>
             </div>
             <div class="flex items-center gap-3">
-                <span class="text-[11px] text-gray-400" x-text="new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })"></span>
+                <span class="text-[11px] text-gray-400 font-medium" x-text="new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })"></span>
             </div>
         </header>
 
         <!-- Page Container -->
-        <div id="page-container" class="p-6 page-fade page-fade-active">
+        <div id="page-container" class="p-6 lg:p-8 page-fade page-fade-active">
             <!-- Home -->
             <div x-show="currentPage === 'home'" x-cloak>
                 <div id="page-home"></div>
