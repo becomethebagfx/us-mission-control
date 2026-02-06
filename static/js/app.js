@@ -24,6 +24,11 @@ document.addEventListener('alpine:init', () => {
             { page: 'home', hash: '#home', label: 'Dashboard', icon: 'layout-dashboard' },
             { page: 'calendar', hash: '#calendar', label: 'Calendar', icon: 'calendar' },
             { page: 'content', hash: '#content', label: 'Content Library', icon: 'file-text' },
+            { page: 'gbp', hash: '#gbp', label: 'Google Business', icon: 'map-pin' },
+            { page: 'aeo', hash: '#aeo', label: 'AEO/GEO Engine', icon: 'search' },
+            { page: 'reviews', hash: '#reviews', label: 'Reviews', icon: 'star' },
+            { page: 'brand-audit', hash: '#brand-audit', label: 'Brand Audit', icon: 'shield-check' },
+            { page: 'assets', hash: '#assets', label: 'Visual Assets', icon: 'image' },
             { page: 'reactivation', hash: '#reactivation', label: 'Reactivation', icon: 'users' },
             { page: 'settings', hash: '#settings', label: 'Settings', icon: 'settings' },
         ],
@@ -34,6 +39,11 @@ document.addEventListener('alpine:init', () => {
             calendar: { title: 'LinkedIn Calendar', subtitle: 'Scheduled posts and events' },
             'post-detail': { title: 'Post Detail', subtitle: 'Review and manage post' },
             content: { title: 'Content Library', subtitle: 'Articles and content management' },
+            gbp: { title: 'Google Business Profile', subtitle: 'Locations, insights, and local search' },
+            aeo: { title: 'AEO/GEO Engine', subtitle: 'Answer engine optimization and AI citations' },
+            reviews: { title: 'Review Management', subtitle: 'Monitor and respond to customer reviews' },
+            'brand-audit': { title: 'Brand Consistency', subtitle: 'NAP accuracy, visual identity, and voice' },
+            assets: { title: 'Visual Assets', subtitle: 'Templates, social cards, and showcases' },
             reactivation: { title: 'Database Reactivation', subtitle: 'Lead pipeline and sequences' },
             settings: { title: 'Settings', subtitle: 'OAuth tokens, companies, and system info' },
         },
@@ -116,6 +126,21 @@ document.addEventListener('alpine:init', () => {
                         break;
                     case 'content':
                         if (window.PageContent) await PageContent.render(company);
+                        break;
+                    case 'gbp':
+                        if (window.PageGBP) await PageGBP.render(company);
+                        break;
+                    case 'aeo':
+                        if (window.PageAEO) await PageAEO.render(company);
+                        break;
+                    case 'reviews':
+                        if (window.PageReviews) await PageReviews.render(company);
+                        break;
+                    case 'brand-audit':
+                        if (window.PageBrandAudit) await PageBrandAudit.render(company);
+                        break;
+                    case 'assets':
+                        if (window.PageAssets) await PageAssets.render(company);
                         break;
                     case 'reactivation':
                         if (window.PageReactivation) await PageReactivation.render(company);
