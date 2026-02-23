@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login — Mission Control</title>
+    <title>Create Account — Mission Control</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -79,7 +79,7 @@
             border-color: #0073EA;
             box-shadow: 0 0 0 3px rgba(0, 115, 234, 0.1);
         }
-        .login-btn {
+        .register-btn {
             display: flex;
             align-items: center;
             gap: 10px;
@@ -95,46 +95,10 @@
             width: 100%;
             justify-content: center;
             transition: background 0.15s;
+            margin-top: 4px;
         }
-        .login-btn:hover { background: #0060C2; }
-        .login-btn:disabled { background: #B0B4C0; cursor: not-allowed; }
-        .divider {
-            display: flex;
-            align-items: center;
-            margin: 24px 0;
-            gap: 12px;
-        }
-        .divider::before, .divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: #D0D4E4;
-        }
-        .divider span {
-            font-size: 12px;
-            color: #9699A6;
-            font-weight: 500;
-        }
-        .github-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: #24292e;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 12px 28px;
-            font-size: 14px;
-            font-weight: 600;
-            font-family: inherit;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background 0.15s;
-            width: 100%;
-            justify-content: center;
-        }
-        .github-btn:hover { background: #1a1e22; }
-        .github-btn svg { width: 20px; height: 20px; }
+        .register-btn:hover { background: #0060C2; }
+        .register-btn:disabled { background: #B0B4C0; cursor: not-allowed; }
         .error-msg {
             background: #FFF0F0;
             border: 1px solid #FFD4D4;
@@ -145,18 +109,34 @@
             margin-bottom: 20px;
             display: none;
         }
-        .register-link {
+        .success-msg {
+            background: #F0FFF4;
+            border: 1px solid #C6F6D5;
+            color: #276749;
+            font-size: 13px;
+            padding: 10px 14px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        .login-link {
             margin-top: 20px;
             font-size: 13px;
             color: #676879;
         }
-        .register-link a {
+        .login-link a {
             color: #0073EA;
             text-decoration: none;
             font-weight: 500;
         }
-        .register-link a:hover {
+        .login-link a:hover {
             text-decoration: underline;
+        }
+        .pw-hint {
+            font-size: 11px;
+            color: #9699A6;
+            margin-top: 4px;
+            text-align: left;
         }
         .footer {
             margin-top: 24px;
@@ -168,89 +148,89 @@
 <body>
     <div class="login-card">
         <div class="logo"><span>MC</span></div>
-        <h1>Mission Control</h1>
-        <p class="subtitle">Sign in to access the marketing dashboard</p>
+        <h1>Create Account</h1>
+        <p class="subtitle">Only authorized emails can register</p>
 
         <div class="error-msg" id="error-msg"></div>
+        <div class="success-msg" id="success-msg"></div>
 
-        <form id="email-form" onsubmit="return handleEmailLogin(event)">
+        <form id="register-form" onsubmit="return handleRegister(event)">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="Your name" autocomplete="name">
+            </div>
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" placeholder="you@company.com" required autocomplete="email">
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Enter your password" required autocomplete="current-password">
+                <input type="password" id="password" name="password" placeholder="Create a password" required autocomplete="new-password" minlength="8">
+                <p class="pw-hint">Must be at least 8 characters</p>
             </div>
-            <button type="submit" class="login-btn" id="login-btn">Sign In</button>
+            <div class="form-group">
+                <label for="password-confirm">Confirm Password</label>
+                <input type="password" id="password-confirm" name="password-confirm" placeholder="Confirm your password" required autocomplete="new-password">
+            </div>
+            <button type="submit" class="register-btn" id="register-btn">Create Account</button>
         </form>
 
-        <div class="divider"><span>or</span></div>
-
-        <a href="/auth/login" class="github-btn">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-            </svg>
-            Sign in with GitHub
-        </a>
-
-        <p class="register-link">Don't have an account? <a href="/auth/register-page">Create one</a></p>
+        <p class="login-link">Already have an account? <a href="/auth/login-page">Sign in</a></p>
 
         <p class="footer">Authorized team members only</p>
     </div>
 
     <script>
-        // Show errors from URL params (GitHub OAuth errors)
-        const params = new URLSearchParams(window.location.search);
-        const error = params.get('error');
-        if (error) {
-            showError({
-                not_allowed: 'Your account is not authorized. Contact your admin.',
-                token_failed: 'GitHub authentication failed. Please try again.',
-                user_failed: 'Could not retrieve your profile. Please try again.',
-                no_code: 'Authentication was cancelled. Please try again.',
-                no_token: 'GitHub did not return an access token. Please try again.',
-                invalid_state: 'Session expired. Please try again.',
-            }[error] || 'Login failed. Please try again.');
-        }
-
         function showError(msg) {
             const el = document.getElementById('error-msg');
             el.textContent = msg;
             el.style.display = 'block';
+            document.getElementById('success-msg').style.display = 'none';
         }
 
-        async function handleEmailLogin(e) {
+        async function handleRegister(e) {
             e.preventDefault();
-            const btn = document.getElementById('login-btn');
+            const btn = document.getElementById('register-btn');
+            const name = document.getElementById('name').value.trim();
             const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
+            const confirm = document.getElementById('password-confirm').value;
 
             if (!email || !password) return;
 
+            if (password !== confirm) {
+                showError('Passwords do not match.');
+                return;
+            }
+
+            if (password.length < 8) {
+                showError('Password must be at least 8 characters.');
+                return;
+            }
+
             btn.disabled = true;
-            btn.textContent = 'Signing in...';
+            btn.textContent = 'Creating account...';
             document.getElementById('error-msg').style.display = 'none';
 
             try {
-                const resp = await fetch('/auth/login-email', {
+                const resp = await fetch('/auth/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password }),
+                    body: JSON.stringify({ email, password, name }),
                 });
 
                 const data = await resp.json();
                 if (resp.ok && data.success) {
                     window.location.href = '/';
                 } else {
-                    showError(data.error || 'Login failed. Please try again.');
+                    showError(data.error || 'Registration failed. Please try again.');
                     btn.disabled = false;
-                    btn.textContent = 'Sign In';
+                    btn.textContent = 'Create Account';
                 }
             } catch (err) {
                 showError('Network error. Please try again.');
                 btn.disabled = false;
-                btn.textContent = 'Sign In';
+                btn.textContent = 'Create Account';
             }
         }
     </script>

@@ -25,6 +25,7 @@ if not DEMO_MODE and SESSION_SECRET == "dev-secret-change-me":
     import warnings
     warnings.warn("SESSION_SECRET must be set in production! Using default is insecure.", RuntimeWarning)
 ALLOWED_USERS = [u.strip() for u in os.getenv("ALLOWED_USERS", "").split(",") if u.strip()]
+ALLOWED_EMAILS = [e.strip().lower() for e in os.getenv("ALLOWED_EMAILS", "").split(",") if e.strip()]
 
 
 # ── Company Registry ─────────────────────────────────────────────
@@ -191,6 +192,7 @@ class DashboardConfig:
     GITHUB_CLIENT_SECRET = GITHUB_CLIENT_SECRET
     SESSION_SECRET = SESSION_SECRET
     ALLOWED_USERS = ALLOWED_USERS
+    ALLOWED_EMAILS = ALLOWED_EMAILS
 
     # CORS
     ALLOWED_ORIGINS = [

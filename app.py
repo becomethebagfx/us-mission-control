@@ -22,6 +22,7 @@ async def lifespan(app: FastAPI):
     (config.DATA_DIR / "builder" / "sessions").mkdir(parents=True, exist_ok=True)
     (config.DATA_DIR / "builder" / "uploads").mkdir(parents=True, exist_ok=True)
     (config.DATA_DIR / "briefs").mkdir(parents=True, exist_ok=True)
+    (config.DATA_DIR / "users").mkdir(parents=True, exist_ok=True)
 
     if config.DEMO_MODE:
         from mock_data import seed_all_mock_data
@@ -77,7 +78,7 @@ async def auth_middleware(request: Request, call_next):
     if not session:
         if path.startswith("/api/"):
             return JSONResponse({"error": "unauthorized"}, status_code=401)
-        return RedirectResponse("/auth/login")
+        return RedirectResponse("/auth/login-page")
 
     request.state.user = session
     return await call_next(request)
@@ -135,10 +136,7 @@ async def serve_index(request: Request):
     if not config.DEMO_MODE:
         session = verify_session(request)
         if not session:
-            login_path = static_dir / "login.html"
-            if login_path.exists():
-                return FileResponse(str(login_path))
-            return RedirectResponse("/auth/login")
+            return RedirectResponse("/auth/login-page")
 
     index_path = static_dir / "index.html"
     if index_path.exists():
