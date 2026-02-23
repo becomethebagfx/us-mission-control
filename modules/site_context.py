@@ -13,15 +13,37 @@ WEBSITES_DIR = Path(__file__).parent.parent.parent.parent / "websites"
 SITE_REGISTRY = {
     "us-exteriors": {
         "name": "US Exteriors",
-        "url": "https://us-exteriors.onrender.com",
+        "url": "https://us-exteriors-1uhh.onrender.com",
         "repo": "US-Websites/us-exteriors-site",
         "dir": "us-exteriors",
+        "pages": [
+            {"path": "index.html", "title": "US Exteriors"},
+            {"path": "about/index.html", "title": "About Us"},
+            {"path": "services/index.html", "title": "Services"},
+            {"path": "projects/index.html", "title": "Projects"},
+            {"path": "contact/index.html", "title": "Contact"},
+            {"path": "blog/index.html", "title": "Blog"},
+            {"path": "blog/exterior-cladding-trends-2026/index.html", "title": "Exterior Cladding Trends 2026"},
+            {"path": "blog/roofing-vs-siding-roi/index.html", "title": "Roofing vs Siding ROI"},
+            {"path": "blog/commercial-siding-materials-compared/index.html", "title": "Commercial Siding Materials"},
+        ],
     },
     "us-drywall": {
         "name": "US Drywall",
-        "url": "https://us-drywall.onrender.com",
+        "url": "https://us-drywall-9r12.onrender.com",
         "repo": "US-Websites/us-drywall-site",
         "dir": "us-drywall",
+        "pages": [
+            {"path": "index.html", "title": "US Drywall"},
+            {"path": "about/index.html", "title": "About Us"},
+            {"path": "services/index.html", "title": "Services"},
+            {"path": "projects/index.html", "title": "Projects"},
+            {"path": "contact/index.html", "title": "Contact"},
+            {"path": "blog/index.html", "title": "Blog"},
+            {"path": "blog/choosing-drywall-finish-level/index.html", "title": "Choosing a Drywall Finish Level"},
+            {"path": "blog/commercial-drywall-2026/index.html", "title": "Commercial Drywall 2026"},
+            {"path": "blog/level-4-vs-level-5-finish/index.html", "title": "Level 4 vs Level 5 Finish"},
+        ],
     },
 }
 
@@ -44,16 +66,17 @@ def get_available_sites() -> list:
 
 
 def get_site_context(site_slug: str) -> Optional[dict]:
-    """Build full context for a site, for the LLM system prompt."""
+    """Build full context for a site, for the LLM system prompt.
+
+    Works both locally (reads page inventory from filesystem) and on Render
+    (returns context with empty pages list — site files are in separate repos).
+    """
     info = SITE_REGISTRY.get(site_slug)
     if not info:
         return None
 
     site_dir = WEBSITES_DIR / info["dir"] / "public"
-    if not site_dir.exists():
-        return None
-
-    pages = _get_page_inventory(site_dir)
+    pages = _get_page_inventory(site_dir) if site_dir.exists() else info.get("pages", [])
 
     return {
         "slug": site_slug,
