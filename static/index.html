@@ -82,9 +82,18 @@
             </template>
         </nav>
 
-        <!-- Footer -->
-        <div class="px-4 py-3 border-t border-white/[0.08] text-[10px] text-white/25">
-            <p>v1.0 &middot; Demo</p>
+        <!-- User / Footer -->
+        <div class="px-4 py-3 border-t border-white/[0.08]">
+            <template x-if="user">
+                <div class="flex items-center gap-2 mb-2">
+                    <img :src="user.avatar_url" class="w-6 h-6 rounded-full" alt="">
+                    <span class="text-[12px] text-white/60 truncate flex-1" x-text="user.name || user.username"></span>
+                    <button @click="logout()" class="text-white/30 hover:text-white/60 transition-colors" title="Sign out">
+                        <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+                    </button>
+                </div>
+            </template>
+            <p class="text-[10px] text-white/25">v1.0</p>
         </div>
     </aside>
 
@@ -101,7 +110,7 @@
     <!-- Main Content -->
     <main class="lg:ml-[240px] min-h-screen bg-[#F6F7FB]">
         <!-- Top Bar -->
-        <header class="bg-white border-b border-[#E6E9EF] px-6 py-2.5 flex items-center justify-between sticky top-0 z-10">
+        <header id="mc-topbar" class="bg-white border-b border-[#E6E9EF] px-6 py-2.5 flex items-center justify-between sticky top-0 z-10">
             <div class="flex items-center gap-2">
                 <h2 class="text-[15px] font-semibold text-[#323338]" x-text="pageTitle"></h2>
                 <span class="text-[12px] text-[#676879] hidden sm:inline" x-text="pageSubtitle ? '— ' + pageSubtitle : ''"></span>
@@ -172,6 +181,21 @@
             <div x-show="currentPage === 'settings'" x-cloak>
                 <div id="page-settings"></div>
             </div>
+
+            <!-- Website Builder -->
+            <div x-show="currentPage === 'builder'" x-cloak>
+                <div id="page-builder"></div>
+            </div>
+
+            <!-- Monitoring -->
+            <div x-show="currentPage === 'monitoring'" x-cloak>
+                <div id="page-monitoring"></div>
+            </div>
+
+            <!-- Weekly Brief -->
+            <div x-show="currentPage === 'brief'" x-cloak>
+                <div id="page-brief"></div>
+            </div>
         </div>
     </main>
 
@@ -189,6 +213,9 @@
     <script src="/static/js/pages/assets.js"></script>
     <script src="/static/js/pages/quality.js"></script>
     <script src="/static/js/pages/settings.js"></script>
+    <script src="/static/js/pages/builder.js"></script>
+    <script src="/static/js/pages/monitoring.js"></script>
+    <script src="/static/js/pages/brief.js"></script>
     <script src="/static/js/app.js"></script>
 </body>
 </html>

@@ -16,6 +16,16 @@ sys.path.insert(0, str(AUTOMATION_DIR))
 DATA_DIR = Path(__file__).parent / "data"
 DATA_DIR.mkdir(exist_ok=True)
 
+# ── Auth Config ─────────────────────────────────────────────────
+GITHUB_CLIENT_ID = os.getenv("GITHUB_CLIENT_ID", "")
+GITHUB_CLIENT_SECRET = os.getenv("GITHUB_CLIENT_SECRET", "")
+SESSION_SECRET = os.getenv("SESSION_SECRET", "dev-secret-change-me")
+DEMO_MODE = os.getenv("DEMO_MODE", "true").lower() == "true"
+if not DEMO_MODE and SESSION_SECRET == "dev-secret-change-me":
+    import warnings
+    warnings.warn("SESSION_SECRET must be set in production! Using default is insecure.", RuntimeWarning)
+ALLOWED_USERS = [u.strip() for u in os.getenv("ALLOWED_USERS", "").split(",") if u.strip()]
+
 
 # ── Company Registry ─────────────────────────────────────────────
 COMPANIES: Dict[str, Dict[str, Any]] = {
@@ -29,12 +39,11 @@ COMPANIES: Dict[str, Dict[str, Any]] = {
         "email": "info@usconstruction.com",
         "address": "4700 Shelbyville Rd, Suite 100, Louisville, KY 40207",
         "services": [
-            "Turnkey Vertical Integration",
+            "Full-Scope Construction",
             "Multi-Trade Coordination",
-            "One Call Framing Through Finish",
+            "Turnkey Project Delivery",
         ],
-        "tagline": "One Call. Framing Through Finish.",
-        "is_parent": True,
+        "tagline": "Full-Scope Commercial Construction",
     },
     "us_framing": {
         "name": "US Framing",
@@ -138,6 +147,17 @@ ACTIVE_COMPANIES = {
     k: v for k, v in COMPANIES.items() if v.get("status") != "coming_soon"
 }
 
+# Client-facing companies (only US Exteriors + US Drywall for client deployment)
+CLIENT_COMPANIES: Dict[str, Dict[str, Any]] = {
+    k: v for k, v in COMPANIES.items() if k in ("us_exteriors", "us_drywall")
+}
+
+
+def get_active_companies() -> Dict[str, Dict[str, Any]]:
+    """Return CLIENT_COMPANIES in production, ACTIVE_COMPANIES in demo mode."""
+    demo = os.getenv("DEMO_MODE", "true").lower() == "true"
+    return ACTIVE_COMPANIES if demo else CLIENT_COMPANIES
+
 
 # ── Module Import Helpers ─────────────────────────────────────────
 def try_import_module_config(module_name: str) -> Optional[Any]:
@@ -166,12 +186,19 @@ class DashboardConfig:
     DEBUG = os.getenv("DEBUG", "false").lower() == "true"
     DEMO_MODE = os.getenv("DEMO_MODE", "true").lower() == "true"
 
+    # Auth
+    GITHUB_CLIENT_ID = GITHUB_CLIENT_ID
+    GITHUB_CLIENT_SECRET = GITHUB_CLIENT_SECRET
+    SESSION_SECRET = SESSION_SECRET
+    ALLOWED_USERS = ALLOWED_USERS
+
     # CORS
     ALLOWED_ORIGINS = [
         "http://localhost:8000",
         "http://127.0.0.1:8000",
         "https://us-mission-control.onrender.com",
         "https://us-marketing-dashboard.onrender.com",
+        "https://us-mc-client.onrender.com",
     ]
 
     # Data paths
@@ -191,6 +218,7 @@ class DashboardConfig:
     # Companies
     COMPANIES = COMPANIES
     ACTIVE_COMPANIES = ACTIVE_COMPANIES
+    CLIENT_COMPANIES = CLIENT_COMPANIES
 
 
 config = DashboardConfig()

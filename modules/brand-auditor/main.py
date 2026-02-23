@@ -87,7 +87,7 @@ def cli():
     """Brand Consistency Auditor for US Construction Marketing.
 
     Audit NAP data, visual identity, voice/tone, and directory listings
-    across the US Construction family of companies.
+    across managed construction company websites.
     """
     pass
 

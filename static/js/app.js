@@ -11,19 +11,21 @@ document.addEventListener('alpine:init', () => {
         pageTitle: 'Dashboard',
         pageSubtitle: 'Overview of all marketing systems',
 
-        // Companies registry
+        // User session
+        user: null,
+
+        // Companies registry (client-scoped: US Exteriors + US Drywall)
         companies: {
-            us_construction: { name: 'US Construction', slug: 'us-construction', color: '#1B2A4A', accent: 'navy' },
-            us_framing: { name: 'US Framing', slug: 'us-framing', color: '#579BFC', accent: 'blue' },
             us_drywall: { name: 'US Drywall', slug: 'us-drywall', color: '#FDAB3D', accent: 'amber' },
-            us_interiors: { name: 'US Interiors', slug: 'us-interiors', color: '#5B7B99', accent: 'slate' },
             us_exteriors: { name: 'US Exteriors', slug: 'us-exteriors', color: '#00C875', accent: 'green' },
-            us_development: { name: 'US Development', slug: 'us-development', color: '#C4AF94', accent: 'tan' },
         },
 
         // Navigation items
         navItems: [
             { page: 'home', hash: '#home', label: 'Dashboard', icon: 'layout-dashboard' },
+            { page: 'builder', hash: '#builder', label: 'Website Builder', icon: 'message-square' },
+            { page: 'brief', hash: '#brief', label: 'Weekly Brief', icon: 'newspaper' },
+            { page: 'monitoring', hash: '#monitoring', label: 'Monitoring', icon: 'activity' },
             { page: 'calendar', hash: '#calendar', label: 'Calendar', icon: 'calendar' },
             { page: 'content', hash: '#content', label: 'Content Library', icon: 'file-text' },
             { page: 'gbp', hash: '#gbp', label: 'Google Business', icon: 'map-pin' },
@@ -50,10 +52,14 @@ document.addEventListener('alpine:init', () => {
             quality: { title: 'Quality Loop', subtitle: 'Recursive content improvement engine' },
             reactivation: { title: 'Database Reactivation', subtitle: 'Lead pipeline and sequences' },
             settings: { title: 'Settings', subtitle: 'OAuth tokens, companies, and system info' },
+            builder: { title: 'Website Builder', subtitle: 'AI-powered website editing' },
+            monitoring: { title: 'Monitoring', subtitle: 'Deployments, performance, and logs' },
+            brief: { title: 'Weekly Brief', subtitle: 'AI-generated executive summary' },
         },
 
         // Init
         init() {
+            this.loadUser();
             this.handleRoute();
             window.addEventListener('hashchange', () => this.handleRoute());
 
@@ -61,6 +67,23 @@ document.addEventListener('alpine:init', () => {
             this.$nextTick(() => {
                 if (window.lucide) lucide.createIcons();
             });
+        },
+
+        // Load authenticated user info
+        async loadUser() {
+            try {
+                const res = await fetch('/auth/me');
+                if (res.ok) {
+                    this.user = await res.json();
+                }
+            } catch (e) {
+                // Not authenticated or auth not configured
+            }
+        },
+
+        // Logout
+        logout() {
+            window.location.href = '/auth/logout';
         },
 
         // Hash router
@@ -154,6 +177,15 @@ document.addEventListener('alpine:init', () => {
                         break;
                     case 'settings':
                         if (window.PageSettings) await PageSettings.render();
+                        break;
+                    case 'builder':
+                        if (window.PageBuilder) await PageBuilder.render(company);
+                        break;
+                    case 'monitoring':
+                        if (window.PageMonitoring) await PageMonitoring.render(company);
+                        break;
+                    case 'brief':
+                        if (window.PageBrief) await PageBrief.render(company);
                         break;
                 }
             } catch (err) {

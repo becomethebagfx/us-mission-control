@@ -6,9 +6,17 @@ services:
     startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: DEMO_MODE
-        value: "true"
+        value: "false"
       - key: DEBUG
         value: "false"
+      - key: GITHUB_CLIENT_ID
+        sync: false
+      - key: GITHUB_CLIENT_SECRET
+        sync: false
+      - key: SESSION_SECRET
+        sync: false
+      - key: ALLOWED_USERS
+        sync: false
     headers:
       - path: /*
         name: X-Frame-Options

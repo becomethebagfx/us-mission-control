@@ -44,7 +44,7 @@ def cli(ctx: click.Context, demo: bool, company: str) -> None:
     """AEO/GEO Content Engine for US Construction Marketing.
 
     Generates answer capsules, FAQ sets, schema markup, and monitors
-    AI citation visibility for the US Construction family of companies.
+    AI citation visibility for managed construction company websites.
     """
     ctx.ensure_object(dict)
     ctx.obj["demo"] = demo
