@@ -5,12 +5,20 @@
 const API = {
     baseURL: '/api',
 
+    _checkAuth(res) {
+        if (res.status === 401) {
+            window.location.href = '/auth/login';
+            throw new Error('Session expired');
+        }
+    },
+
     async get(path, params = {}) {
         const url = new URL(this.baseURL + path, window.location.origin);
         Object.entries(params).forEach(([k, v]) => {
             if (v !== null && v !== undefined && v !== '') url.searchParams.set(k, v);
         });
         const res = await fetch(url.toString());
+        this._checkAuth(res);
         if (!res.ok) throw new Error(`API ${res.status}: ${res.statusText}`);
         return res.json();
     },
@@ -21,6 +29,7 @@ const API = {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body),
         });
+        this._checkAuth(res);
         if (!res.ok) throw new Error(`API ${res.status}: ${res.statusText}`);
         return res.json();
     },
@@ -31,6 +40,7 @@ const API = {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body),
         });
+        this._checkAuth(res);
         if (!res.ok) throw new Error(`API ${res.status}: ${res.statusText}`);
         return res.json();
     },

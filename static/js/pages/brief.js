@@ -71,11 +71,11 @@ const PageBrief = {
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
               <div>
                 <div style="font-size:12px;font-weight:600;color:var(--text-secondary);margin-bottom:4px">Activity</div>
-                <p style="font-size:13px">${sections.activity?.description || 'No activity data'}</p>
+                <p style="font-size:13px">${this._esc(sections.activity?.description || 'No activity data')}</p>
               </div>
               <div>
                 <div style="font-size:12px;font-weight:600;color:var(--text-secondary);margin-bottom:4px">AI Insight</div>
-                <p style="font-size:13px;color:var(--accent)">${sections.insight || 'No insight available'}</p>
+                <p style="font-size:13px;color:var(--accent)">${this._esc(sections.insight || 'No insight available')}</p>
               </div>
             </div>
             ${sections.action_items?.length ? `
@@ -84,7 +84,7 @@ const PageBrief = {
                 ${sections.action_items.map(item => `
                   <div style="display:flex;align-items:center;gap:6px;font-size:12px;padding:2px 0">
                     <i data-lucide="circle" style="width:10px;height:10px;color:var(--orange)"></i>
-                    ${item}
+                    ${this._esc(item)}
                   </div>
                 `).join('')}
               </div>
@@ -157,7 +157,7 @@ const PageBrief = {
         <div class="mc-card" style="margin-bottom:16px">
           <div class="mc-card-header"><h3>This Week's Activity</h3></div>
           <div class="mc-card-body">
-            <p style="font-size:14px;line-height:1.6">${sections.activity?.description || 'No activity data available.'}</p>
+            <p style="font-size:14px;line-height:1.6">${this._esc(sections.activity?.description || 'No activity data available.')}</p>
           </div>
         </div>
 
@@ -165,7 +165,7 @@ const PageBrief = {
         <div class="mc-card" style="margin-bottom:16px">
           <div class="mc-card-header"><h3>Performance</h3></div>
           <div class="mc-card-body">
-            <p style="font-size:14px;line-height:1.6">${sections.performance?.description || 'No performance data available.'}</p>
+            <p style="font-size:14px;line-height:1.6">${this._esc(sections.performance?.description || 'No performance data available.')}</p>
           </div>
         </div>
 
@@ -173,7 +173,7 @@ const PageBrief = {
         <div class="mc-card" style="margin-bottom:16px;border-left:3px solid var(--accent)">
           <div class="mc-card-header"><h3><i data-lucide="lightbulb" style="width:14px;height:14px;margin-right:6px;color:var(--accent)"></i>AI Insight</h3></div>
           <div class="mc-card-body">
-            <p style="font-size:14px;line-height:1.6;color:var(--accent)">${sections.insight || 'No insight available.'}</p>
+            <p style="font-size:14px;line-height:1.6;color:var(--accent)">${this._esc(sections.insight || 'No insight available.')}</p>
           </div>
         </div>
 
@@ -185,7 +185,7 @@ const PageBrief = {
             ${sections.action_items.map((item, i) => `
               <div style="display:flex;align-items:start;gap:10px;padding:8px 0;${i > 0 ? 'border-top:1px solid var(--border-light)' : ''}">
                 <div style="width:20px;height:20px;border:2px solid var(--border);border-radius:4px;flex-shrink:0;margin-top:1px"></div>
-                <span style="font-size:14px">${item}</span>
+                <span style="font-size:14px">${this._esc(item)}</span>
               </div>
             `).join('')}
           </div>
@@ -256,6 +256,11 @@ const PageBrief = {
 
         this.state.generating = false;
         if (el) { el.innerHTML = this._html(); this._bindEvents(el); if (window.lucide) lucide.createIcons(); }
+    },
+
+    _esc(str) {
+        if (!str) return '';
+        return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     },
 };
 

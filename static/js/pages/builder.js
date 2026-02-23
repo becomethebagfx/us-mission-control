@@ -459,8 +459,8 @@ const PageBuilder = {
     },
 
     _renderMarkdown(text) {
-        // Simple markdown rendering
-        return text
+        // Escape HTML first to prevent XSS, then apply markdown formatting
+        return this._escapeHtml(text)
             .replace(/```(\w*)\n([\s\S]*?)```/g, '<pre class="builder-code"><code>$2</code></pre>')
             .replace(/`([^`]+)`/g, '<code class="builder-inline-code">$1</code>')
             .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')

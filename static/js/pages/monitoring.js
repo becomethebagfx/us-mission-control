@@ -129,7 +129,7 @@ const PageMonitoring = {
                   <td><span class="mc-badge mc-badge-${status}">${label}</span></td>
                   <td style="font-size:12px">${date}</td>
                   <td><code style="font-size:11px">${d.commit_sha || 'N/A'}</code></td>
-                  <td style="font-size:12px;max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${d.commit_message || ''}</td>
+                  <td style="font-size:12px;max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${this._esc(d.commit_message)}</td>
                   <td><button class="btn-ghost view-logs-btn" data-id="${d.id}" data-site="${d.site || ''}" style="font-size:11px">View Logs</button></td>
                 </tr>`;
             }).join('')}
@@ -192,7 +192,7 @@ const PageMonitoring = {
             return `<div class="log-entry ${levelClass}">
               <span class="log-time">${time}</span>
               <span class="log-level">${l.level}</span>
-              <span class="log-message">${l.message}</span>
+              <span class="log-message">${this._esc(l.message)}</span>
             </div>`;
           }).join('')}
         </div>`;
@@ -262,6 +262,11 @@ const PageMonitoring = {
                 }
             });
         });
+    },
+
+    _esc(str) {
+        if (!str) return '';
+        return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     },
 };
 

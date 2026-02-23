@@ -3,6 +3,7 @@ Website Builder — API Router
 Chat interface, file uploads, preview/deploy pipeline.
 """
 
+import re
 import time
 from typing import Optional
 
@@ -63,6 +64,7 @@ async def chat(request: Request, body: ChatRequest):
         session = session_store.get_session(body.session_id)
         if not session:
             raise HTTPException(status_code=404, detail="Session not found")
+        _check_ownership(request, session)
     else:
         session = session_store.create_session(user, body.site_slug)
 
@@ -106,6 +108,12 @@ async def upload_file(
     session_id: str = Form(...),
 ):
     """Upload a file (image) for use in website changes."""
+    # Verify session ownership
+    session = session_store.get_session(session_id)
+    if not session:
+        raise HTTPException(status_code=404, detail="Session not found")
+    _check_ownership(request, session)
+
     content = await file.read()
 
     # Validate
@@ -213,6 +221,10 @@ async def create_preview(request: Request, body: PreviewRequest):
 @router.post("/deploy")
 async def deploy_changes(request: Request, body: DeployRequest):
     """Merge preview branch to main (triggers auto-deploy on Render)."""
+    # Validate branch name format
+    if not re.match(r'^preview/update-\d+$', body.branch_name):
+        raise HTTPException(status_code=400, detail="Invalid branch name format")
+
     session = session_store.get_session(body.session_id)
     if not session:
         raise HTTPException(status_code=404, detail="Session not found")
@@ -244,6 +256,10 @@ async def deploy_changes(request: Request, body: DeployRequest):
 @router.post("/discard")
 async def discard_preview(request: Request, body: DiscardRequest):
     """Discard preview branch without merging."""
+    # Validate branch name format
+    if not re.match(r'^preview/update-\d+$', body.branch_name):
+        raise HTTPException(status_code=400, detail="Invalid branch name format")
+
     session = session_store.get_session(body.session_id)
     if not session:
         raise HTTPException(status_code=404, detail="Session not found")
@@ -264,8 +280,12 @@ async def discard_preview(request: Request, body: DiscardRequest):
 
 
 @router.post("/rollback")
-async def rollback(body: RollbackRequest):
+async def rollback(request: Request, body: RollbackRequest):
     """Rollback to a previous commit."""
+    # Validate commit SHA format
+    if not re.match(r'^[0-9a-f]{7,40}$', body.commit_sha):
+        raise HTTPException(status_code=400, detail="Invalid commit SHA format")
+
     site_info = site_context.SITE_REGISTRY.get(body.site_slug)
     if not site_info:
         raise HTTPException(status_code=404, detail="Site not found")
