@@ -199,6 +199,7 @@ class DashboardConfig:
         "https://us-mission-control.onrender.com",
         "https://us-marketing-dashboard.onrender.com",
         "https://us-mc-client.onrender.com",
+        "https://us-mission-control-vf19.onrender.com",
     ]
 
     # Data paths
